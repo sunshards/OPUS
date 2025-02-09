@@ -40,16 +40,17 @@ class HeartRateMonitor : ObservableObject {
         }
 
         let configuration = HKWorkoutConfiguration()
-        configuration.activityType = .other // Change as needed
-        configuration.locationType = .indoor  // Change as needed
-
-        //workoutBuilder = HKWorkoutBuilder(healthStore: healthStore, configuration: configuration, device: nil)
+        configuration.activityType = .other
+        configuration.locationType = .indoor
+        
+        // Creo una sessione di workout per far accendere il sensore del battito cardiaco
         do {
             workoutSession = try HKWorkoutSession(healthStore: healthStore, configuration: configuration)
         } catch {
             print("Could not create workout session.")
             return
         }
+        // Se la sessione viene creata, inizio la raccolta dei dati
         workoutBuilder?.beginCollection(withStart: Date()) { success, error in
             if let error = error {
                 print("Error starting workout collection: \(error.localizedDescription)")
@@ -61,7 +62,7 @@ class HeartRateMonitor : ObservableObject {
         startHeartRateQuery(heartRateType: heartRateType)
     }
 
-    // MARK: - Query Heart Rate Data
+    // In questa funzione viene creata una query che raccoglie tutti i nuovi dati presi dal sensore
     private func startHeartRateQuery(heartRateType: HKQuantityType) {
         let query = HKAnchoredObjectQuery(type: heartRateType, predicate: nil, anchor: nil, limit: HKObjectQueryNoLimit) { query, samples, _, _, error in
             if let error = error {
