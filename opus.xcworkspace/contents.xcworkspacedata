@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:HeartLogger.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:OpusTV.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:OpusIOS.xcodeproj">
+   </FileRef>
+</Workspace>
