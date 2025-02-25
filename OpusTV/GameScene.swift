@@ -8,7 +8,12 @@
 import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
-   
+    
+    let mpcManager: MPCManager = MPCManager.shared
+    let device = PhoneConnection.shared
+    var objectSelected : Bool = false
+    var lastCursorContacts : Int = 0
+    
     var width : CGFloat = 1920
     var height : CGFloat = 1080
     var lightPosition = CGPoint(x: 0, y: 0)
@@ -63,61 +68,70 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // START OF THE GAME
     override func didMove(to view: SKView) {
+        mpcManager.startService()
         physicsWorld.contactDelegate = self
+        let cursor = childNode(withName: "cursor") as! SKSpriteNode
+        cursor.physicsBody?.usesPreciseCollisionDetection = true
+        
         //checkPhysics()
-
-        width = scene?.frame.width ?? 1920
-        height = scene?.frame.height ?? 1080
-
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        // NON RIDIMENSIONARE USANDO LA SCALE, MA CAMBIANDO LA SIZE DEGLI SPRITE ALTRIMENTI LA LUCE NON COMPARE
-        print("Inizio contatto: ", contact.bodyB.node?.name ?? "no name")
-        if let object = contact.bodyB.node as? SKSpriteNode {
-            let objectLight = SKSpriteNode(imageNamed: "light")
-            objectLight.position = CGPoint(x: 0, y: 0)
-            objectLight.zPosition = -1 // relativo al padre
-            objectLight.size = object.size
-            objectLight.setScale(1.1)
-            objectLight.name = "light"
-            objectLight.color = .yellow
-            objectLight.alpha = 0.5
-            object.addChild(objectLight)
-        }
+
     }
     
     func didEnd(_ contact: SKPhysicsContact) {
-        print("Fine contatto: ", contact.bodyB.node?.name ?? "no name")
-        if let object = contact.bodyB.node as? SKSpriteNode {
-            if let child = object.childNode(withName: "light") as? SKSpriteNode {
-                child.removeFromParent()
-            }
-
-        }
     }
     
     override func update(_ currentTime: TimeInterval) {
-        var x = lightPosition.x
-        var y = lightPosition.y
-        if (x > width/2 || x < -width/2) {
-            xDirection *= -1
-        }
-        if (y > height/2 || y < -height/2) {
-            yDirection *= -1
-        }
-        x += CGFloat(velocity * xDirection)
-        y += CGFloat(velocity * yDirection)
-        lightPosition = CGPoint(x:x, y:y)
-        //print(lightPosition)
+        
+        lightPosition = CGPoint(x: device.xPerc * CGFloat(width), y: device.yPerc * CGFloat(height))
         let lightNode = childNode(withName: "torch") as! SKLightNode
         let cursor = childNode(withName: "cursor") as! SKSpriteNode
         lightNode.position = lightPosition
         cursor.position = lightPosition
+        spawnLight()
+        print(lastCursorContacts)
+
     }
     
-
-    
-    
+    func spawnLight() {
+        let cursor = childNode(withName: "cursor") as! SKSpriteNode
+        guard let cursorBody = cursor.physicsBody else { return }
+        
+        // Tiene un conto del numero di oggetti toccati al momento dal cursore
+        // Se il numero cambia, significa che ci sono luci da togliere o da aggiungere
+        let currentCursorContacts : Int = cursorBody.allContactedBodies().count
+        if currentCursorContacts != lastCursorContacts {
+            if currentCursorContacts == 0 {
+                // Remove all lights
+                for child in scene?.children ?? [] {
+                    if child.name == "objectLight" {
+                        child.removeFromParent()
+                    }
+                }
+            }
+            else {
+                // Spawn lights for object in contact with the cursor
+                for body in cursorBody.allContactedBodies() {
+                    guard let node = body.node as? SKSpriteNode else { continue }
+                    if body.categoryBitMask == 2 { // Categoria degli interagibili
+                        let objectLight = SKSpriteNode(imageNamed: "light")
+                        objectLight.name = "objectLight"
+                        objectLight.position = node.position
+                        objectLight.zPosition = 0 // relativo al padre
+                        objectLight.size = node.size
+                        objectLight.setScale(1.5)
+                        objectLight.color = .yellow
+                        objectLight.alpha = 0.8
+                        scene?.addChild(objectLight)
+                    }
+                }
+            }
+        }
+        lastCursorContacts = currentCursorContacts
+        
+        
+    }
     
 }

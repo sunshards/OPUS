@@ -10,9 +10,22 @@
 		3DD57D652D6C622D006A5A67 /* OpusTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpusTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		3D8AB27A2D6E745C007CF473 /* Exceptions for "OpusTV" folder in "OpusTV" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 3DD57D642D6C622D006A5A67 /* OpusTV */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		3DD57D672D6C622D006A5A67 /* OpusTV */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				3D8AB27A2D6E745C007CF473 /* Exceptions for "OpusTV" folder in "OpusTV" target */,
+			);
 			path = OpusTV;
 			sourceTree = "<group>";
 		};
@@ -255,6 +268,9 @@
 				DEVELOPMENT_TEAM = K3D3D89R3N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OpusTV/Info.plist;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Let OPUS connect to your iPhone for input.";
+				INFOPLIST_KEY_NSNearbyInteractionUsageDescription = "Let OPUS connect to your iPhone for input.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -281,6 +297,9 @@
 				DEVELOPMENT_TEAM = K3D3D89R3N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OpusTV/Info.plist;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Let OPUS connect to your iPhone for input.";
+				INFOPLIST_KEY_NSNearbyInteractionUsageDescription = "Let OPUS connect to your iPhone for input.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				LD_RUNPATH_SEARCH_PATHS = (

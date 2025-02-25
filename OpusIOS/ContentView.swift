@@ -9,6 +9,7 @@ import SwiftUI
 import SpriteKit
 
 struct ContentView: View {
+
     var scene: SKScene {
         let scene = SKScene(fileNamed: "GameScene")
         scene?.scaleMode = .aspectFill
