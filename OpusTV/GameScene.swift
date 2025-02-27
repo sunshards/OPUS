@@ -20,8 +20,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var xDirection : Int = 1
     var yDirection : Int = 1
     var velocity : Int = 10
+    let sensibility : CGFloat = 10
 
-    //MARK: - Analyse the collision/contact set up.
+    //MARK: - Analyse the cosllision/contact set up.
     func checkPhysics() {
 
         // Create an array of all the nodes with physicsBodies
@@ -84,8 +85,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        
-        lightPosition = CGPoint(x: device.xPerc * CGFloat(width), y: device.yPerc * CGFloat(height))
+            
+        //lightPosition = CGPoint(x: device.xPerc * CGFloat(width), y: device.yPerc * CGFloat(height))
+        lightPosition = CGPoint(x: lightPosition.x + sensibility * -device.zGyro,
+                                y: lightPosition.y + sensibility * device.xGyro)
         let lightNode = childNode(withName: "torch") as! SKLightNode
         let cursor = childNode(withName: "cursor") as! SKSpriteNode
         lightNode.position = lightPosition

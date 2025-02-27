@@ -12,8 +12,10 @@ class PhoneConnection : MPCManagerDelegate {
     static let shared: PhoneConnection = PhoneConnection()
     // crea singleton threadsafe: ogni volta che istanzi se esiste già viene presa la copia esistente.
     
-    var xPerc : CGFloat = 0.0
-    var yPerc : CGFloat = 0.0
+    var xGyro : CGFloat = 0.0
+    var yGyro : CGFloat = 0.0
+    var zGyro : CGFloat = 0.0
+    
     let mpcManager = MPCManager.shared
     
     init () {
@@ -23,8 +25,9 @@ class PhoneConnection : MPCManagerDelegate {
     
     // HANDLING DEL MESSAGGIO
     func mpcManager(_ manager: MPCManager, didReceive message: Message, from peer: MCPeerID) {
-        self.xPerc = message.xPerc
-        self.yPerc = message.yPerc
+        self.xGyro = message.xGyro
+        self.yGyro = message.yGyro
+        self.zGyro = message.zGyro
     }
     
     // AZIONE DI QUANDO SI CONNETTE UN DEVICE

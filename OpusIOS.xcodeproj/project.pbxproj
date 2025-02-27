@@ -270,6 +270,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OpusIOS/Info.plist;
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Let OPUS connect to your Apple TV for input.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "Let OPUS use the iPhone's gyroscopes for input.";
 				INFOPLIST_KEY_NSNearbyInteractionUsageDescription = "Let OPUS connect to your Apple TV for input.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -303,6 +304,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OpusIOS/Info.plist;
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Let OPUS connect to your Apple TV for input.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "Let OPUS use the iPhone's gyroscopes for input.";
 				INFOPLIST_KEY_NSNearbyInteractionUsageDescription = "Let OPUS connect to your Apple TV for input.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

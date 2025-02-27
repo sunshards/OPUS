@@ -8,8 +8,9 @@
 import Foundation
 
 struct Message : Codable {
-    let xPerc : CGFloat
-    let yPerc : CGFloat
+    let xGyro : CGFloat
+    let yGyro : CGFloat
+    let zGyro : CGFloat
     
     func toData() -> Data? {
         var data : Data? = nil
