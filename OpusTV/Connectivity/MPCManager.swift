@@ -8,6 +8,11 @@
 import Foundation
 import MultipeerConnectivity
 
+protocol MPCManagerDelegate : AnyObject  { // per compatibilità con NSObject
+    func mpcManager(_ manager: MPCManager, didReceive message: Message, from peer: MCPeerID)
+    func mpcManager(_ manager: MPCManager, userIsConnected user: String)
+}
+
 class MPCManager : NSObject {
     static let shared: MPCManager = MPCManager() // crea singleton threadsafe: ogni volta che istanzi se esiste già viene presa la copia esistente.
     
@@ -88,7 +93,3 @@ extension MPCManager : MCNearbyServiceAdvertiserDelegate {
     }
 }
 
-protocol MPCManagerDelegate : AnyObject  { // per compatibilità con NSObject
-    func mpcManager(_ manager: MPCManager, didReceive message: Message, from peer: MCPeerID)
-    func mpcManager(_ manager: MPCManager, userIsConnected user: String)
-}

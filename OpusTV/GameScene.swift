@@ -10,7 +10,7 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let mpcManager: MPCManager = MPCManager.shared
-    let device = PhoneConnection.shared
+//    let device : PhoneConnection = PhoneConnection.shared
     var objectSelected : Bool = false
     var lastCursorContacts : Int = 0
     
@@ -21,7 +21,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var yDirection : Int = 1
     var velocity : Int = 10
     let sensibility : CGFloat = 10
+    
+    var xGyro : CGFloat = 0.0
+    var yGyro : CGFloat = 0.0
+    var zGyro : CGFloat = 0.0
+    
+    var xAcc : CGFloat = 0.0
+    var yAcc : CGFloat = 0.0
+    var zAcc : CGFloat = 0.0
 
+    
+    
     //MARK: - Analyse the cosllision/contact set up.
     func checkPhysics() {
 
@@ -69,12 +79,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // START OF THE GAME
     override func didMove(to view: SKView) {
-        mpcManager.startService()
+        //device.scene = scene
+        mpcManager.delegate = self
         physicsWorld.contactDelegate = self
-        let cursor = childNode(withName: "cursor") as! SKSpriteNode
-        cursor.physicsBody?.usesPreciseCollisionDetection = true
+        mpcManager.startService()
         
-        //checkPhysics()
+//        let cursor = childNode(withName: "cursor") as! SKSpriteNode
+//        cursor.physicsBody?.usesPreciseCollisionDetection = true
+        
+//        checkPhysics()
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -87,8 +100,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
             
         //lightPosition = CGPoint(x: device.xPerc * CGFloat(width), y: device.yPerc * CGFloat(height))
-        lightPosition = CGPoint(x: lightPosition.x + sensibility * -device.zGyro,
-                                y: lightPosition.y + sensibility * device.xGyro)
+        lightPosition = CGPoint(x: lightPosition.x + sensibility * -zGyro,
+                                y: lightPosition.y + sensibility * xGyro)
         let lightNode = childNode(withName: "torch") as! SKLightNode
         let cursor = childNode(withName: "cursor") as! SKSpriteNode
         lightNode.position = lightPosition
@@ -137,4 +150,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    func recalibrate() {
+        lightPosition = CGPoint(x: 0,
+                                y: 0)
+        let lightNode = childNode(withName: "torch") as! SKLightNode
+        let cursor = childNode(withName: "cursor") as! SKSpriteNode
+        lightNode.position = lightPosition
+        cursor.position = lightPosition
+    }
+    
 }
+

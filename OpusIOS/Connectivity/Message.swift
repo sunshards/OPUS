@@ -7,11 +7,23 @@
 
 import Foundation
 
+enum MessageType : Codable {
+    case calibration
+    case gyroscope
+    case accelerometer
+}
+
+struct Vector3D : Codable {
+    let x : CGFloat
+    let y : CGFloat
+    let z : CGFloat
+}
+
 struct Message : Codable {
-    let xGyro : CGFloat
-    let yGyro : CGFloat
-    let zGyro : CGFloat
-    
+    let type : MessageType
+    let vector : Vector3D?
+    var state : Bool?
+
     func toData() -> Data? {
         var data : Data? = nil
         
