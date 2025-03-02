@@ -16,11 +16,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var width : CGFloat = 1920
     var height : CGFloat = 1080
-    var lightPosition = CGPoint(x: 0, y: 0)
+        
+    var queueSize: Int  = 5
+    var updateLightCounter = 0
+    var lightPosition = CGPoint.zero
+    var lightDisplayPosition = CGPoint.zero
     var xDirection : Int = 1
     var yDirection : Int = 1
     var velocity : Int = 10
-    let sensibility : CGFloat = 10
+    let sensibility : CGFloat = 2000//30
+    let smoothness : Double = 0.15
     
     var xGyro : CGFloat = 0.0
     var yGyro : CGFloat = 0.0
@@ -82,6 +87,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //device.scene = scene
         mpcManager.delegate = self
         physicsWorld.contactDelegate = self
+        
         mpcManager.startService()
         
 //        let cursor = childNode(withName: "cursor") as! SKSpriteNode
@@ -99,15 +105,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) {
             
-        //lightPosition = CGPoint(x: device.xPerc * CGFloat(width), y: device.yPerc * CGFloat(height))
-        lightPosition = CGPoint(x: lightPosition.x + sensibility * -zGyro,
-                                y: lightPosition.y + sensibility * xGyro)
+        /*let newPoint = CGPoint(x: -zGyro * sensibility,
+                              y: xGyro * sensibility) BEFORE ATTITUDE */
+        let newPoint = CGPoint(x: -xGyro * sensibility, y: yGyro * sensibility)
+        lightDisplayPosition = lerp(p1: lightDisplayPosition, p2: newPoint, t: smoothness)
         let lightNode = childNode(withName: "torch") as! SKLightNode
         let cursor = childNode(withName: "cursor") as! SKSpriteNode
-        lightNode.position = lightPosition
-        cursor.position = lightPosition
+        lightNode.position = lightDisplayPosition
+        cursor.position = lightDisplayPosition
         spawnLight()
-        print(lastCursorContacts)
 
     }
     
@@ -151,13 +157,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func recalibrate() {
-        lightPosition = CGPoint(x: 0,
-                                y: 0)
+        lightPosition = CGPoint.zero
         let lightNode = childNode(withName: "torch") as! SKLightNode
         let cursor = childNode(withName: "cursor") as! SKSpriteNode
-        lightNode.position = lightPosition
-        cursor.position = lightPosition
+        lightNode.position = CGPoint.zero
+        cursor.position = CGPoint.zero
     }
     
 }
 
+func lerp(p1 : CGPoint, p2 : CGPoint, t : Double) -> CGPoint {
+    let newPoint = CGPoint(x: p1.x + CGFloat(t) * (p2.x - p1.x),  y: p1.y + CGFloat(t) * (p2.y - p1.y))
+    return newPoint
+}
+
+func distanceBetweenPoints(first : CGPoint, second : CGPoint) -> Double {
+    return sqrt( pow(Double(first.x-second.x), 2.0) + pow(Double(first.y-second.y), 2.0) )
+}

@@ -19,6 +19,9 @@ struct ContentView: View {
     var body: some View {
         SpriteView(scene: scene)
             .edgesIgnoringSafeArea(.all)
+            .onAppear {
+                UIApplication.shared.isIdleTimerDisabled = true
+            }
     }
 }
 

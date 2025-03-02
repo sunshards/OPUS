@@ -37,7 +37,7 @@ class MPCManager : NSObject {
     }
     func send(message : Message) {
         if let data = message.toData() {
-            try? session.send(data, toPeers: session.connectedPeers, with: .reliable)
+            try? session.send(data, toPeers: session.connectedPeers, with: .unreliable)
         }
     }
 }
