@@ -7,8 +7,13 @@
 
 import SwiftUI
 import SpriteKit
+import HealthKit
 
 struct ContentView: View {
+    @ObservedObject private var monitor = HeartRateReader()
+    
+    let store = HKHealthStore()
+    let heartRateType = HKObjectType.quantityType(forIdentifier: .heartRate)
 
     var scene: SKScene {
         let scene = SKScene(fileNamed: "GameScene")
@@ -18,9 +23,18 @@ struct ContentView: View {
     
     
     var body: some View {
+        
+        Text("\(monitor.heartRate ?? 0.0)")
         SpriteView(scene: scene)
             .edgesIgnoringSafeArea(.all)
-    }
+            .onAppear(){
+                monitor.requestAuthorization()
+                monitor.startHeartRateQuery(heartRateType: heartRateType!)
+
+            }
+        
+        
+        }
 }
 
 struct ContentView_Previews: PreviewProvider {

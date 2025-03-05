@@ -69,16 +69,14 @@ class HeartRateMonitor : ObservableObject {
                 print("Error querying heart rate: \(error.localizedDescription)")
                 return
             }
-
             self.handleHeartRateSamples(samples: samples)
         }
 
-        query.updateHandler = { query, samples, _, _, error in
+        query.updateHandler = {query, samples, _, _, error in
             if let error = error {
                 print("Error updating heart rate query: \(error.localizedDescription)")
                 return
             }
-
             self.handleHeartRateSamples(samples: samples)
         }
 
@@ -87,17 +85,17 @@ class HeartRateMonitor : ObservableObject {
 
     // MARK: - Handle Heart Rate Data
     private func handleHeartRateSamples(samples: [HKSample]?) {
-        guard let heartRateSamples = samples as? [HKQuantitySample] else { return }
+        guard let heartRateSamples = samples as? [HKQuantitySample] else { return}
 
         for sample in heartRateSamples {
             let heartRateUnit = HKUnit.count().unitDivided(by: HKUnit.minute())
             let heartRate = sample.quantity.doubleValue(for: heartRateUnit)
             let timestamp = sample.startDate
-            
+
             //Needed to update the label on the main thread
             DispatchQueue.main.async {
-                self.heartRate = heartRate
                 print("Heart Rate: \(heartRate) BPM at \(timestamp)")
+                self.heartRate = heartRate
             }
             
         }

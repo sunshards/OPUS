@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import HealthKit
 
 enum MessageType : Codable {
     case touch
@@ -25,6 +26,8 @@ struct Message : Codable {
     let type : MessageType
     let vector : Vector3D?
     var state : Bool?
+    
+    
 
     func toData() -> Data? {
         var data : Data? = nil
@@ -42,3 +45,4 @@ struct Message : Codable {
         try? JSONDecoder().decode(Message.self, from: data)
     }
 }
+
