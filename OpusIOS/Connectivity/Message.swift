@@ -8,6 +8,8 @@
 import Foundation
 
 enum MessageType : Codable {
+    case touch
+    case heartrate
     case calibration
     case gyroscope
     case accelerometer

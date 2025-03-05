@@ -14,6 +14,8 @@ class GameScene: SKScene {
     var xGyroTotal : Double = 0.0
     var yGyroTotal : Double = 0.0
     var zGyroTotal : Double = 0.0
+    
+    var hasCalibrated : Bool = false
 
     let gyroBound : Double = 0.05
     
@@ -66,7 +68,7 @@ class GameScene: SKScene {
                     return
                 }
                 
-        motionManager.deviceMotionUpdateInterval = 0.1 // Update every 0.1 seconds
+        motionManager.deviceMotionUpdateInterval = 0.02 // Update every 0.1 seconds
         motionManager.startDeviceMotionUpdates(to: .main) {  (motion, error) in
             guard let motion = motion, error == nil else {
                 print("Error: \(String(describing: error))")
@@ -95,15 +97,21 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let currentAttitude = motionManager.deviceMotion?.attitude {
-            referenceAttitude = currentAttitude.copy() as? CMAttitude
-            print("Attitude frame reset!")
+        if (!hasCalibrated) {
+            if let currentAttitude = motionManager.deviceMotion?.attitude {
+                referenceAttitude = currentAttitude.copy() as? CMAttitude
+                print("Attitude frame reset!")
+            }
+            self.xGyroTotal = 0
+            self.yGyroTotal = 0
+            self.zGyroTotal = 0
+            let message = Message(type: .calibration, vector: nil, state: true)
+            self.mpcManager.send(message: message)
+            hasCalibrated = true
+        } else {
+            let message = Message(type: .touch, vector: nil, state: nil)
+            self.mpcManager.send(message: message)
         }
-        self.xGyroTotal = 0
-        self.yGyroTotal = 0
-        self.zGyroTotal = 0
-        let message = Message(type: .calibration, vector: nil, state: true)
-        self.mpcManager.send(message: message)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {

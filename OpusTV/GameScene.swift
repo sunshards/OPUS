@@ -36,7 +36,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var zAcc : CGFloat = 0.0
 
     
-    
     //MARK: - Analyse the cosllision/contact set up.
     func checkPhysics() {
 
@@ -90,21 +89,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         mpcManager.startService()
         
-//        let cursor = childNode(withName: "cursor") as! SKSpriteNode
-//        cursor.physicsBody?.usesPreciseCollisionDetection = true
+        let chest = InteractiveSprite(texture: SKTexture(imageNamed: "paper"), color: .clear, size: CGSize(width: 100, height: 100)) { sprite in
+//            sprite.run(SKAction.sequence([
+//                SKAction.scale(by: 1.2, duration: 0.2),
+//                SKAction.scale(to: 1.0, duration: 0.2)
+//            ]))
+            print("Chest opened at position: \(sprite.position)")
+        }
+        chest.position = CGPoint(x: 0, y: 0)
+        addChild(chest)
         
-//        checkPhysics()
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-
+//        if let interactive = contact.bodyB.node as? InteractiveSprite {
+//            print("oibò")
+//            interactive.action?(interactive)
+//        }
     }
     
     func didEnd(_ contact: SKPhysicsContact) {
     }
     
+    
+    
     override func update(_ currentTime: TimeInterval) {
-            
         /*let newPoint = CGPoint(x: -zGyro * sensibility,
                               y: xGyro * sensibility) BEFORE ATTITUDE */
         let newPoint = CGPoint(x: -xGyro * sensibility, y: yGyro * sensibility)
@@ -115,6 +124,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         cursor.position = lightDisplayPosition
         spawnLight()
 
+    }
+    
+    func initiateTouch() {
+        let cursor = childNode(withName: "cursor") as! SKSpriteNode
+        guard let cursorBody = cursor.physicsBody else { return }
+        
+        let contacts = cursorBody.allContactedBodies()
+        for sprite in contacts {
+            if let interactive = sprite.node as? InteractiveSprite {
+                interactive.action?(interactive)
+            }
+        }
     }
     
     func spawnLight() {
@@ -163,6 +184,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         lightNode.position = CGPoint.zero
         cursor.position = CGPoint.zero
     }
+    
+    
     
 }
 

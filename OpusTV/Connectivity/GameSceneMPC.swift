@@ -14,7 +14,7 @@ extension GameScene : MPCManagerDelegate {
             self.xGyro = vector.x
             self.yGyro = vector.y
             self.zGyro = vector.z
-            print("x: \(xGyro), y: \(yGyro), z: \(zGyro)")
+            //print("x: \(xGyro), y: \(yGyro), z: \(zGyro)")
         } else if message.type == .accelerometer {
             guard let vector = message.vector else {return}
             self.xAcc = vector.x
@@ -25,6 +25,8 @@ extension GameScene : MPCManagerDelegate {
             if state == true {
                 recalibrate()
             }
+        } else if message.type == .touch {
+            initiateTouch()
         }
     }
     
