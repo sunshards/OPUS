@@ -55,10 +55,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func didEnd(_ contact: SKPhysicsContact) {}
     
+    
     override func update(_ currentTime: TimeInterval) {
-        // prova a spostare nell'mpc handler
-        let newPoint = CGPoint(x: -xGyro * sensibility, y: yGyro * sensibility)
-        light?.smoothMove(to: newPoint)
+        light?.smoothUpdate()
         light?.highlightObjects()
 
     }

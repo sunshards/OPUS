@@ -14,7 +14,8 @@ extension GameScene : MPCManagerDelegate {
             self.xGyro = vector.x
             self.yGyro = vector.y
             self.zGyro = vector.z
-            //print("x: \(xGyro), y: \(yGyro), z: \(zGyro)")
+            light?.position = CGPoint(x: -xGyro * sensibility, y: yGyro * sensibility)
+            
         } else if message.type == .accelerometer {
             guard let vector = message.vector else {return}
             self.xAcc = vector.x

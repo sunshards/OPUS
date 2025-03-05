@@ -23,15 +23,23 @@ class Light {
         self.scene = scene
     }
     
+    // Questa è la posizione che viene impostata ma la luce non viene mossa.
+    // La luce viene mostrata nella posizione displayPosition che viene modificata
+    // nello smoothUpdate
     func setPosition(to point : CGPoint) {
         position = point
-        lightNode.position = position
-        cursor.position = position
     }
     
-    func smoothMove(to point : CGPoint) {
+    // Muove la luce direttamente
+    func move(to point : CGPoint) {
         position = point
-        displayPosition = lerp(p1: displayPosition, p2: point, t: smoothness)
+        displayPosition = point
+        lightNode.position = displayPosition
+        cursor.position = displayPosition
+    }
+    
+    func smoothUpdate() {
+        displayPosition = lerp(p1: displayPosition, p2: position, t: smoothness)
         lightNode.position = displayPosition
         cursor.position = displayPosition
 
