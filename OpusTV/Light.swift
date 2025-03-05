@@ -16,6 +16,9 @@ class Light {
     var displayPosition = CGPoint.zero
     let smoothness : Double = 0.15
     var lastCursorContacts : Int = 0
+    
+    var lightVisible : Bool = true
+    var cursorVisible : Bool = false
 
     init(lightNode : SKLightNode, cursor : SKSpriteNode, scene: SKScene) {
         self.lightNode = lightNode
@@ -42,7 +45,26 @@ class Light {
         displayPosition = lerp(p1: displayPosition, p2: position, t: smoothness)
         lightNode.position = displayPosition
         cursor.position = displayPosition
-
+    }
+    
+    func hideLight() {
+        lightNode.isEnabled = false
+        lightVisible = false
+    }
+    
+    func showLight() {
+        lightNode.isEnabled = true
+        lightVisible = true
+    }
+    
+    func hideCursor() {
+        cursor.alpha = 0
+        cursorVisible = false
+    }
+    
+    func showCursor() {
+        cursor.alpha = 1
+        cursorVisible = true
     }
     
     func highlightObjects() {

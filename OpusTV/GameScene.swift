@@ -7,6 +7,21 @@
 
 import SpriteKit
 
+enum minigameState {
+    case hidden
+    case cauldron
+    case insect
+}
+
+enum sceneState {
+    case room
+    case kitchen
+    case library
+    case laboratory
+    case minigame
+    case test
+}
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let mpcManager: MPCManager = MPCManager.shared
@@ -28,18 +43,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var yAcc : CGFloat = 0.0
     var zAcc : CGFloat = 0.0
 
-    var displayedRoom : Int = 0
+    var gameState : sceneState = .room
+    var minigame : minigameState = .hidden
     
     // START OF THE GAME
     override func didMove(to view: SKView) {
-        mpcManager.delegate = self
         physicsWorld.contactDelegate = self
-        
-        mpcManager.startService()
-        
         let lightNode = childNode(withName: "torch") as! SKLightNode
         let cursor = childNode(withName: "cursor") as! SKSpriteNode
         light = Light(lightNode: lightNode, cursor: cursor, scene: self)
+        
+        mpcManager.delegate = self
+        mpcManager.startService()
+        
+
         
 //        let chest = InteractiveSprite(texture: SKTexture(imageNamed: "paper"), color: .clear, size: CGSize(width: 100, height: 100)) { sprite in
 ////            sprite.run(SKAction.sequence([
@@ -59,27 +76,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         light?.smoothUpdate()
-        light?.highlightObjects()
-
+        
+        if !(gameState == .minigame) {
+            light?.highlightObjects()
+        }
     }
     
     func switchScene() {
         let sala = childNode(withName: "sala")
         let room = childNode(withName: "test")
         
-        if displayedRoom == 0 {
+        if gameState == .room {
             sala?.position = CGPoint(x:0, y:0)
             room?.position = CGPoint(x:3000, y:3000)
-        } else if displayedRoom == 1 {
+        } else if gameState == .test {
             sala?.position = CGPoint(x:3000, y:3000)
             room?.position = CGPoint(x:0, y:0)
         }
         
+        if gameState == .test { gameState = .room } else { gameState = .test }
+        
     }
     
     func phoneTouch() {
-        if displayedRoom == 0 { displayedRoom = 1 } else { displayedRoom = 0 }
-        switchScene()
         let cursor = childNode(withName: "cursor") as! SKSpriteNode
         guard let cursorBody = cursor.physicsBody else { return }
         
