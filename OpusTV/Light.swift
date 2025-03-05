@@ -10,12 +10,69 @@ import SpriteKit
 class Light {
     let lightNode : SKLightNode
     let cursor : SKSpriteNode
-    var lightPosition = CGPoint.zero
-    var lightDisplayPosition = CGPoint.zero
-    
-    init(lightNode : SKLightNode, cursor : SKSpriteNode) {
+    var scene : SKScene
+
+    var position = CGPoint.zero
+    var displayPosition = CGPoint.zero
+    let smoothness : Double = 0.15
+    var lastCursorContacts : Int = 0
+
+    init(lightNode : SKLightNode, cursor : SKSpriteNode, scene: SKScene) {
         self.lightNode = lightNode
         self.cursor = cursor
+        self.scene = scene
+    }
+    
+    func setPosition(to point : CGPoint) {
+        position = point
+        lightNode.position = position
+        cursor.position = position
+    }
+    
+    func smoothMove(to point : CGPoint) {
+        position = point
+        displayPosition = lerp(p1: displayPosition, p2: point, t: smoothness)
+        lightNode.position = displayPosition
+        cursor.position = displayPosition
+
+    }
+    
+    func highlightObjects() {
+        guard let cursorBody = cursor.physicsBody else { return }
+        
+        // Tiene un conto del numero di oggetti toccati al momento dal cursore
+        // Se il numero cambia, significa che ci sono luci da togliere o da aggiungere
+        let currentCursorContacts : Int = cursorBody.allContactedBodies().count
+        if currentCursorContacts != lastCursorContacts {
+            if currentCursorContacts == 0 {
+                // Remove all lights
+                for child in scene.children {
+                    if child.name == "objectLight" {
+                        child.removeFromParent()
+                    }
+                }
+            }
+            else {
+                // Spawn lights for object in contact with the cursor
+                for body in cursorBody.allContactedBodies() {
+                    guard let node = body.node as? SKSpriteNode else { continue }
+                    if body.categoryBitMask == 2 { // Categoria degli interagibili
+                        let objectLight = SKSpriteNode(imageNamed: "light")
+                        objectLight.name = "objectLight"
+                        objectLight.position = node.position
+                        objectLight.zPosition = 0 // relativo al padre
+                        objectLight.size = node.size
+                        objectLight.setScale(1.5)
+                        objectLight.color = .yellow
+                        objectLight.alpha = 0.8
+                        scene.addChild(objectLight)
+                    }
+                }
+            }
+        }
+        lastCursorContacts = currentCursorContacts
+        
+        
     }
     
 }
