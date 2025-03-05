@@ -73,9 +73,9 @@ class GameScene: SKScene {
                 return
             }
                         
-            print("Roll: \(motion.attitude.roll)")   // Rotation around x-axis (rad)
-            print("Pitch: \(motion.attitude.pitch)") // Rotation around y-axis (rad)
-            print("Yaw: \(motion.attitude.yaw)")     // Rotation around z-axis (rad)
+//            print("Roll: \(motion.attitude.roll)")   // Rotation around x-axis (rad)
+//            print("Pitch: \(motion.attitude.pitch)") // Rotation around y-axis (rad)
+//            print("Yaw: \(motion.attitude.yaw)")     // Rotation around z-axis (rad)
             
             if let reference = self.referenceAttitude {
                 motion.attitude.multiply(byInverseOf: reference)

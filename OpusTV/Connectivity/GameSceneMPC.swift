@@ -14,6 +14,7 @@ extension GameScene : MPCManagerDelegate {
             self.xGyro = vector.x
             self.yGyro = vector.y
             self.zGyro = vector.z
+            print("x: \(xGyro), y: \(yGyro), z: \(zGyro)")
         } else if message.type == .accelerometer {
             guard let vector = message.vector else {return}
             self.xAcc = vector.x
