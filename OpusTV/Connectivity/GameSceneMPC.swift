@@ -27,7 +27,7 @@ extension GameScene : MPCManagerDelegate {
                 recalibrate()
             }
         } else if message.type == .touch {
-            initiateTouch()
+            phoneTouch()
         }
     }
     

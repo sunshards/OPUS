@@ -28,6 +28,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var yAcc : CGFloat = 0.0
     var zAcc : CGFloat = 0.0
 
+    var displayedRoom : Int = 0
     
     // START OF THE GAME
     override func didMove(to view: SKView) {
@@ -40,15 +41,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let cursor = childNode(withName: "cursor") as! SKSpriteNode
         light = Light(lightNode: lightNode, cursor: cursor, scene: self)
         
-        let chest = InteractiveSprite(texture: SKTexture(imageNamed: "paper"), color: .clear, size: CGSize(width: 100, height: 100)) { sprite in
-//            sprite.run(SKAction.sequence([
-//                SKAction.scale(by: 1.2, duration: 0.2),
-//                SKAction.scale(to: 1.0, duration: 0.2)
-//            ]))
-            print("Chest opened at position: \(sprite.position)")
-        }
-        chest.position = CGPoint(x: 0, y: 0)
-        addChild(chest)
+//        let chest = InteractiveSprite(texture: SKTexture(imageNamed: "paper"), color: .clear, size: CGSize(width: 100, height: 100)) { sprite in
+////            sprite.run(SKAction.sequence([
+////                SKAction.scale(by: 1.2, duration: 0.2),
+////                SKAction.scale(to: 1.0, duration: 0.2)
+////            ]))
+//            print("Chest opened at position: \(sprite.position)")
+//        }
+//        chest.position = CGPoint(x: 0, y: 0)
+//        addChild(chest)
     }
     
     func didBegin(_ contact: SKPhysicsContact) {}
@@ -62,7 +63,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     }
     
-    func initiateTouch() {
+    func switchScene() {
+        let sala = childNode(withName: "sala")
+        let room = childNode(withName: "test")
+        
+        if displayedRoom == 0 {
+            sala?.position = CGPoint(x:0, y:0)
+            room?.position = CGPoint(x:3000, y:3000)
+        } else if displayedRoom == 1 {
+            sala?.position = CGPoint(x:3000, y:3000)
+            room?.position = CGPoint(x:0, y:0)
+        }
+        
+    }
+    
+    func phoneTouch() {
+        if displayedRoom == 0 { displayedRoom = 1 } else { displayedRoom = 0 }
+        switchScene()
         let cursor = childNode(withName: "cursor") as! SKSpriteNode
         guard let cursorBody = cursor.physicsBody else { return }
         
