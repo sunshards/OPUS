@@ -6,6 +6,7 @@
 //
 
 import SpriteKit
+import SwiftUI
 
 enum minigameState {
     case hidden
@@ -43,8 +44,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var yAcc : CGFloat = 0.0
     var zAcc : CGFloat = 0.0
 
-    var i : Int = 0 // usata in switch scene, da rimuovere!
-    
+    var i : Int = 0 //  usata in switch scene, da rimuovere!
     var gameState : sceneState = .room
     var minigame : minigameState = .hidden
     

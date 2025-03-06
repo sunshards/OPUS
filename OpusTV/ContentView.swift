@@ -17,11 +17,17 @@ struct ContentView: View {
     }
     
     var body: some View {
-        SpriteView(scene: scene)
-            .edgesIgnoringSafeArea(.all)
-            .onAppear {
-                UIApplication.shared.isIdleTimerDisabled = true
-            }
+        ZStack(alignment: .bottomLeading) { // Align to the bottom leading corner
+            SpriteView(scene: scene)
+                .edgesIgnoringSafeArea(.all)
+                .onAppear {
+                    UIApplication.shared.isIdleTimerDisabled = true
+                }
+            
+            // Inventory View at the bottom left
+            InventoryView()
+                .padding() // Add some padding to the inventory view
+        }
     }
 }
 
