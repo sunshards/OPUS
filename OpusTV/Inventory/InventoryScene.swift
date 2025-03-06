@@ -38,7 +38,7 @@ class InventoryScene: SKScene {
         inventoryNode.removeAllChildren() // Clear previous items
         
         let itemSpacing: CGFloat = 50.0
-        for (index, item) in inventory.enumerated() {
+        for (index, _) in inventory.enumerated() {
             let itemNode = SKSpriteNode()
             itemNode.position = CGPoint(x: -CGFloat(inventory.count - 1) * itemSpacing + CGFloat(index) * itemSpacing, y: 0)
             itemNode.zPosition = 2

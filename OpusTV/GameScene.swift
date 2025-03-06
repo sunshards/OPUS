@@ -15,12 +15,11 @@ enum minigameState {
 }
 
 enum sceneState {
-    case room
-    case kitchen
-    case library
-    case laboratory
+    case sala
+    case cucina
+    case libreria
+    case laboratorio
     case minigame
-    case test
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
@@ -45,8 +44,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var zAcc : CGFloat = 0.0
 
     var i : Int = 0 //  usata in switch scene, da rimuovere!
-    var gameState : sceneState = .room
+    var gameState : sceneState = .sala
     var minigame : minigameState = .hidden
+    var stanze : [Stanza] = [sala,cucina,laboratorio,libreria]
     
     // START OF THE GAME
     override func didMove(to view: SKView) {
@@ -54,21 +54,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let lightNode = childNode(withName: "torch") as! SKLightNode
         let cursor = childNode(withName: "cursor") as! SKSpriteNode
         light = Light(lightNode: lightNode, cursor: cursor, scene: self)
-        
+         
         mpcManager.delegate = self
         mpcManager.startService()
         
-        let laboratorio = childNode(withName: "laboratorio")
-        let libreria = childNode(withName: "libreria")
-        let sala = childNode(withName: "sala")
-        let cucina = childNode(withName: "cucina")
-        let stanze = [laboratorio, libreria, sala, cucina]
+        let nodoLaboratorio = childNode(withName: "laboratorio")
+        laboratorio.assignNode(node: nodoLaboratorio)
+        let nodoLibreria = childNode(withName: "libreria")
+        libreria.assignNode(node:nodoLibreria)
+        let nodoSala = childNode(withName: "sala")
+        sala.assignNode(node:nodoSala)
+        let nodoCucina = childNode(withName: "cucina")
+        cucina.assignNode(node:nodoCucina)
         
+        let populator = Populator()
+
         for stanza in stanze {
-            stanza?.position = CGPoint.zero
-            stanza?.isHidden = true
+            populator.populate(interactables: stanza.interactives, room: stanza.node!)
+            stanza.node?.position = CGPoint.zero
+            stanza.node?.isHidden = true
         }
-        stanze[0]?.isHidden = false
+        stanze[0].node?.isHidden = false
         
 //        let chest = InteractiveSprite(texture: SKTexture(imageNamed: "paper"), color: .clear, size: CGSize(width: 100, height: 100)) { sprite in
 ////            sprite.run(SKAction.sequence([
@@ -95,26 +101,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func switchScene() {
-        let laboratorio = childNode(withName: "laboratorio")
-        let libreria = childNode(withName: "libreria")
-        let sala = childNode(withName: "sala")
-        let cucina = childNode(withName: "cucina")
-        let stanze = [laboratorio, libreria, sala, cucina]
-        
-        stanze[i]?.isHidden = true
+        stanze[i].node?.isHidden = true
         i = (i+1)%4
-        stanze[i]?.isHidden = false
-        
+        stanze[i].node?.isHidden = false
     }
     
     func phoneTouch() {
-        let cursor = childNode(withName: "cursor") as! SKSpriteNode
-        guard let cursorBody = cursor.physicsBody else { return }
-        switchScene()
-        let contacts = cursorBody.allContactedBodies()
-        for sprite in contacts {
-            if let interactive = sprite.node as? InteractiveSprite {
-                interactive.action?(interactive)
+        //switchScene()
+        if let contacts = light?.cursor.physicsBody?.allContactedBodies() {
+            for sprite in contacts {
+                if let interactive = sprite.node as? InteractiveSprite {
+                    interactive.action?(interactive)
+                }
             }
         }
     }
