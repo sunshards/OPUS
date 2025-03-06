@@ -14,6 +14,12 @@ class HeartRateReader : NSObject, ObservableObject {
     private var workoutBuilder : HKWorkoutBuilder?
     @Published var heartRate : Double?
     
+    var anchor: HKQueryAnchor? = nil
+    var results: HKAnchoredObjectQueryDescriptor<HKQuantitySample>.Result?
+    let heartRateType = HKQuantityType(.heartRate)
+
+
+    
     func requestAuthorization() {
         guard let heartRateType = HKObjectType.quantityType(forIdentifier: .heartRate) else {
             print("Heart Rate Type is unavailable.")
@@ -30,25 +36,41 @@ class HeartRateReader : NSObject, ObservableObject {
     }
     
      func startHeartRateQuery(heartRateType: HKQuantityType) {
-        let query = HKAnchoredObjectQuery(type: heartRateType, predicate: nil, anchor: nil, limit: HKObjectQueryNoLimit) { query, samples, _, _, error in
-            if let error = error {
-                print("Error querying heart rate: \(error.localizedDescription)")
-                return
-            }
-            self.handleHeartRateSamples(samples: samples)
-        }
+         
+         // Create a query descriptor.
+         let anchorDescriptor =
+         HKAnchoredObjectQueryDescriptor(
+             predicates: [.quantitySample(type: heartRateType)],
+             anchor: anchor
+         )
 
-        query.updateHandler = {query, samples, _, _, error in
-            print("test")
-
-            if let error = error {
-                print("Error updating heart rate query: \(error.localizedDescription)")
-                return
-            }
-            self.handleHeartRateSamples(samples: samples)
-        }
-
-        healthStore.execute(query)
+         let updateQueue = anchorDescriptor.results(for: healthStore)
+         let updateTask = Task {
+             for try await update in updateQueue {
+                 // Process the update here.
+                 print(update)
+             }
+         }
+         
+//        let query = HKAnchoredObjectQuery(type: heartRateType, predicate: nil, anchor: nil, limit: HKObjectQueryNoLimit) { query, samples, _, _, error in
+//            if let error = error {
+//                print("Error querying heart rate: \(error.localizedDescription)")
+//                return
+//            }
+//            self.handleHeartRateSamples(samples: samples)
+//        }
+//
+//        query.updateHandler = {query, samples, _, _, error in
+//            print("test")
+//
+//            if let error = error {
+//                print("Error updating heart rate query: \(error.localizedDescription)")
+//                return
+//            }
+//            self.handleHeartRateSamples(samples: samples)
+//        }
+//
+//        healthStore.execute(query)
     }
     
     // MARK: - Handle Heart Rate Data

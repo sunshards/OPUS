@@ -90,11 +90,11 @@ class Light {
                         let objectLight = SKSpriteNode(imageNamed: "light")
                         objectLight.name = "objectLight"
                         objectLight.position = node.position
-                        objectLight.zPosition = 0 // relativo al padre
+                        objectLight.zPosition = -50 // relativo al padre
                         objectLight.size = node.size
-                        objectLight.setScale(1.5)
+                        objectLight.setScale(0.8)
                         objectLight.color = .yellow
-                        objectLight.alpha = 0.8
+                        objectLight.alpha = 0.5
                         scene.addChild(objectLight)
                     }
                 }

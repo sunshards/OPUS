@@ -43,6 +43,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var yAcc : CGFloat = 0.0
     var zAcc : CGFloat = 0.0
 
+    var i : Int = 0 // usata in switch scene, da rimuovere!
+    
     var gameState : sceneState = .room
     var minigame : minigameState = .hidden
     
@@ -56,7 +58,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         mpcManager.delegate = self
         mpcManager.startService()
         
-
+        let laboratorio = childNode(withName: "laboratorio")
+        let libreria = childNode(withName: "libreria")
+        let sala = childNode(withName: "sala")
+        let cucina = childNode(withName: "cucina")
+        let stanze = [laboratorio, libreria, sala, cucina]
+        
+        for stanza in stanze {
+            stanza?.position = CGPoint.zero
+            stanza?.isHidden = true
+        }
+        stanze[0]?.isHidden = false
         
 //        let chest = InteractiveSprite(texture: SKTexture(imageNamed: "paper"), color: .clear, size: CGSize(width: 100, height: 100)) { sprite in
 ////            sprite.run(SKAction.sequence([
@@ -78,30 +90,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         light?.smoothUpdate()
         
         if !(gameState == .minigame) {
-            light?.highlightObjects()
+            //light?.highlightObjects()
         }
     }
     
     func switchScene() {
+        let laboratorio = childNode(withName: "laboratorio")
+        let libreria = childNode(withName: "libreria")
         let sala = childNode(withName: "sala")
-        let room = childNode(withName: "test")
+        let cucina = childNode(withName: "cucina")
+        let stanze = [laboratorio, libreria, sala, cucina]
         
-        if gameState == .room {
-            sala?.position = CGPoint(x:0, y:0)
-            room?.position = CGPoint(x:3000, y:3000)
-        } else if gameState == .test {
-            sala?.position = CGPoint(x:3000, y:3000)
-            room?.position = CGPoint(x:0, y:0)
-        }
-        
-        if gameState == .test { gameState = .room } else { gameState = .test }
+        stanze[i]?.isHidden = true
+        i = (i+1)%4
+        stanze[i]?.isHidden = false
         
     }
     
     func phoneTouch() {
         let cursor = childNode(withName: "cursor") as! SKSpriteNode
         guard let cursorBody = cursor.physicsBody else { return }
-        
+        switchScene()
         let contacts = cursorBody.allContactedBodies()
         for sprite in contacts {
             if let interactive = sprite.node as? InteractiveSprite {
