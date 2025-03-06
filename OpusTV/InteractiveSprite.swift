@@ -22,10 +22,6 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
         self.action = action
         self.name = name
         assignSprite(sprite: sprite)
-        
-        self.physicsBody = SKPhysicsBody(rectangleOf: self.size)
-        initializeBody()
-        self.lightingBitMask = 1
     }
     
     func initializeBody() {
@@ -42,16 +38,26 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
     }
     
     func assignSprite(sprite : SKSpriteNode) {
-        let newTexture = SKTexture(imageNamed: self.name ?? "")
-        self.texture = newTexture
-        self.physicsBody = SKPhysicsBody(texture: newTexture, alphaThreshold: 0.1, size: newTexture.size())
-        initializeBody()
-        self.color = sprite.color
         self.size = sprite.size
-        self.alpha = 1
         self.lightingBitMask = sprite.lightingBitMask
         self.position = sprite.position
         self.zPosition = sprite.zPosition
+
+        // Controlla se la texture è presente negli asset, altrimenti lo sprite è solo un placeholder
+        if let _ = UIImage(named: self.name!) {
+            let newTexture = SKTexture(imageNamed: self.name ?? "")
+            self.texture = newTexture
+            self.physicsBody = SKPhysicsBody(texture: newTexture, alphaThreshold: 0.1, size: newTexture.size())
+            self.lightingBitMask = 1
+            self.color = sprite.color
+            self.alpha = 1
+        } else { // Lo sprite è un placeholder
+            self.color = .clear
+            self.alpha = 0
+            self.lightingBitMask = 0
+            self.physicsBody = SKPhysicsBody(rectangleOf: self.size)
+        }
+        initializeBody()
     }
 
     required init?(coder aDecoder: NSCoder) {

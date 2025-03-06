@@ -6,6 +6,14 @@
 //
 import Foundation
 
+/* TEMPLATE
+ 
+     InteractiveSprite(name: "NOMESPRITE", action: {(self) in
+         
+     })
+ 
+ */
+
 let sala = Stanza(state: .sala, interactives: [
     
     InteractiveSprite(name: "salavasopieno", action: {(self) in
@@ -15,6 +23,10 @@ let sala = Stanza(state: .sala, interactives: [
         DispatchQueue.main.async {
             self.removeFromParent()
         }
+    }),
+    
+    InteractiveSprite(name: "salapendolo", action: {(self) in
+        print("pendolooo")
     })
     
 ])
