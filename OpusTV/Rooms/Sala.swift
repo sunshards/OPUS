@@ -25,6 +25,8 @@ let sala = Stanza(state: .sala,
     
     InteractiveSprite(name: "salavasopieno", action: {(self) in
         self.playSound(soundName: "AperturaHorror")
+        
+        GameScene.shared.inventory.addItem(InventoryItem(name: "fiore"))
 
         // Le rimozioni vanno fatte nel thread principale
         DispatchQueue.main.async {
@@ -33,7 +35,7 @@ let sala = Stanza(state: .sala,
     }),
     
     InteractiveSprite(name: "salaportacucina", action: {(self) in
-        GameScene.shared.selectScene(.cucina)
+        self.scene.selectScene(.cucina)
     }),
     
     InteractiveSprite(name: "salapendolo", action: {(self) in

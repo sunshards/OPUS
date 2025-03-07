@@ -9,5 +9,4 @@ import SpriteKit
 
 struct InventoryItem {
     var name: String
-    
 }

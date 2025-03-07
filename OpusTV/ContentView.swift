@@ -16,23 +16,23 @@ struct ContentView: View {
         return scene!
     }
     
-    var body: some View {
-        // bottomLeading for the inventory
-        ZStack(alignment: .bottomLeading) {
-            SpriteView(scene: scene)
-                .edgesIgnoringSafeArea(.all)
-                .onAppear {
-                    UIApplication.shared.isIdleTimerDisabled = true
-                }
-            
-            InventoryView()
-                .padding()
-        }
+    var inventoryScene : SKScene {
+        let inventoryScene = SKScene(fileNamed:"InventoryScene")
+        return inventoryScene!
     }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+    
+    var body: some View {
+        
+        SpriteView(scene: scene)
+            .edgesIgnoringSafeArea(.all)
+            .onAppear {
+                UIApplication.shared.isIdleTimerDisabled = true
+            }
+    }
+    
+    struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            ContentView()
+        }
     }
 }

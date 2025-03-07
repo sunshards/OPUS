@@ -23,13 +23,13 @@ enum SceneState {
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    
-    static let shared = GameScene() //singleton per riferirsi al controller al di fuori
     let mpcManager: MPCManager = MPCManager.shared
 //    let device : PhoneConnection = PhoneConnection.shared
     
     var width : CGFloat = 1920
     var height : CGFloat = 1080
+    var xInventoryPadding : CGFloat = 80
+    let yInventoryPadding : CGFloat = 80
     
     var light : Light?
     
@@ -40,6 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //    var yAcc : CGFloat = 0.0
 //    var zAcc : CGFloat = 0.0
 
+    let inventory = Inventory(position: .zero)
     private var sceneState : SceneState = .sala
     private var minigame : MinigameState = .hidden
     var stanze : [SceneState : Stanza] = [.sala: sala,.cucina : cucina,.laboratorio : laboratorio,.libreria: libreria]
@@ -71,6 +72,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             stanza.hide()
         }
         selectScene(.sala)
+        
+        inventory.setPosition(point: CGPoint(x: -width/2+xInventoryPadding, y: -height/2+yInventoryPadding))
+        addChild(inventory.node)
+        inventory.addItem(InventoryItem(name: "fiore"))
     }
     
     func didBegin(_ contact: SKPhysicsContact) {}
