@@ -14,13 +14,15 @@ extension GameScene : MPCManagerDelegate {
             self.xGyro = vector.x
             self.yGyro = vector.y
             self.zGyro = vector.z
-            light?.position = CGPoint(x: -xGyro * sensibility, y: yGyro * sensibility)
+            if let light {
+                light.position = CGPoint(x: -xGyro * light.sensibility, y: yGyro * light.sensibility)
+            }
             
         } else if message.type == .accelerometer {
             guard let vector = message.vector else {return}
-            self.xAcc = vector.x
-            self.yAcc = vector.y
-            self.zAcc = vector.z
+//            self.xAcc = vector.x
+//            self.yAcc = vector.y
+//            self.zAcc = vector.z
         } else if message.type == .calibration {
             guard let state = message.state else {return}
             if state == true {

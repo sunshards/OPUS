@@ -14,6 +14,7 @@ class Light {
 
     var position = CGPoint.zero
     var displayPosition = CGPoint.zero
+    let sensibility : CGFloat = 2000
     let smoothness : Double = 0.15
     var lastCursorContacts : Int = 0
     

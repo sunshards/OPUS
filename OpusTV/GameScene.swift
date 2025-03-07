@@ -24,27 +24,24 @@ enum SceneState {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    static let shared = GameScene() //singleton per riferirsi al controller al di fuori
     let mpcManager: MPCManager = MPCManager.shared
 //    let device : PhoneConnection = PhoneConnection.shared
-    var objectSelected : Bool = false
-    
     
     var width : CGFloat = 1920
     var height : CGFloat = 1080
     
     var light : Light?
-    let sensibility : CGFloat = 2000//30
     
-    var xGyro : CGFloat = 0.0
-    var yGyro : CGFloat = 0.0
-    var zGyro : CGFloat = 0.0
-    
-    var xAcc : CGFloat = 0.0
-    var yAcc : CGFloat = 0.0
-    var zAcc : CGFloat = 0.0
+    private var xGyro : CGFloat = 0.0
+    private var yGyro : CGFloat = 0.0
+    private var zGyro : CGFloat = 0.0
+//    var xAcc : CGFloat = 0.0
+//    var yAcc : CGFloat = 0.0
+//    var zAcc : CGFloat = 0.0
 
-    var sceneState : SceneState = .sala
-    var minigame : MinigameState = .hidden
+    private var sceneState : SceneState = .sala
+    private var minigame : MinigameState = .hidden
     var stanze : [SceneState : Stanza] = [.sala: sala,.cucina : cucina,.laboratorio : laboratorio,.libreria: libreria]
     
     // START OF THE GAME
@@ -68,22 +65,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let populator = Populator()
 
-        for (state, stanza) in stanze {
+        for (_, stanza) in stanze {
             populator.populate(interactables: stanza.interactives, room: stanza.node!)
             stanza.node?.position = CGPoint.zero
             stanza.node?.isHidden = true
         }
         selectScene(.sala)
-        
-//        let chest = InteractiveSprite(texture: SKTexture(imageNamed: "paper"), color: .clear, size: CGSize(width: 100, height: 100)) { sprite in
-////            sprite.run(SKAction.sequence([
-////                SKAction.scale(by: 1.2, duration: 0.2),
-////                SKAction.scale(to: 1.0, duration: 0.2)
-////            ]))
-//            print("Chest opened at position: \(sprite.position)")
-//        }
-//        chest.position = CGPoint(x: 0, y: 0)
-//        addChild(chest)
     }
     
     func didBegin(_ contact: SKPhysicsContact) {}
@@ -122,6 +109,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         light?.setPosition(to:CGPoint.zero)
     }
     
+    func playSound(soundName : String) {
+        self.scene?.run(SKAction.playSoundFileNamed(soundName, waitForCompletion: true))
+    }
     
 }
 

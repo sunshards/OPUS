@@ -33,7 +33,11 @@ let sala = Stanza(state: .sala,
     }),
     
     InteractiveSprite(name: "salapendolo", action: {(self) in
-        print("pendolooo")
+        print("pendolo")
+    }),
+    
+    InteractiveSprite(name: "salaportacucina", action: {(self) in
+        GameScene.shared.selectScene(.cucina)
     })
     
 ])

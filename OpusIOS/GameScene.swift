@@ -31,67 +31,33 @@ class GameScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
+        self.size = screenSize
         mpcManager.startService()
         
-        self.size = screenSize
-        
-        if motionManager.isGyroAvailable {
-            motionManager.gyroUpdateInterval = 0.001
-            motionManager.startGyroUpdates(to: OperationQueue.main) { (data, error) in
-                guard let rotation = data?.rotationRate else {return}
-                if abs(rotation.x) > self.gyroBound { self.xGyroTotal += rotation.x }
-                if abs(rotation.y) > self.gyroBound { self.yGyroTotal += rotation.y }
-                if abs(rotation.z) > self.gyroBound { self.zGyroTotal += rotation.z }
-
-                //print(self.xGyroTotal, self.yGyroTotal, self.zGyroTotal)
-                //let gyroVector = Vector3D(x: self.xGyroTotal, y: self.yGyroTotal, z: self.zGyroTotal)
-                //let message = Message(type: .gyroscope, vector : gyroVector)
-                //self.mpcManager.send(message: message)
-            }
-        }
-        
-        if motionManager.isAccelerometerAvailable {
-            motionManager.accelerometerUpdateInterval = 0.001
-            motionManager.startAccelerometerUpdates(to: OperationQueue.main) { (data, error) in
-                guard let acceleration = data?.acceleration else {return}
-                let accVector = Vector3D(x: acceleration.x, y: acceleration.y, z: acceleration.z)
-                //print(accVector)
-                let message = Message(type: .accelerometer, vector : accVector)
-                //self.mpcManager.send(message: message)
-            }
+        if motionManager.isDeviceMotionAvailable {
             
-            
-        }
-        
-        guard motionManager.isDeviceMotionAvailable else {
-                    print("Device motion is not available.")
+            motionManager.deviceMotionUpdateInterval = 0.02 // Update every 0.1 seconds
+            motionManager.startDeviceMotionUpdates(to: .main) {  (motion, error) in
+                guard let motion = motion, error == nil else {
+                    print("Error: \(String(describing: error))")
                     return
                 }
+                //            print("Roll: \(motion.attitude.roll)")   // Rotation around x-axis (rad)
+                //            print("Pitch: \(motion.attitude.pitch)") // Rotation around y-axis (rad)
+                //            print("Yaw: \(motion.attitude.yaw)")     // Rotation around z-axis (rad)
                 
-        motionManager.deviceMotionUpdateInterval = 0.02 // Update every 0.1 seconds
-        motionManager.startDeviceMotionUpdates(to: .main) {  (motion, error) in
-            guard let motion = motion, error == nil else {
-                print("Error: \(String(describing: error))")
-                return
+                if let reference = self.referenceAttitude {
+                    motion.attitude.multiply(byInverseOf: reference)
+                }
+                else {
+                    self.referenceAttitude = motion.attitude
+                    let reference = motion.attitude
+                    motion.attitude.multiply(byInverseOf: reference)
+                }
+                let attitudeVector = Vector3D(x: motion.attitude.yaw, y: motion.attitude.pitch, z: motion.attitude.roll)
+                let message = Message(type: .gyroscope, vector : attitudeVector)
+                self.mpcManager.send(message: message)
             }
-                        
-//            print("Roll: \(motion.attitude.roll)")   // Rotation around x-axis (rad)
-//            print("Pitch: \(motion.attitude.pitch)") // Rotation around y-axis (rad)
-//            print("Yaw: \(motion.attitude.yaw)")     // Rotation around z-axis (rad)
-            
-            if let reference = self.referenceAttitude {
-                motion.attitude.multiply(byInverseOf: reference)
-            }
-            else {
-                self.referenceAttitude = motion.attitude
-                let reference = motion.attitude
-                motion.attitude.multiply(byInverseOf: reference)
-           }
-
-            //print(self.xGyroTotal, self.yGyroTotal, self.zGyroTotal)
-            let attitudeVector = Vector3D(x: motion.attitude.yaw, y: motion.attitude.pitch, z: motion.attitude.roll)
-            let message = Message(type: .gyroscope, vector : attitudeVector)
-            self.mpcManager.send(message: message)
         }
         
     }
