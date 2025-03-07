@@ -8,13 +8,13 @@
 import SpriteKit
 import SwiftUI
 
-enum minigameState {
+enum MinigameState {
     case hidden
     case cauldron
     case insect
 }
 
-enum sceneState {
+enum SceneState {
     case sala
     case cucina
     case libreria
@@ -43,10 +43,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var yAcc : CGFloat = 0.0
     var zAcc : CGFloat = 0.0
 
-    var i : Int = 0 //  usata in switch scene, da rimuovere!
-    var gameState : sceneState = .sala
-    var minigame : minigameState = .hidden
-    var stanze : [Stanza] = [sala,cucina,laboratorio,libreria]
+    var sceneState : SceneState = .sala
+    var minigame : MinigameState = .hidden
+    var stanze : [SceneState : Stanza] = [.sala: sala,.cucina : cucina,.laboratorio : laboratorio,.libreria: libreria]
     
     // START OF THE GAME
     override func didMove(to view: SKView) {
@@ -69,12 +68,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let populator = Populator()
 
-        for stanza in stanze {
+        for (state, stanza) in stanze {
             populator.populate(interactables: stanza.interactives, room: stanza.node!)
             stanza.node?.position = CGPoint.zero
             stanza.node?.isHidden = true
         }
-        stanze[0].node?.isHidden = false
+        selectScene(.sala)
         
 //        let chest = InteractiveSprite(texture: SKTexture(imageNamed: "paper"), color: .clear, size: CGSize(width: 100, height: 100)) { sprite in
 ////            sprite.run(SKAction.sequence([
@@ -95,15 +94,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         light?.smoothUpdate()
         
-        if !(gameState == .minigame) {
+        if !(sceneState == .minigame) {
             //light?.highlightObjects()
         }
     }
     
-    func switchScene() {
-        stanze[i].node?.isHidden = true
-        i = (i+1)%4
-        stanze[i].node?.isHidden = false
+    func selectScene(_ newScene : SceneState) {
+        stanze[sceneState]?.node?.isHidden = true
+        stanze[sceneState]?.stopStounds()
+        stanze[newScene]?.node?.isHidden = false
+        stanze[newScene]?.playSounds()
+        sceneState = newScene
     }
     
     func phoneTouch() {
@@ -111,7 +112,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if let contacts = light?.cursor.physicsBody?.allContactedBodies() {
             for sprite in contacts {
                 if let interactive = sprite.node as? InteractiveSprite {
-                    interactive.action?(interactive)
+                    interactive.run()
                 }
             }
         }

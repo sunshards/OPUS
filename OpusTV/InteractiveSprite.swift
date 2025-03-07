@@ -10,14 +10,13 @@ import SpriteKit
 
 
 class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
-    var action: ((InteractiveSprite) -> Void)?
+    private var action: ((InteractiveSprite) -> Void)?
     static let defaultSpriteNode = SKSpriteNode(color: .clear, size: CGSize(width: 1, height: 1))
-
+    
     
     // Dato uno sprite a schermo, creane la versione interagibile (devi rimuovere lo sprite sottostante)
     // Se non viene dato uno sprite ne viene assegnato uno blank di default, poi bisogna assegnarlo
     init(name: String, sprite : SKSpriteNode = defaultSpriteNode , action: ((InteractiveSprite) -> Void)? = nil) {
-
         super.init(texture:sprite.texture, color:sprite.color, size:sprite.size)
         self.action = action
         self.name = name
@@ -34,7 +33,15 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
         self.physicsBody?.contactTestBitMask = 1
         self.physicsBody?.isDynamic = true
         self.physicsBody?.fieldBitMask = 0
-
+    }
+    
+    // we pass self to the action so that it can control the sprite's properties
+    func run() {
+        self.action?(self)
+    }
+    
+    func playSound(soundName : String) {
+        self.parent?.run(SKAction.playSoundFileNamed(soundName, waitForCompletion: true))
     }
     
     func assignSprite(sprite : SKSpriteNode) {

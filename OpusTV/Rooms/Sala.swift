@@ -5,6 +5,7 @@
 //  Created by Simone Boscaglia on 06/03/25.
 //
 import Foundation
+import SpriteKit
 
 /* TEMPLATE
  
@@ -14,11 +15,17 @@ import Foundation
  
  */
 
-let sala = Stanza(state: .sala, interactives: [
+let sala = Stanza(state: .sala,
+                  
+  sounds : [
+    "OrologioTick2"
+  ],
+  
+  interactives: [
     
     InteractiveSprite(name: "salavasopieno", action: {(self) in
-            
-        print("hi")
+        self.playSound(soundName: "AperturaHorror")
+
         // Le rimozioni vanno fatte nel thread principale
         DispatchQueue.main.async {
             self.removeFromParent()
