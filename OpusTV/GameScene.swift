@@ -33,9 +33,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var light : Light?
     
-    private var xGyro : CGFloat = 0.0
-    private var yGyro : CGFloat = 0.0
-    private var zGyro : CGFloat = 0.0
+    var xGyro : CGFloat = 0.0
+    var yGyro : CGFloat = 0.0
+    var zGyro : CGFloat = 0.0
 //    var xAcc : CGFloat = 0.0
 //    var yAcc : CGFloat = 0.0
 //    var zAcc : CGFloat = 0.0
@@ -66,9 +66,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let populator = Populator()
 
         for (_, stanza) in stanze {
-            populator.populate(interactables: stanza.interactives, room: stanza.node!)
+            populator.populate(interactables: stanza.interactives, room: stanza)
             stanza.node?.position = CGPoint.zero
-            stanza.node?.isHidden = true
+            stanza.hide()
         }
         selectScene(.sala)
     }
@@ -87,18 +87,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func selectScene(_ newScene : SceneState) {
-        stanze[sceneState]?.node?.isHidden = true
-        stanze[sceneState]?.stopStounds()
-        stanze[newScene]?.node?.isHidden = false
-        stanze[newScene]?.playSounds()
+        stanze[sceneState]?.hide()
+        stanze[newScene]?.show()
         sceneState = newScene
     }
     
     func phoneTouch() {
         //switchScene()
-        if let contacts = light?.cursor.physicsBody?.allContactedBodies() {
-            for sprite in contacts {
-                if let interactive = sprite.node as? InteractiveSprite {
+        guard let contacts = light?.cursor.physicsBody?.allContactedBodies() else {return}
+        for sprite in contacts {
+            if let interactive = sprite.node as? InteractiveSprite {
+                if interactive.parent?.isHidden == false {
                     interactive.run()
                 }
             }

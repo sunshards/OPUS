@@ -1,5 +1,5 @@
 //
-//  Laboratorio.swift
+//  Biblioteca.swift
 //  OpusTV
 //
 //  Created by Simone Boscaglia on 06/03/25.
@@ -8,7 +8,7 @@
 import Foundation
 import SpriteKit
 
-let laboratorio = Stanza(state: .laboratorio,
+let libreria = Stanza(state: .libreria,
                     
                     
    sounds : [

@@ -5,6 +5,18 @@
 //  Created by Simone Boscaglia on 06/03/25.
 //
 
-let cucina = Stanza(state: .cucina, sounds : nil, interactives: [
+import Foundation
+import SpriteKit
+
+let cucina = Stanza(state: .cucina,
+                    
+   sounds : [
+  ],
+  
+  interactives: [
+    
+    InteractiveSprite(name: "cucporta", action: {(self) in
+        GameScene.shared.selectScene(.sala)
+    }),
     
 ])
