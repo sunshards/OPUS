@@ -17,7 +17,7 @@ let libreria = Stanza(state: .libreria,
   interactives: [
     
     InteractiveSprite(name: "libporta", action: {(self) in
-        GameScene.shared.selectScene(.sala)
+        sceneManager.selectRoom(.sala)
     }),
     
 ])

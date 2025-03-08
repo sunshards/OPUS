@@ -17,7 +17,7 @@ let laboratorio = Stanza(state: .laboratorio,
   interactives: [
     
     InteractiveSprite(name: "libporta", action: {(self) in
-        GameScene.shared.selectScene(.sala)
+        sceneManager.selectRoom(.sala)
     }),
     
 ])

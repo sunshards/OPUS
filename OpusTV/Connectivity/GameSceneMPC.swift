@@ -14,7 +14,7 @@ extension GameScene : MPCManagerDelegate {
             self.xGyro = vector.x
             self.yGyro = vector.y
             self.zGyro = vector.z
-            if let light {
+            if let light = sceneManager.light {
                 light.position = CGPoint(x: -xGyro * light.sensibility, y: yGyro * light.sensibility)
             }
             

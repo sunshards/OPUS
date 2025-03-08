@@ -16,7 +16,7 @@ let cucina = Stanza(state: .cucina,
   interactives: [
     
     InteractiveSprite(name: "cucporta", action: {(self) in
-        GameScene.shared.selectScene(.sala)
+        sceneManager.selectRoom(.sala)
     }),
     
 ])

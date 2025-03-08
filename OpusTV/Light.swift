@@ -20,7 +20,7 @@ class Light {
     
     var lightVisible : Bool = true
     var cursorVisible : Bool = false
-
+    
     init(lightNode : SKLightNode, cursor : SKSpriteNode, scene: SKScene) {
         self.lightNode = lightNode
         self.cursor = cursor
@@ -68,6 +68,20 @@ class Light {
         cursorVisible = true
     }
     
+    func touch() {
+        var alreadyInteracted : [InteractiveSprite] = []
+        guard let contacts = cursor.physicsBody?.allContactedBodies() else {return}
+        print(contacts)
+        for sprite in contacts {
+            if let interactive = sprite.node as? InteractiveSprite {
+                if interactive.parent?.isHidden == false && !alreadyInteracted.contains(interactive){
+                    interactive.run()
+                    alreadyInteracted.append(interactive)
+                }
+            }
+        }
+    }
+    
     func highlightObjects() {
         guard let cursorBody = cursor.physicsBody else { return }
         
@@ -102,8 +116,6 @@ class Light {
             }
         }
         lastCursorContacts = currentCursorContacts
-        
-        
     }
     
 }

@@ -8,53 +8,27 @@
 import SpriteKit
 import SwiftUI
 
-enum MinigameState {
-    case hidden
-    case cauldron
-    case insect
-}
-
-enum SceneState {
-    case sala
-    case cucina
-    case libreria
-    case laboratorio
-    case minigame
-}
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     let mpcManager: MPCManager = MPCManager.shared
-//    let device : PhoneConnection = PhoneConnection.shared
     
     var width : CGFloat = 1920
     var height : CGFloat = 1080
     var xInventoryPadding : CGFloat = 80
     let yInventoryPadding : CGFloat = 80
-    
-    var light : Light?
-    
+        
     var xGyro : CGFloat = 0.0
     var yGyro : CGFloat = 0.0
     var zGyro : CGFloat = 0.0
-//    var xAcc : CGFloat = 0.0
-//    var yAcc : CGFloat = 0.0
-//    var zAcc : CGFloat = 0.0
-
-    let inventory = Inventory(position: .zero)
-    private var sceneState : SceneState = .sala
-    private var minigame : MinigameState = .hidden
-    var stanze : [SceneState : Stanza] = [.sala: sala,.cucina : cucina,.laboratorio : laboratorio,.libreria: libreria]
-    
+        
     // START OF THE GAME
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
-        let lightNode = childNode(withName: "torch") as! SKLightNode
-        let cursor = childNode(withName: "cursor") as! SKSpriteNode
-        light = Light(lightNode: lightNode, cursor: cursor, scene: self)
-         
+
         mpcManager.delegate = self
         mpcManager.startService()
-        
+        sceneManager.assignScene(scene: scene!)
+
         let nodoLaboratorio = childNode(withName: "laboratorio")
         laboratorio.assignNode(node: nodoLaboratorio)
         let nodoLibreria = childNode(withName: "libreria")
@@ -63,19 +37,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sala.assignNode(node:nodoSala)
         let nodoCucina = childNode(withName: "cucina")
         cucina.assignNode(node:nodoCucina)
+        sceneManager.populate()
         
-        let populator = Populator()
-
-        for (_, stanza) in stanze {
-            populator.populate(interactables: stanza.interactives, room: stanza)
-            stanza.node?.position = CGPoint.zero
-            stanza.hide()
-        }
-        selectScene(.sala)
+        sceneManager.selectRoom(.sala)
         
-        inventory.setPosition(point: CGPoint(x: -width/2+xInventoryPadding, y: -height/2+yInventoryPadding))
-        addChild(inventory.node)
-        inventory.addItem(InventoryItem(name: "fiore"))
+        sceneManager.inventory.setPosition(point: CGPoint(x: -width/2+xInventoryPadding, y: -height/2+yInventoryPadding))
+        addChild(sceneManager.inventory.node)
     }
     
     func didBegin(_ contact: SKPhysicsContact) {}
@@ -84,33 +51,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     override func update(_ currentTime: TimeInterval) {
-        light?.smoothUpdate()
+        sceneManager.light?.smoothUpdate()
         
-        if !(sceneState == .minigame) {
+        if !(sceneManager.sceneState == .minigame) {
             //light?.highlightObjects()
         }
     }
     
-    func selectScene(_ newScene : SceneState) {
-        stanze[sceneState]?.hide()
-        stanze[newScene]?.show()
-        sceneState = newScene
-    }
-    
     func phoneTouch() {
         //switchScene()
-        guard let contacts = light?.cursor.physicsBody?.allContactedBodies() else {return}
-        for sprite in contacts {
-            if let interactive = sprite.node as? InteractiveSprite {
-                if interactive.parent?.isHidden == false {
-                    interactive.run()
-                }
-            }
-        }
+        sceneManager.light?.touch()
+        
     }
     
     func recalibrate() {
-        light?.setPosition(to:CGPoint.zero)
+        sceneManager.light?.setPosition(to:CGPoint.zero)
     }
     
     func playSound(soundName : String) {
