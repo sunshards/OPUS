@@ -13,8 +13,11 @@ class HeartRateMonitor : ObservableObject {
     private var workoutSession: HKWorkoutSession?
     private var workoutBuilder : HKLiveWorkoutBuilder?
     @Published var heartRate : Double?
-    private let status = HKAuthorizationStatus(rawValue: 0)
+    @Published var hasAuthorization = false
     
+    init() {
+            checkAuthorizationStatus()
+        }
     // MARK: - Request Authorization
     func requestAuthorization(/*completion: @escaping (Bool) -> Void*/) {
         guard let heartRateType = HKObjectType.quantityType(forIdentifier: .heartRate) else {
@@ -32,10 +35,15 @@ class HeartRateMonitor : ObservableObject {
 //            completion(success)
         }
     }
-
-    func updateStatus() {
-        status
-    }
+        
+    func checkAuthorizationStatus() -> HKAuthorizationStatus{
+            let heartRateType = HKObjectType.quantityType(forIdentifier: .heartRate)!
+            let status = healthStore.authorizationStatus(for: heartRateType)
+            DispatchQueue.main.async {
+                self.hasAuthorization = (status == .sharingAuthorized)
+            }
+        return status
+        }
     // MARK: - Start Workout and Heart Rate Query
     func startWorkout() {
         guard let heartRateType = HKObjectType.quantityType(forIdentifier: .heartRate) else {
