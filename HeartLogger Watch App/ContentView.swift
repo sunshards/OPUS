@@ -9,10 +9,9 @@ import SwiftUI
 import HealthKit
 import SpriteKit
 
-
-struct NotContentView: View{
-    @ObservedObject private var monitor = HeartRateMonitor()
-    if status != .sharingAuthorized {
+struct NotContentView: View {
+    @ObservedObject var monitor : HeartRateMonitor
+    var body: some View{
         VStack {
             Button(action: {
                 monitor.requestAuthorization()
@@ -28,16 +27,11 @@ struct NotContentView: View{
 }
 
 struct ContentView: View {
-    
-    @ObservedObject private var monitor = HeartRateMonitor()
+    var store = HKHealthStore()
+    @ObservedObject var monitor : HeartRateMonitor
     @State private var animationAmount = 1.0
-    guard let heartRateType = HKObjectType.quantityType(forIdentifier: .heartRate) else {
-        print("Heart Rate Type is unavailable.")
-//            completion(false)
-        return
-    }
+    let heartRateType = HKObjectType.quantityType(forIdentifier: .heartRate)!
     var body: some View {
-    
             VStack {
                 Image(systemName: "heart.fill")
                     .font(.system(size: 25))
@@ -65,8 +59,5 @@ struct ContentView: View {
                 animationAmount = 1.5
                 monitor.startWorkout()
             }
-        }
     }
-#Preview {
-    ContentView()
 }
