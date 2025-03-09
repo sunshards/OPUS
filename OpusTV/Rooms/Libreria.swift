@@ -18,6 +18,6 @@ let libreria = Stanza(state: .libreria,
     
     InteractiveSprite(name: "libporta", action: {(self) in
         sceneManager.selectRoom(.sala)
-    }),
+    })
     
 ])

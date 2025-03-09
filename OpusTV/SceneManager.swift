@@ -19,6 +19,7 @@ enum SceneState {
     case libreria
     case laboratorio
     case minigame
+    case title
 }
 
 // Metto qui tutti gli oggetti a cui devono avere accesso altre classi
@@ -29,7 +30,8 @@ class SceneManager {
     
     var sceneState : SceneState = .sala
     var minigame : MinigameState = .hidden
-    var stanze : [SceneState : Stanza] = [.sala: sala,.cucina : cucina,.laboratorio : laboratorio,.libreria: libreria]
+    var stanze : [SceneState : Stanza] = [.sala: sala,.cucina : cucina,.laboratorio : laboratorio,.libreria: libreria, .title: titolo
+    ]
     
     init() {}
     

@@ -40,7 +40,7 @@ let sala = Stanza(state: .sala,
     
     InteractiveSprite(name: "salaportalibreria", action: {(self) in
         sceneManager.selectRoom(.libreria)
-    }),
+    })
     
     
     

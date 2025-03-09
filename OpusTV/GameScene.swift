@@ -28,9 +28,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         mpcManager.delegate = self
         mpcManager.startService()
         sceneManager.assignScene(scene: scene!)
-
+        
         let nodoLaboratorio = childNode(withName: "laboratorio")
         laboratorio.assignNode(node: nodoLaboratorio)
+        titolo.assignNode(node: childNode(withName: "title"))
         let nodoLibreria = childNode(withName: "libreria")
         libreria.assignNode(node:nodoLibreria)
         let nodoSala = childNode(withName: "sala")
@@ -39,7 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         cucina.assignNode(node:nodoCucina)
         sceneManager.populate()
         
-        sceneManager.selectRoom(.sala)
+        sceneManager.selectRoom(.title)
         
         sceneManager.inventory.setPosition(point: CGPoint(x: -width/2+xInventoryPadding, y: -height/2+yInventoryPadding))
         addChild(sceneManager.inventory.node)

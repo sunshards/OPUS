@@ -13,6 +13,7 @@ class HeartRateMonitor : ObservableObject {
     private var workoutSession: HKWorkoutSession?
     private var workoutBuilder : HKLiveWorkoutBuilder?
     @Published var heartRate : Double?
+    private let status = HKAuthorizationStatus(rawValue: 0)
     
     // MARK: - Request Authorization
     func requestAuthorization(/*completion: @escaping (Bool) -> Void*/) {
@@ -32,6 +33,9 @@ class HeartRateMonitor : ObservableObject {
         }
     }
 
+    func updateStatus() {
+        status
+    }
     // MARK: - Start Workout and Heart Rate Query
     func startWorkout() {
         guard let heartRateType = HKObjectType.quantityType(forIdentifier: .heartRate) else {
