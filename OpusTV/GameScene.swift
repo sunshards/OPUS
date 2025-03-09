@@ -27,40 +27,47 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         mpcManager.delegate = self
         mpcManager.startService()
+        
         sceneManager.assignScene(scene: scene!)
-        
-        let nodoLaboratorio = childNode(withName: "laboratorio")
-        laboratorio.assignNode(node: nodoLaboratorio)
+        laboratorio.assignNode(node: childNode(withName: "laboratorio"))
         titolo.assignNode(node: childNode(withName: "title"))
-        let nodoLibreria = childNode(withName: "libreria")
-        libreria.assignNode(node:nodoLibreria)
-        let nodoSala = childNode(withName: "sala")
-        sala.assignNode(node:nodoSala)
-        let nodoCucina = childNode(withName: "cucina")
-        cucina.assignNode(node:nodoCucina)
+        libreria.assignNode(node:childNode(withName: "libreria"))
+        sala.assignNode(node:childNode(withName: "sala"))
+        cucina.assignNode(node:childNode(withName: "cucina"))
         sceneManager.populate()
-        
-        sceneManager.selectRoom(.title)
         
         sceneManager.inventory.setPosition(point: CGPoint(x: -width/2+xInventoryPadding, y: -height/2+yInventoryPadding))
         addChild(sceneManager.inventory.node)
+        
+        sceneManager.selectRoom(.title)
     }
     
-    func didBegin(_ contact: SKPhysicsContact) {}
+    func didBegin(_ contact: SKPhysicsContact) {
+        if contact.bodyA.node?.name == "cursor" {
+            if let interactive = contact.bodyB.node as? InteractiveSprite {
+                interactive.hoverOn()
+            }
+        }
+    }
     
-    func didEnd(_ contact: SKPhysicsContact) {}
+    func didEnd(_ contact: SKPhysicsContact) {
+        if contact.bodyA.node?.name == "cursor" {
+            if let interactive = contact.bodyB.node as? InteractiveSprite {
+                interactive.hoverOff()
+            }
+        }
+    }
     
     
     override func update(_ currentTime: TimeInterval) {
         sceneManager.light?.smoothUpdate()
         
-        if !(sceneManager.sceneState == .minigame) {
-            //light?.highlightObjects()
-        }
+//        if !(sceneManager.sceneState == .minigame) {
+//            light?.highlightObjects()
+//        }
     }
     
     func phoneTouch() {
-        //switchScene()
         sceneManager.light?.touch()
         
     }

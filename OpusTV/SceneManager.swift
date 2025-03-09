@@ -53,6 +53,7 @@ class SceneManager {
     
     func selectRoom(_ newScene : SceneState) {
         stanze[sceneState]?.hide()
+        stanze[newScene]?.setup()
         stanze[newScene]?.show()
         sceneState = newScene
     }

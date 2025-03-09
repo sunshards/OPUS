@@ -15,7 +15,7 @@ let cucina = Stanza(state: .cucina,
   
   interactives: [
     
-    InteractiveSprite(name: "cucporta", action: {(self) in
+    InteractiveSprite(name: "cucporta", touchAction: {(self) in
         sceneManager.selectRoom(.sala)
     }),
     

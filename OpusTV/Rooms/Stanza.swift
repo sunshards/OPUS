@@ -12,16 +12,22 @@ class Stanza {
     var sounds : [String]?
     var node : SKNode? = nil
     private var audioNodes : [SKAudioNode] = []
+    private var action: ((Stanza) -> Void)?
 
-    init(state: SceneState, sounds: [String]? = nil, interactives: [InteractiveSprite], node: SKNode? = nil) {
+    init(state: SceneState, action: ((Stanza) -> Void)? = nil, sounds: [String]? = nil, interactives: [InteractiveSprite], node: SKNode? = nil) {
         self.state = state
         self.interactives = interactives
+        self.action = action
         self.sounds = sounds
         self.node = node
     }
     
     func assignNode(node : SKNode?) {
         self.node = node
+    }
+    
+    func setup() {
+        self.action?(self)
     }
     
     func playSounds() {

@@ -9,7 +9,7 @@ import SpriteKit
 
 /* TEMPLATE
  
-     InteractiveSprite(name: "NOMESPRITE", action: {(self) in
+     InteractiveSprite(name: "NOMESPRITE", touchAction: {(self) in
          
      })
  
@@ -23,7 +23,7 @@ let sala = Stanza(state: .sala,
   
   interactives: [
     
-    InteractiveSprite(name: "salavasopieno", action: {(self) in
+    InteractiveSprite(name: "salavasopieno", touchAction: {(self) in
         self.playSound(soundName: "AperturaHorror")
         
         sceneManager.inventory.addItem(InventoryItem(name: "fiore"))
@@ -34,11 +34,11 @@ let sala = Stanza(state: .sala,
         }
     }),
     
-    InteractiveSprite(name: "salaportacucina", action: {(self) in
+    InteractiveSprite(name: "salaportacucina", touchAction: {(self) in
         sceneManager.selectRoom(.cucina)
     }),
     
-    InteractiveSprite(name: "salaportalibreria", action: {(self) in
+    InteractiveSprite(name: "salaportalibreria", touchAction: {(self) in
         sceneManager.selectRoom(.libreria)
     })
     

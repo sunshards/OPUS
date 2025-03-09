@@ -10,14 +10,24 @@ import SpriteKit
 
 
 class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
-    private var action: ((InteractiveSprite) -> Void)?
+    private var touchAction: ((InteractiveSprite) -> Void)?
+    private var hoverOnAction: ((InteractiveSprite) -> Void)?
+    private var hoverOffAction: ((InteractiveSprite) -> Void)?
+
+
     static let defaultSpriteNode = SKSpriteNode(color: .clear, size: CGSize(width: 1, height: 1))
     
     // Dato uno sprite a schermo, creane la versione interagibile (devi rimuovere lo sprite sottostante)
     // Se non viene dato uno sprite ne viene assegnato uno blank di default, poi bisogna assegnarlo
-    init(name: String, sprite : SKSpriteNode = defaultSpriteNode , action: ((InteractiveSprite) -> Void)? = nil) {
+    init(name: String,
+         sprite : SKSpriteNode = defaultSpriteNode ,
+         hoverOnAction: ((InteractiveSprite) -> Void)? = nil,
+         hoverOffAction: ((InteractiveSprite) -> Void)? = nil,
+         touchAction: ((InteractiveSprite) -> Void)? = nil) {
         super.init(texture:sprite.texture, color:sprite.color, size:sprite.size)
-        self.action = action
+        self.touchAction = touchAction
+        self.hoverOnAction = hoverOnAction
+        self.hoverOffAction = hoverOffAction
         self.name = name
         assignSprite(sprite: sprite)
     }
@@ -33,8 +43,14 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
     }
     
     // we pass self to the action so that the action can control the sprite's properties
+    func hoverOn() {
+        self.hoverOnAction?(self)
+    }
+    func hoverOff() {
+        self.hoverOffAction?(self)
+    }
     func run() {
-        self.action?(self)
+        self.touchAction?(self)
     }
      
     func playSound(soundName : String) {
