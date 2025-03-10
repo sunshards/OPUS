@@ -7,6 +7,7 @@
 
 import SpriteKit
 import CoreMotion
+import _SpriteKit_SwiftUI
 
 class GameScene: SKScene {
     let mpcManager = MPCManager.shared
@@ -21,6 +22,12 @@ class GameScene: SKScene {
     
     private var referenceAttitude : CMAttitude?
     
+    var calibrate: SKScene {
+        let scene = SKScene(fileNamed: "Calibrazione")
+        scene?.scaleMode = .aspectFill
+        return scene!
+    }
+    
     var screenSize : CGSize {
         var deviceWidth = view?.window?.windowScene?.screen.bounds.width ?? 0
         var deviceHeight = view?.window?.windowScene?.screen.bounds.height ?? 0
@@ -31,7 +38,8 @@ class GameScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
-        self.size = screenSize
+        _ = childNode(withName: "button") as! SKSpriteNode
+        //self.size = screenSize
         mpcManager.startService()
         
         if motionManager.isDeviceMotionAvailable {
@@ -63,6 +71,9 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let button = childNode(withName: "button") as! SKSpriteNode
+        let touchLocation = touches.first!.location(in: self)
+        print("Touch: (\(touchLocation))")
         if (!hasCalibrated) {
             if let currentAttitude = motionManager.deviceMotion?.attitude {
                 referenceAttitude = currentAttitude.copy() as? CMAttitude
@@ -75,6 +86,10 @@ class GameScene: SKScene {
             self.mpcManager.send(message: message)
             hasCalibrated = true
         } else {
+            if(button.contains(touchLocation)){
+                print("toccato")
+                scene?.view?.presentScene(calibrate)
+            }
             let message = Message(type: .touch, vector: nil, state: nil)
             self.mpcManager.send(message: message)
         }
