@@ -69,7 +69,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         sceneManager.light?.smoothUpdate()
         let conn = childNode(withName: "title")?.childNode(withName: "connection") as? SKSpriteNode
-        print("\(mpcManager.iPhoneConnected)")
         if (mpcManager.iPhoneConnected){
             conn?.color = .green
         }else {
