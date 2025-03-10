@@ -11,6 +11,7 @@ import SpriteKit
 let cucina = Stanza(state: .cucina,
                     
    sounds : [
+    "fuoco"
   ],
   
   interactives: [
@@ -24,5 +25,9 @@ let cucina = Stanza(state: .cucina,
                           self.playSound(soundName: "Mestolo2")
                       }),
     
-
+    InteractiveSprite(name: "cucamino",
+                      touchAction: {(self) in
+                          self.playSound(soundName: "Scream")
+                      }),
+    
 ])
