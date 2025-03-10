@@ -44,3 +44,11 @@ extension SKPhysicsBody
         return body
     }
 }
+
+func normalize(vector : CGPoint) -> CGPoint {
+    var newVector : CGPoint = .zero
+    let norm = sqrt((vector.x * vector.x) + (vector.y * vector.y))
+    newVector.x = vector.x / CGFloat(norm)
+    newVector.y = vector.y / CGFloat(norm)
+    return newVector
+}

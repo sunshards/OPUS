@@ -13,12 +13,10 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
     private var hoverOnAction: ((InteractiveSprite) -> Void)?
     private var hoverOffAction: ((InteractiveSprite) -> Void)?
     var text : String?
-    
+
     var room : SKNode? {
         return self.parent
     }
-    
-    
     static let defaultSpriteNode = SKSpriteNode(color: .clear, size: CGSize(width: 1, height: 1))
     
     // Dato uno sprite a schermo, creane la versione interagibile (devi rimuovere lo sprite sottostante)
@@ -35,7 +33,6 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
         self.hoverOnAction = hoverOnAction
         self.hoverOffAction = hoverOffAction
         self.name = name
-        assignSprite(sprite: sprite)
     }
     
     // we pass self to the action so that the action can control the sprite's properties
@@ -60,7 +57,7 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
         self.zPosition = sprite.zPosition
         self.physicsBody = sprite.physicsBody?.copy() as? SKPhysicsBody
         self.lightingBitMask = sprite.lightingBitMask
-        
+        self.isPaused = false
         // Controlla se la texture è presente negli asset, altrimenti lo sprite è solo un placeholder
         if let _ = UIImage(named: self.name!) {
             let newTexture = SKTexture(imageNamed: self.name ?? "")

@@ -7,7 +7,7 @@
 
 import MultipeerConnectivity
 
-extension GameScene : MPCManagerDelegate {
+extension SceneManager : MPCManagerDelegate {
     func mpcManager(_ manager: MPCManager, didReceive message: Message, from peer: MCPeerID) {
         if message.type == .gyroscope {
             guard let vector = message.vector else {return}
@@ -15,7 +15,7 @@ extension GameScene : MPCManagerDelegate {
             self.yGyro = vector.y
             self.zGyro = vector.z
             if let light = sceneManager.light {
-                light.position = CGPoint(x: -xGyro * light.sensibility, y: yGyro * light.sensibility)
+                light.move(to: CGPoint(x: -xGyro * light.sensibility, y: yGyro * light.sensibility))
             }
             
         } else if message.type == .accelerometer {
