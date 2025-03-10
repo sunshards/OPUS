@@ -6,9 +6,12 @@
 //
 
 import SpriteKit
+import SwiftUI
 
 // Metto qui tutti gli oggetti a cui devono avere accesso altre classi
 class SceneManager {
+    @ObservedObject var mpcManager: MPCManager = MPCManager.shared
+
     var scene : SKScene?
     var light : Light?
     let inventory = Inventory(position: .zero)
@@ -18,12 +21,20 @@ class SceneManager {
     var minigame : MinigameState = .hidden
     var stanze : [SceneState : Stanza] = [.sala: sala,.cucina : cucina,.laboratorio : laboratorio,.libreria: libreria, .title: titolo]
     
+    var xGyro : CGFloat = 0.0
+    var yGyro : CGFloat = 0.0
+    var zGyro : CGFloat = 0.0
+    
+    init() {
+        mpcManager.delegate = self
+        mpcManager.startService()
+    }
     
     func assignScene(scene : SKScene) {
         self.scene = scene
         let lightNode = scene.childNode(withName: "torch") as! SKLightNode
         let cursor = scene.childNode(withName: "cursor") as! SKSpriteNode
-        light = Light(lightNode: lightNode, cursor: cursor, scene: scene)
+        light = Light(lightNode: lightNode, cursor: cursor)
     }
     
     func initializePopulator() {
@@ -46,6 +57,16 @@ class SceneManager {
         stanze[newScene]?.show()
         sceneState = newScene
     }
+    
+    func phoneTouch() {
+        light?.touch()
+        
+    }
+    
+    func recalibrate() {
+        light?.move(to:CGPoint.zero)
+    }
+    
 }
 
 let sceneManager = SceneManager()

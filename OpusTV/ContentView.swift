@@ -16,11 +16,6 @@ struct ContentView: View {
         return scene!
     }
     
-    var inventoryScene : SKScene {
-        let inventoryScene = SKScene(fileNamed:"InventoryScene")
-        return inventoryScene!
-    }
-    
     var body: some View {
         
         SpriteView(scene: scene)
