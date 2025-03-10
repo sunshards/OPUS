@@ -34,7 +34,7 @@ extension GameScene : MPCManagerDelegate {
     }
     
     func mpcManager(_ manager: MPCManager, userIsConnected user: String) {
-        
+        mpcManager.iPhoneConnected = true
     }
     
     

@@ -9,9 +9,9 @@ import SpriteKit
 import SwiftUI
 
 
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    let mpcManager: MPCManager = MPCManager.shared
-    
+    @ObservedObject var mpcManager: MPCManager = MPCManager.shared
     var width : CGFloat = 1920
     var height : CGFloat = 1080
     var xInventoryPadding : CGFloat = 80
@@ -20,14 +20,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var xGyro : CGFloat = 0.0
     var yGyro : CGFloat = 0.0
     var zGyro : CGFloat = 0.0
-        
     // START OF THE GAME
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
 
         mpcManager.delegate = self
         mpcManager.startService()
-        
         sceneManager.assignScene(scene: scene!)
         laboratorio.assignNode(node: childNode(withName: "laboratorio"))
         titolo.assignNode(node: childNode(withName: "title"))
@@ -70,6 +68,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         sceneManager.light?.smoothUpdate()
+        let conn = childNode(withName: "title")?.childNode(withName: "connection") as? SKSpriteNode
+        print("\(mpcManager.iPhoneConnected)")
+        if (mpcManager.iPhoneConnected){
+            conn?.color = .green
+        }else {
+            conn?.color = .red
+        }
+        
+//        if !(sceneManager.sceneState == .minigame) {
+//            light?.highlightObjects()
+//        }
     }
     
     func phoneTouch() {

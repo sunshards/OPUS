@@ -41,7 +41,7 @@ class Stanza {
         }
     }
     
-    func stopStounds() {
+    func stopSounds() {
         for audio in audioNodes {
             audio.run(SKAction.stop())
         }
@@ -54,7 +54,7 @@ class Stanza {
     
     func hide() {
         self.node?.isHidden = true
-        self.stopStounds()
+        self.stopSounds()
     }
     
     func show() {
