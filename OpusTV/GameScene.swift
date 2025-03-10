@@ -27,6 +27,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         mpcManager.delegate = self
         mpcManager.startService()
         sceneManager.assignScene(scene: scene!)
+        sceneManager.initializePopulator()
+
         laboratorio.assignNode(node: childNode(withName: "laboratorio"))
         titolo.assignNode(node: childNode(withName: "title"))
         libreria.assignNode(node:childNode(withName: "libreria"))
@@ -36,6 +38,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         sceneManager.inventory.setPosition(point: CGPoint(x: -width/2+xInventoryPadding, y: -height/2+yInventoryPadding))
         addChild(sceneManager.inventory.node)
+        
+        //let a = childNode(withName: "mostro") as! SKSpriteNode
+        let mostro = Mostro(sprite: InteractiveSprite(name: "mostro", hoverOnAction: {(self) in
+            print("ciao")
+        }))
+        sceneManager.populator!.swap(interactable: mostro.sprite)
+        let sp = mostro.sprite as SKSpriteNode
+        sp.run(SKAction.scale(by: 1.5, duration: 3))
+        //mostro.startIdleAnimation()
         
         sceneManager.selectRoom(.title)
     }
@@ -55,7 +66,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didEnd(_ contact: SKPhysicsContact) {
         if contact.bodyA.node?.name == "cursor" {
             if let interactive = contact.bodyB.node as? InteractiveSprite {
-                print(interactive.name!)
                 interactive.hoverOff()
             }
         } else if contact.bodyB.node?.name == "cursor" {

@@ -11,6 +11,12 @@ import SpriteKit
 // Populates the room with Interactable Sprites
 class Populator {
     
+    let scene : SKScene
+    
+    init(scene: SKScene) {
+        self.scene = scene
+    }
+    
     // Rimuove gli sprite normali e li sostituisce con quelli con cui si può interagire
     func populate(interactables: [InteractiveSprite], room: Stanza) {
         for interactable in interactables {
@@ -21,6 +27,26 @@ class Populator {
                 interactable.assignSprite(sprite: child)
                 child.removeFromParent()
                 node.addChild(interactable)
+            }
+        }
+    }
+    
+    func swap(interactable : InteractiveSprite, parent : SKNode? = nil) {
+        guard let name = interactable.name else {print("Interactable not swapped succesfully"); return}
+        if let parent {
+            let child = parent.childNode(withName: name)
+            if let child = child as? SKSpriteNode {
+                interactable.assignSprite(sprite: child)
+                child.removeFromParent()
+                parent.addChild(interactable)
+            }
+        } else {
+            let child = scene.childNode(withName: name)
+            if let child = child as? SKSpriteNode {
+                interactable.assignSprite(sprite: child)
+                child.removeFromParent()
+                scene.addChild(interactable)
+                print(interactable)
             }
         }
         

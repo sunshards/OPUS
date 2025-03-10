@@ -12,13 +12,12 @@ class SceneManager {
     var scene : SKScene?
     var light : Light?
     let inventory = Inventory(position: .zero)
+    var populator : Populator? = nil
     
     var sceneState : SceneState = .sala
     var minigame : MinigameState = .hidden
-    var stanze : [SceneState : Stanza] = [.sala: sala,.cucina : cucina,.laboratorio : laboratorio,.libreria: libreria, .title: titolo
-    ]
+    var stanze : [SceneState : Stanza] = [.sala: sala,.cucina : cucina,.laboratorio : laboratorio,.libreria: libreria, .title: titolo]
     
-    init() {}
     
     func assignScene(scene : SKScene) {
         self.scene = scene
@@ -27,8 +26,13 @@ class SceneManager {
         light = Light(lightNode: lightNode, cursor: cursor, scene: scene)
     }
     
+    func initializePopulator() {
+        guard self.scene != nil else {print("Trying to initialize populator but scene not assigned"); return}
+        self.populator = Populator(scene: self.scene!)
+    }
+    
     func populate() {
-        let populator = Populator()
+        guard let populator = self.populator else {print("Trying to populate but populator not assigned"); return}
         for (_, stanza) in stanze {
             populator.populate(interactables: stanza.interactives, room: stanza)
             stanza.node?.position = CGPoint.zero
