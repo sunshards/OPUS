@@ -19,4 +19,10 @@ let cucina = Stanza(state: .cucina,
         sceneManager.selectRoom(.sala)
     }),
     
+    InteractiveSprite(name: "cucmestolopieno",
+                      touchAction: {(self) in
+                          self.playSound(soundName: "Mestolo2")
+                      }),
+    
+
 ])
