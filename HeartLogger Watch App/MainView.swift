@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct MainView: View {
-    @StateObject private var monitor = HeartRateMonitor()
+    @ObservedObject private var monitor = HeartRateMonitor()
 
     var body: some View {
-        if monitor.checkAuthorizationStatus() == .sharingAuthorized {
+        if monitor.hasAuthorization == true {
             ContentView(monitor: monitor)
         } else {
-            NotContentView(monitor: monitor)
+            AuthorizationView(monitor: monitor)
         }
     }
 }
