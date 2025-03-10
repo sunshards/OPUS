@@ -23,7 +23,8 @@ let sala = Stanza(state: .sala,
   
   interactives: [
     
-    InteractiveSprite(name: "salavasopieno", touchAction: {(self) in
+    InteractiveSprite(name: "salavasopieno",
+      touchAction: {(self) in
         self.playSound(soundName: "AperturaHorror")
         
         sceneManager.inventory.addItem(InventoryItem(name: "fiore"))
@@ -40,8 +41,22 @@ let sala = Stanza(state: .sala,
     
     InteractiveSprite(name: "salaportalibreria", touchAction: {(self) in
         sceneManager.selectRoom(.libreria)
-    })
+    }),
     
+    InteractiveSprite(name: "salasedia",
+                      touchAction: {(self) in
+                          self.playSound(soundName: "SediaAperturaLegno")
+                      }),
+    
+    InteractiveSprite(name: "salatazza",
+                      touchAction: {(self) in
+                          self.playSound(soundName: "Ceramica")
+                      }),
+    
+    InteractiveSprite(name: "salavasopieno",
+                      touchAction: {(self) in
+                          self.playSound(soundName: "")
+                      }),
     
     
 ])

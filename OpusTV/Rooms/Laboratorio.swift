@@ -20,4 +20,17 @@ let laboratorio = Stanza(state: .laboratorio,
         sceneManager.selectRoom(.sala)
     }),
     
+    InteractiveSprite(name: "labarile",
+                      touchAction: {(self) in
+                          self.playSound(soundName: "Legno")
+                      }),
+    
+//https://youtu.be/f8mL0_4GeV0?si=czQ1LuuEcC3cZZqO
+    
+    InteractiveSprite(name: "labmannaia",
+                      touchAction: {(self) in
+                          self.playSound(soundName: "Metal")
+                      }),
+    
+    
 ])

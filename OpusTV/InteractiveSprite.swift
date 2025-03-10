@@ -12,6 +12,7 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
     private var touchAction: ((InteractiveSprite) -> Void)?
     private var hoverOnAction: ((InteractiveSprite) -> Void)?
     private var hoverOffAction: ((InteractiveSprite) -> Void)?
+    var text : String?
     
     var room : SKNode? {
         return self.parent
@@ -23,10 +24,12 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
     // Dato uno sprite a schermo, creane la versione interagibile (devi rimuovere lo sprite sottostante)
     // Se non viene dato uno sprite ne viene assegnato uno blank di default, poi bisogna assegnarlo
     init(name: String,
+         text : String? = nil,
          sprite : SKSpriteNode = defaultSpriteNode ,
          hoverOnAction: ((InteractiveSprite) -> Void)? = nil,
          hoverOffAction: ((InteractiveSprite) -> Void)? = nil,
          touchAction: ((InteractiveSprite) -> Void)? = nil) {
+        self.text = text
         super.init(texture:sprite.texture, color:sprite.color, size:sprite.size)
         self.touchAction = touchAction
         self.hoverOnAction = hoverOnAction

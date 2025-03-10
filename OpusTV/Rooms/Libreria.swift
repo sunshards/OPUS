@@ -18,6 +18,10 @@ let libreria = Stanza(state: .libreria,
     
     InteractiveSprite(name: "libporta", touchAction: {(self) in
         sceneManager.selectRoom(.sala)
-    })
+    }),
     
+    InteractiveSprite(name: "libsedia",
+                      touchAction: {(self) in
+                          self.playSound(soundName: "Sedia2")
+                      }),
 ])
