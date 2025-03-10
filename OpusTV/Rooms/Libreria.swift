@@ -24,4 +24,12 @@ let libreria = Stanza(state: .libreria,
                       touchAction: {(self) in
                           self.playSound(soundName: "Sedia2")
                       }),
+    InteractiveSprite(name: "libquadro",
+                      touchAction: {(self) in
+                          self.run(SKAction.move(to: CGPoint(x: 0, y: 0), duration: 1))
+                      }),
+    InteractiveSprite(name: "libscale",
+                      touchAction: {(self) in
+                          sceneManager.selectRoom(.laboratorio)
+                      }),
 ])
