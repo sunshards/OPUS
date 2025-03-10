@@ -32,5 +32,9 @@ let laboratorio = Stanza(state: .laboratorio,
                           self.playSound(soundName: "Metal")
                       }),
     
+    InteractiveSprite(name: "labcadavere",
+                      touchAction: {(self) in
+                          self.playSound(soundName: "EasterEgg")
+                      }),
     
 ])
