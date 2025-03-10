@@ -13,7 +13,7 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
     private var hoverOnAction: ((InteractiveSprite) -> Void)?
     private var hoverOffAction: ((InteractiveSprite) -> Void)?
     var text : String?
-    
+
     var room : SKNode? {
         return self.parent
     }
