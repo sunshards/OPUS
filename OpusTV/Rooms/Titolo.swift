@@ -37,26 +37,26 @@ let titolo = Stanza(
     interactives: [
         InteractiveSprite(name: "playoff",
               hoverOnAction: {(self) in
-                  self.parent?.childNode(withName:"playon")?.isHidden = false
-                  self.parent?.childNode(withName:"playoff")?.isHidden = true
+                  self.room?.childNode(withName:"playon")?.isHidden = false
+                  self.room?.childNode(withName:"playoff")?.isHidden = true
               }),
         InteractiveSprite(name: "playon",
               hoverOffAction: {(self) in
-                  self.parent?.childNode(withName:"playoff")?.isHidden = false
-                  self.parent?.childNode(withName:"playon")?.isHidden = true
+                  self.room?.childNode(withName:"playoff")?.isHidden = false
+                  self.room?.childNode(withName:"playon")?.isHidden = true
               },
               touchAction: {(self) in
                   sceneManager.selectRoom(.sala)
           }),
         InteractiveSprite(name: "creditsoff",
               hoverOnAction: {(self) in
-                  self.parent?.childNode(withName:"creditson")?.isHidden = false
-                  self.parent?.childNode(withName:"creditsoff")?.isHidden = true
+                  self.room?.childNode(withName:"creditson")?.isHidden = false
+                  self.room?.childNode(withName:"creditsoff")?.isHidden = true
               }),
         InteractiveSprite(name: "creditson",
               hoverOffAction: {(self) in
-                  self.parent?.childNode(withName:"creditsoff")?.isHidden = false
-                  self.parent?.childNode(withName:"creditson")?.isHidden = true
+                  self.room?.childNode(withName:"creditsoff")?.isHidden = false
+                  self.room?.childNode(withName:"creditson")?.isHidden = true
               },
               touchAction: {(self) in
                   //sceneManager.selectRoom(.sala)

@@ -68,14 +68,16 @@ class Light {
         cursorVisible = true
     }
     
+    // fa partire l'azione del primo sprite interattivo non nascosto che trova
     func touch() {
-        var alreadyInteracted : [InteractiveSprite] = []
+        //var alreadyInteracted : [InteractiveSprite] = []
         guard let contacts = cursor.physicsBody?.allContactedBodies() else {return}
         for sprite in contacts {
             if let interactive = sprite.node as? InteractiveSprite {
-                if interactive.parent?.isHidden == false && !alreadyInteracted.contains(interactive){
+                if interactive.parent?.isHidden == false {//&& !alreadyInteracted.contains(interactive){
                     interactive.run()
-                    alreadyInteracted.append(interactive)
+                    return
+                    //alreadyInteracted.append(interactive)
                 }
             }
         }

@@ -7,21 +7,6 @@
 
 import SpriteKit
 
-enum MinigameState {
-    case hidden
-    case cauldron
-    case insect
-}
-
-enum SceneState {
-    case sala
-    case cucina
-    case libreria
-    case laboratorio
-    case minigame
-    case title
-}
-
 // Metto qui tutti gli oggetti a cui devono avere accesso altre classi
 class SceneManager {
     var scene : SKScene?
@@ -57,8 +42,6 @@ class SceneManager {
         stanze[newScene]?.show()
         sceneState = newScene
     }
-    
-    
 }
 
 let sceneManager = SceneManager()

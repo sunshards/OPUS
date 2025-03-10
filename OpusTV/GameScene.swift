@@ -47,12 +47,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if let interactive = contact.bodyB.node as? InteractiveSprite {
                 interactive.hoverOn()
             }
+        } else if contact.bodyB.node?.name == "cursor" {
+            if let interactive = contact.bodyA.node as? InteractiveSprite {
+                interactive.hoverOn()
+            }
         }
     }
     
     func didEnd(_ contact: SKPhysicsContact) {
         if contact.bodyA.node?.name == "cursor" {
             if let interactive = contact.bodyB.node as? InteractiveSprite {
+                print(interactive.name!)
+                interactive.hoverOff()
+            }
+        } else if contact.bodyB.node?.name == "cursor" {
+            if let interactive = contact.bodyA.node as? InteractiveSprite {
                 interactive.hoverOff()
             }
         }
@@ -61,10 +70,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         sceneManager.light?.smoothUpdate()
-        
-//        if !(sceneManager.sceneState == .minigame) {
-//            light?.highlightObjects()
-//        }
     }
     
     func phoneTouch() {

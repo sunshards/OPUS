@@ -7,11 +7,6 @@
 
 import SpriteKit
 
-enum axis {
-    case x
-    case y
-}
-
 func lerp(p1 : CGPoint, p2 : CGPoint, t : Double) -> CGPoint {
     let newPoint = CGPoint(x: p1.x + CGFloat(t) * (p2.x - p1.x),  y: p1.y + CGFloat(t) * (p2.y - p1.y))
     return newPoint
@@ -31,4 +26,21 @@ func scaleProportionally(sprite : SKSpriteNode, axis: axis, value : CGFloat) {
         sprite.size = CGSize(width: texture.size().width * percent, height: value)
     }
     
+}
+
+extension SKPhysicsBody
+{
+    override open func copy() -> Any {
+        guard let body = super.copy() as? SKPhysicsBody else {fatalError("SKPhysicsBody.copy() failed")}
+        body.affectedByGravity = affectedByGravity
+        body.allowsRotation = allowsRotation
+        body.isDynamic = isDynamic
+        body.mass = mass
+        body.density = density
+        body.friction = friction
+        body.restitution = restitution
+        body.linearDamping = linearDamping
+        body.angularDamping = angularDamping
+        return body
+    }
 }
