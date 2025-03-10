@@ -75,6 +75,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }else {
             conn?.color = .red
         }
+        /*let conn = childNode(withName: "connection")
+        if ((mpcManager.delegate?.mpcManager(mpcManager, userIsConnected: mpcManager.peerID.displayName)) != nil){
+            conn?.inputView?.tintColor = .green
+        }
+        else
+        {
+            conn?.inputView?.tintColor = .red
+        }*/
         
 //        if !(sceneManager.sceneState == .minigame) {
 //            light?.highlightObjects()
