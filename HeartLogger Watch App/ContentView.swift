@@ -9,22 +9,7 @@ import SwiftUI
 import HealthKit
 import SpriteKit
 
-struct NotContentView: View {
-    @ObservedObject var monitor : HeartRateMonitor
-    var body: some View{
-        VStack {
-            Button(action: {
-                monitor.requestAuthorization()
-            }) {
-                Label {
-                    Text("Allow access to heart rate")
-                } icon: {
-                    Rectangle().cornerRadius(10).frame(width: 20, height: 20)
-                }
-            }
-        }
-    }
-}
+
 
 struct ContentView: View {
     var store = HKHealthStore()
@@ -55,9 +40,10 @@ struct ContentView: View {
                 }
             }
             .padding()
-            .onAppear() {
+            .onAppear() {           
                 animationAmount = 1.5
                 monitor.startWorkout()
             }
+        }
+        
     }
-}

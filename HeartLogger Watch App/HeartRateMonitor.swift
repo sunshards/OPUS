@@ -32,7 +32,7 @@ class HeartRateMonitor : ObservableObject {
             if let error = error {
                 print("Authorization failed: \(error.localizedDescription)")
             }
-//            completion(success)
+            self.hasAuthorization = true
         }
     }
         
