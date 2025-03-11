@@ -26,7 +26,8 @@ let libreria = Stanza(state: .libreria,
                       }),
     InteractiveSprite(name: "libquadro",
                       touchAction: {(self) in
-                          self.run(SKAction.move(to: CGPoint(x: 0, y: 0), duration: 1))
+                          /*self.run(SKAction.move(to: CGPoint(x: 0, y: 0), duration: 1)*/
+                          sceneManager.selectRoom(.laboratorio)
                       }),
     InteractiveSprite(name: "libscale",
                       touchAction: {(self) in
