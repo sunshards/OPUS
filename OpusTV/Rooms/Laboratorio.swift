@@ -42,4 +42,8 @@ let laboratorio = Stanza(state: .laboratorio,
                           self.playSound(soundName: "EasterEgg")
                       }),
     
+    InteractiveSprite(name: "labscale", touchAction: {(self) in
+        sceneManager.selectRoom(.libreria)
+    }),
+    
 ])
