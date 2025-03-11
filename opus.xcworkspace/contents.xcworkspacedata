@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:HeartLogger.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:OpusTV.xcodeproj">
    </FileRef>
    <FileRef

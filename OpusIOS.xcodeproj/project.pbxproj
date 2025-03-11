@@ -6,8 +6,37 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		3DFEB5AF2D80F203008CA402 /* OpusWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 3DFEB5A22D80F202008CA402 /* OpusWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3DFEB5AD2D80F203008CA402 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3DF46D792D6CA6E2008109BE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3DFEB5A12D80F202008CA402;
+			remoteInfo = "OpusWatch Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3D7889AD2D80D01500D20C88 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				3DFEB5AF2D80F203008CA402 /* OpusWatch Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		3DF46D812D6CA6E2008109BE /* OpusIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpusIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3DFEB5A22D80F202008CA402 /* OpusWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OpusWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -29,10 +58,22 @@
 			path = OpusIOS;
 			sourceTree = "<group>";
 		};
+		3DFEB5A32D80F202008CA402 /* OpusWatch Watch App */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "OpusWatch Watch App";
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		3DF46D7E2D6CA6E2008109BE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3DFEB59F2D80F202008CA402 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -46,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				3DF46D832D6CA6E2008109BE /* OpusIOS */,
+				3DFEB5A32D80F202008CA402 /* OpusWatch Watch App */,
 				3DF46D822D6CA6E2008109BE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				3DF46D812D6CA6E2008109BE /* OpusIOS.app */,
+				3DFEB5A22D80F202008CA402 /* OpusWatch Watch App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -68,10 +111,12 @@
 				3DF46D7D2D6CA6E2008109BE /* Sources */,
 				3DF46D7E2D6CA6E2008109BE /* Frameworks */,
 				3DF46D7F2D6CA6E2008109BE /* Resources */,
+				3D7889AD2D80D01500D20C88 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				3DFEB5AE2D80F203008CA402 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				3DF46D832D6CA6E2008109BE /* OpusIOS */,
@@ -81,6 +126,28 @@
 			);
 			productName = OpusIOS;
 			productReference = 3DF46D812D6CA6E2008109BE /* OpusIOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3DFEB5A12D80F202008CA402 /* OpusWatch Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3DFEB5B02D80F203008CA402 /* Build configuration list for PBXNativeTarget "OpusWatch Watch App" */;
+			buildPhases = (
+				3DFEB59E2D80F202008CA402 /* Sources */,
+				3DFEB59F2D80F202008CA402 /* Frameworks */,
+				3DFEB5A02D80F202008CA402 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				3DFEB5A32D80F202008CA402 /* OpusWatch Watch App */,
+			);
+			name = "OpusWatch Watch App";
+			packageProductDependencies = (
+			);
+			productName = "OpusWatch Watch App";
+			productReference = 3DFEB5A22D80F202008CA402 /* OpusWatch Watch App.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -94,6 +161,9 @@
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					3DF46D802D6CA6E2008109BE = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					3DFEB5A12D80F202008CA402 = {
 						CreatedOnToolsVersion = 16.2;
 					};
 				};
@@ -113,12 +183,20 @@
 			projectRoot = "";
 			targets = (
 				3DF46D802D6CA6E2008109BE /* OpusIOS */,
+				3DFEB5A12D80F202008CA402 /* OpusWatch Watch App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		3DF46D7F2D6CA6E2008109BE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3DFEB5A02D80F202008CA402 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -135,7 +213,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3DFEB59E2D80F202008CA402 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3DFEB5AE2D80F203008CA402 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3DFEB5A12D80F202008CA402 /* OpusWatch Watch App */;
+			targetProxy = 3DFEB5AD2D80F203008CA402 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		3DF46D8D2D6CA6E3008109BE /* Debug */ = {
@@ -266,7 +359,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OpusIOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 2C3JSATD54;
+				DEVELOPMENT_TEAM = K3D3D89R3N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OpusIOS/Info.plist;
@@ -287,7 +380,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = andrea.Party;
+				PRODUCT_BUNDLE_IDENTIFIER = it.simoneboscaglia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -300,6 +393,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = OpusIOS/OpusIOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OpusIOS/Preview Content\"";
@@ -332,6 +426,72 @@
 			};
 			name = Release;
 		};
+		3DFEB5B12D80F203008CA402 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "OpusWatch Watch App/OpusWatch Watch App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"OpusWatch Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = K3D3D89R3N;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = OpusWatch;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Permetti l'accesso al battito cardiaco.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Permetti di modificare i tuoi dati.";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = it.simoneboscaglia;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = it.simoneboscaglia.OpusAppleTV;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+			};
+			name = Debug;
+		};
+		3DFEB5B22D80F203008CA402 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "OpusWatch Watch App/OpusWatch Watch App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"OpusWatch Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = K3D3D89R3N;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = OpusWatch;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Permetti l'accesso al battito cardiaco.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Permetti di modificare i tuoi dati.";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = it.simoneboscaglia;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = it.simoneboscaglia.OpusAppleTV;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -349,6 +509,15 @@
 			buildConfigurations = (
 				3DF46D902D6CA6E3008109BE /* Debug */,
 				3DF46D912D6CA6E3008109BE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3DFEB5B02D80F203008CA402 /* Build configuration list for PBXNativeTarget "OpusWatch Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3DFEB5B12D80F203008CA402 /* Debug */,
+				3DFEB5B22D80F203008CA402 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

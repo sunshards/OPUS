@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import HealthKit
 
 enum MessageType : Codable {
     case touch

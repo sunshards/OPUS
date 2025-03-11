@@ -19,14 +19,14 @@ class MPCManager : NSObject {
     
     private lazy var browser : MCNearbyServiceBrowser = MCNearbyServiceBrowser(peer:peerID, serviceType: "opus") // serviceType deve essere unico, se è condiviso da qualcun altro si connetterà insieme
     
-    weak var delegate : MPCManagerDelegate? // Stesso comportamento di session e browser
+    weak var delegate : MPCManagerDelegate?
     // weak: evitare processi zombie nell'iphone. una volta settata una classe come delegato quella rimane in memoria. Weak infatti evita che il contatore degli utilizzi della classe salga di 1, quindi non vale come reference per mantenere una classe in memoria.
     
     private override init() {
         super.init()
         session.delegate = self
         browser.delegate = self
-    } // inizializzatore non deve essere accessibile dall'esterno
+    }
     
     func startService() {
         browser.startBrowsingForPeers()
@@ -94,8 +94,7 @@ extension MPCManager : MCNearbyServiceBrowserDelegate {
     
     // Un peer se n'è andato
     // MARK: - IMPORTANTE perchè ogni tanto si disconnette a caso, per il debug
-    func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
-    }
+    func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {}
     
 
 }
