@@ -22,8 +22,9 @@ class GameScene: SKScene {
     
     private var referenceAttitude : CMAttitude?
     
-    var calibrate: SKScene {
-        let scene = SKScene(fileNamed: "Calibrazione")
+    var pauseScreen: SKScene {
+        let scene = SKScene(fileNamed: "pauseScreen")
+        print("\(scene?.sceneDidLoad())")
         scene?.scaleMode = .aspectFill
         return scene!
     }
@@ -88,7 +89,7 @@ class GameScene: SKScene {
         } else {
             if(button.contains(touchLocation)){
                 print("toccato")
-                scene?.view?.presentScene(calibrate)
+                scene?.view?.presentScene(pauseScreen)
             }
             let message = Message(type: .touch, vector: nil, state: nil)
             self.mpcManager.send(message: message)
