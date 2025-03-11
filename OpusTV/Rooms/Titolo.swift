@@ -45,6 +45,8 @@ let titolo = Stanza(
 //                  return;
                   self.room?.childNode(withName:"playon")?.isHidden = false
                   self.room?.childNode(withName:"playoff")?.isHidden = true
+              }, touchAction: { (self) in
+                  sceneManager.selectRoom(.sala)
               }),
         InteractiveSprite(name: "playon",
               hoverOffAction: {(self) in

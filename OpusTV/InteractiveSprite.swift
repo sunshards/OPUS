@@ -12,6 +12,7 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
     private var touchAction: ((InteractiveSprite) -> Void)?
     private var hoverOnAction: ((InteractiveSprite) -> Void)?
     private var hoverOffAction: ((InteractiveSprite) -> Void)?
+    var hasTouched : Bool = false
     var text : String?
 
     var room : SKNode? {
@@ -44,10 +45,11 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
     }
     func run() {
         self.touchAction?(self)
+        self.hasTouched = true
     }
     
     func playSound(soundName : String) {
-        self.parent?.run(SKAction.playSoundFileNamed(soundName, waitForCompletion: false))
+        self.parent?.run(SKAction.playSoundFileNamed(soundName, waitForCompletion: true))
     }
     
     func assignSprite(sprite : SKSpriteNode) {

@@ -75,16 +75,18 @@ class Light {
     
     // fa partire l'azione del primo sprite interattivo non nascosto che trova
     func touch() {
-        //var alreadyInteracted : [InteractiveSprite] = []
+        var displayed : [InteractiveSprite] = []
         guard let contacts = cursor.physicsBody?.allContactedBodies() else {return}
         for sprite in contacts {
             if let interactive = sprite.node as? InteractiveSprite {
                 if interactive.room?.isHidden == false {//&& !alreadyInteracted.contains(interactive){
-                    interactive.run()
-                    return
-                    //alreadyInteracted.append(interactive)
+                    displayed.append(interactive)
                 }
             }
         }
+        if let highestTouched = displayed.max(by: {$0.zPosition < $1.zPosition}) {
+            highestTouched.run()
+        }
+
     }
 }
