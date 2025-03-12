@@ -16,7 +16,8 @@ extension SceneManager : MPCManagerDelegate {
             self.yGyro = vector.y
             self.zGyro = vector.z
             if let light = sceneManager.light {
-                light.move(to: CGPoint(x: -xGyro * light.sensibility, y: yGyro * light.sensibility))
+                guard let sensibility = light.sensibility else {print("light has no sensibility"); return}
+                light.move(to: CGPoint(x: -xGyro * sensibility, y: yGyro * sensibility))
             }
         }
         

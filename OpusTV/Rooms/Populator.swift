@@ -31,24 +31,25 @@ class Populator {
         }
     }
     
-    func swap(interactable : InteractiveSprite, parent : SKNode? = nil) {
+    // swap di uno sprite normale con uno interattivo
+    func swap(interactable : InteractiveSprite, sprite : SKSpriteNode) {
+        var parent = sprite.parent
+        if parent == nil { parent = scene }
+        interactable.assignSprite(sprite: sprite)
+        parent!.addChild(interactable)
+        sprite.removeFromParent()
+    }
+    
+    // swap di uno sprite interattivo sapendo la stanza in cui si trova quello normale ed il suo nome
+    func swap(interactable : InteractiveSprite, parent parentNode : SKNode? = nil) {
         guard let name = interactable.name else {print("Interactable not swapped succesfully"); return}
-        if let parent {
-            let child = parent.childNode(withName: name)
-            if let child = child as? SKSpriteNode {
-                interactable.assignSprite(sprite: child)
-                child.removeFromParent()
-                parent.addChild(interactable)
-            }
-        } else {
-            let child = scene.childNode(withName: name)
-            if let child = child as? SKSpriteNode {
-                interactable.assignSprite(sprite: child)
-                child.removeFromParent()
-                scene.addChild(interactable)
-                print(interactable)
-            }
+        var parent : SKNode
+        if let parentNode {parent = parentNode} else {parent = scene }
+        let child = parent.childNode(withName: name)
+        if let child = child as? SKSpriteNode {
+            interactable.assignSprite(sprite: child)
+            child.removeFromParent()
+            parent.addChild(interactable)
         }
-        
     }
 }
