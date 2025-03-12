@@ -22,21 +22,35 @@ let cucina = Stanza(state: .cucina,
     
     InteractiveSprite(name: "cucmestolopieno",
                       touchAction: {(self) in
-                          self.playSound(soundName: "Mestolo2")
-                      }),
+                          if sceneManager.hasCollectedWater{
+                              self.playSound(soundName: "Mestolo2")
+                          }
+                      },active: true),
     
-    InteractiveSprite(name: "cucamino",
+    InteractiveSprite(name: "cuccamino",
                       touchAction: {(self) in
                           self.playSound(soundName: "Scream")
-                      }),
+                      },active: false),
     
     InteractiveSprite(name: "cucacqua",touchAction: {
         (self) in
+        sceneManager.hasCollectedWater = true
+        print("\(sceneManager.hasCollectedWater)")
         sceneManager.inventory.addItem(InventoryItem(name: "cucacqua"))
         DispatchQueue.main.async {
             self.removeFromParent()
         }
-        self.isActive = true
+    },active: true),
+    
+    //MARK: Fiala ancora visbile alla rimozione
+    InteractiveSprite(name: "cucfiala",touchAction: {
+        (self) in
+        if sceneManager.hasCollectedWater{
+            sceneManager.inventory.addItem(InventoryItem(name: "cucfiala"))
+            DispatchQueue.main.async {
+                self.removeFromParent()
+            }
+        }
     },active: true)
     
 ])

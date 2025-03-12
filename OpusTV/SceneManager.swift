@@ -10,7 +10,6 @@ import SwiftUI
 
 // Metto qui tutti gli oggetti a cui devono avere accesso altre classi
 class SceneManager {
-    static let shared : SceneManager = SceneManager()
     @ObservedObject var mpcManager: MPCManager = MPCManager.shared
 
     var scene : SKScene?
@@ -27,6 +26,11 @@ class SceneManager {
     var zGyro : CGFloat = 0.0
     
     var heartRate : Double = -1
+    
+    var hasCollectedWater : Bool = false
+    var hasMoved: Bool = false
+    var poisonCollected = false
+    
     
     var textManager : TextManager = TextManager(textNode: SKLabelNode())
     
@@ -72,8 +76,6 @@ class SceneManager {
     func recalibrate() {
         self.light?.move(to:CGPoint.zero)
     }
-    
-    
 }
 
-let sceneManager = SceneManager.shared
+let sceneManager = SceneManager()

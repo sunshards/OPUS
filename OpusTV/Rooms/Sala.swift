@@ -25,6 +25,7 @@ let sala = Stanza(state: .sala,
     
     InteractiveSprite(name: "salavasopieno",
       touchAction: {(self) in
+          if sceneManager.hasCollectedWater{
         self.playSound(soundName: "Ceramica")
         
         sceneManager.inventory.addItem(InventoryItem(name: "fiore"))
@@ -32,8 +33,8 @@ let sala = Stanza(state: .sala,
         // Le rimozioni vanno fatte nel thread principale
         DispatchQueue.main.async {
             self.removeFromParent()
-        }
-    }),
+        }}
+      },active: true),
     
     InteractiveSprite(name: "salaportacucina", touchAction: {(self) in
         sceneManager.selectRoom(.cucina)
@@ -49,12 +50,19 @@ let sala = Stanza(state: .sala,
                       },
                       touchAction: {(self) in
                           self.playSound(soundName: "SediaAperturaLegno")
-                      }),
+                      },active: true),
     
     InteractiveSprite(name: "salatazza",
                       touchAction: {(self) in
                           self.playSound(soundName: "Ceramica")
-                      }),
+                      },active: true),
     
-    
+    InteractiveSprite(name: "salacassa",
+                      touchAction: {(self) in
+                          if sceneManager.hasCollectedWater && !sceneManager.poisonCollected{
+                              self.playSound(soundName: "BauleApertura")
+                              sceneManager.inventory.addItem(InventoryItem(name: "veleno"))
+                              sceneManager.poisonCollected = true
+                          }
+                      },active: true)
 ])
