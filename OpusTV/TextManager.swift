@@ -27,11 +27,13 @@ class TextManager {
         self.textNode.run(SKAction.sequence(sequence))
     }
     
+    
     func hideText() {
         textNode.isHidden = true
     }
     
     func showText() {
+        textNode.zPosition = 7
         textNode.isHidden = false
     }
     

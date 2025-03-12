@@ -35,8 +35,8 @@ let cucina = Stanza(state: .cucina,
     InteractiveSprite(name: "cucacqua",touchAction: {
         (self) in
         sceneManager.hasCollectedWater = true
-        print("\(sceneManager.hasCollectedWater)")
         sceneManager.inventory.addItem(InventoryItem(name: "cucacqua"))
+        sceneManager.removeAntonio()
         DispatchQueue.main.async {
             self.removeFromParent()
         }

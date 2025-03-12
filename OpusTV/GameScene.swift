@@ -1,8 +1,8 @@
 //
 //  GameScene.swift
-//  templateSpriteKit
+//  opusTV
 //
-//  Created by Ignazio Finizio on 07/04/22.
+//  Created by Andrea Iannaccone on 13/02/25.
 //
 
 import SpriteKit
@@ -21,7 +21,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         sceneManager.assignScene(scene: scene!)
         sceneManager.initializePopulator()
-        /*sceneManager.textManager = TextManager(textNode: childNode(withName: "Text") as! SKLabelNode)*/
+        sceneManager.textManager = TextManager(textNode: childNode(withName: "Text") as! SKLabelNode)
         sceneManager.textManager.hideText()
         
         sceneManager.light?.setSensibility(sensibility: lightSensibility)
@@ -36,9 +36,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sceneManager.inventory.setPosition(point: CGPoint(x: -width/2+xInventoryPadding, y: -height/2+yInventoryPadding))
         addChild(sceneManager.inventory.node)
         
-        let mostro = Mostro(position : CGPoint(x:300,y:-87), room: sala)
+        //let mostro = Mostro(position : CGPoint(x:300,y:-87), room: sala)
         
         sceneManager.selectRoom(.title)
+        
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -68,6 +69,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         sceneManager.light?.smoothUpdate()
+        sceneManager.firstBoot()
         let conn = childNode(withName: "title")?.childNode(withName: "connection") as? SKSpriteNode
         if (sceneManager.mpcManager.iPhoneConnected){
             conn?.color = .green
