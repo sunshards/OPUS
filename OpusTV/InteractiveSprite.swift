@@ -23,15 +23,29 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
     
     // Dato uno sprite a schermo, creane la versione interagibile (devi rimuovere lo sprite sottostante)
     // Se non viene dato uno sprite ne viene assegnato uno blank di default, poi bisogna assegnarlo
+    
+    // Ogni sprite ha una:
+    // - hoverOnAction: quando si passa sopra con la torcia,
+    // - hoverOffAction: quando si toglie la torcia,
+    // - touchAction: quando si ha la torcia sopra e si preme.
     init(name: String,
          text : String? = nil,
-         sprite : SKSpriteNode = defaultSpriteNode ,
+         sprite spriteNode: SKSpriteNode? = nil ,
          hoverOnAction: ((InteractiveSprite) -> Void)? = nil,
          hoverOffAction: ((InteractiveSprite) -> Void)? = nil,
          touchAction: ((InteractiveSprite) -> Void)? = nil,
          active: Bool? = false){
         self.text = text
-        super.init(texture:sprite.texture, color:sprite.color, size:sprite.size)
+        // Se lo sprite è assegnato allora viene subito fatta l'assegnazione,
+        // altrimenti viene fatto l'init con lo sprite di default
+        var sprite = spriteNode
+        if sprite == nil {
+            sprite = InteractiveSprite.defaultSpriteNode
+            super.init(texture:sprite!.texture, color:sprite!.color, size:sprite!.size)
+        } else {
+            super.init(texture:sprite!.texture, color:sprite!.color, size:sprite!.size)
+            assignSprite(sprite: sprite!)
+        }
         self.touchAction = touchAction
         self.hoverOnAction = hoverOnAction
         self.hoverOffAction = hoverOffAction
@@ -70,7 +84,7 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
         self.lightingBitMask = sprite.lightingBitMask
         self.isPaused = false
         // Controlla se la texture è presente negli asset, altrimenti lo sprite è solo un placeholder
-        if let _ = UIImage(named: self.name!) {
+        if let name = self.name, let _ = UIImage(named: name) {
             let newTexture = SKTexture(imageNamed: self.name ?? "")
             self.texture = newTexture
             self.color = sprite.color

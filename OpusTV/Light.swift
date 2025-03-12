@@ -13,7 +13,7 @@ class Light {
 
     var position = CGPoint.zero
     var displayPosition = CGPoint.zero
-    var sensibility : CGFloat = 2000
+    var sensibility : CGFloat?
     var smoothness : Double = 0.15
     var lastCursorContacts : Int = 0
     
@@ -71,6 +71,10 @@ class Light {
     func showCursor() {
         cursor.alpha = 1
         cursorVisible = true
+    }
+    
+    func setSensibility(sensibility : CGFloat) {
+        self.sensibility = sensibility
     }
     
     // fa partire l'azione del primo sprite interattivo non nascosto che trova

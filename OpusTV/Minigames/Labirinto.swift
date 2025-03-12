@@ -19,15 +19,13 @@ class Labirinto: SKScene {
         insetto.physicsBody?.usesPreciseCollisionDetection = true
         scene?.camera = childNode(withName:"camera") as? SKCameraNode
         sceneManager.assignScene(scene: scene!)
-        sceneManager.light?.sensibility = lightSensibility
+        sceneManager.light?.setSensibility(sensibility: lightSensibility)
 
     }
     
     override func update(_ currentTime: TimeInterval) {
         guard let light = sceneManager.light else {print("update could not find light"); return}
         sceneManager.light?.smoothUpdate(transpose: insetto.position)
-        //let dx = light.position.x - insetto.position.x
-        //let dy = light.position.y - insetto.position.y
         // alla posizione della luce viene aggiunta la posizione dell'insetto e poi tolta per fare il delta
         // quindi alla fine la direzione è semplicemente la posizione della luce
         let direction = normalize(vector: light.position)//vector: CGPoint(x: dx, y: dy))

@@ -69,4 +69,11 @@ class Inventory {
         background.position = CGPoint(x: background.size.width/2+padding/2, y: itemHeight/2+padding/2)
 
     }
+    
+    func createInventoryNode (itemName : String, point: CGPoint) -> SKSpriteNode {
+        let itemNode = SKSpriteNode(imageNamed: itemName)
+        itemNode.position = point
+        itemNode.zPosition = 1
+        return itemNode
+    }
 }

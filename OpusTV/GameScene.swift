@@ -12,15 +12,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var height : CGFloat = 1080
     var xInventoryPadding : CGFloat = 80
     let yInventoryPadding : CGFloat = 80
+    let lightSensibility : CGFloat = 2000
     
     // START OF THE GAME
     override func didMove(to view: SKView) {
+        
+        
+        
+        sceneManager.inventory.addItem(InventoryItem(name: "boccia"))
+        sceneManager.inventory.addItem(InventoryItem(name: "chiave"))
+        sceneManager.inventory.addItem(InventoryItem(name: "fiore"))
+        sceneManager.inventory.addItem(InventoryItem(name: "mestolo"))
+        sceneManager.inventory.addItem(InventoryItem(name: "veleno"))
+
+        let pozione = SKScene(fileNamed: "Pozione")
+        pozione!.size = CGSize(width: 1920, height: 1080)
+        pozione?.scaleMode = .aspectFit
+        self.scene?.view?.presentScene(pozione!,
+                                       transition: .crossFade(withDuration: 0.5))
+        return;
+        
+        
+        
+        
+        
         physicsWorld.contactDelegate = self
         
         sceneManager.assignScene(scene: scene!)
         sceneManager.initializePopulator()
         /*sceneManager.textManager = TextManager(textNode: childNode(withName: "Text") as! SKLabelNode)*/
         sceneManager.textManager.hideText()
+        
+        sceneManager.light?.setSensibility(sensibility: lightSensibility)
 
         laboratorio.assignNode(node: childNode(withName: "laboratorio"))
         titolo.assignNode(node: childNode(withName: "title"))
@@ -32,12 +55,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sceneManager.inventory.setPosition(point: CGPoint(x: -width/2+xInventoryPadding, y: -height/2+yInventoryPadding))
         addChild(sceneManager.inventory.node)
         
-        let mostro = Mostro(sprite: InteractiveSprite(name: "mostro", hoverOnAction: {(self) in
-            print("ciao")
-        }))
-        sceneManager.populator!.swap(interactable: mostro.sprite)
-        let sp = mostro.sprite as SKSpriteNode
-        mostro.startIdleAnimation()
+        let mostro = Mostro(position : CGPoint(x:300,y:-87), room: sala)
         
         sceneManager.selectRoom(.title)
     }

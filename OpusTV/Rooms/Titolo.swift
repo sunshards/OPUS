@@ -37,12 +37,6 @@ let titolo = Stanza(
     interactives: [
         InteractiveSprite(name: "playoff",
               hoverOnAction: {(self) in
-//                  let labirinto = SKScene(fileNamed: "Labirinto")
-//                  labirinto!.size = CGSize(width: 1920, height: 1080)
-//                  labirinto?.scaleMode = .aspectFit
-//                  self.scene?.view?.presentScene(labirinto!,
-//                                                 transition: .crossFade(withDuration: 0.5))
-//                  return;
                   self.room?.childNode(withName:"playon")?.isHidden = false
                   self.room?.childNode(withName:"playoff")?.isHidden = true
               }, touchAction: { (self) in

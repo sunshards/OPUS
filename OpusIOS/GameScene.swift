@@ -61,9 +61,7 @@ class GameScene: SKScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let button = childNode(withName: "button") as! SKSpriteNode
-        self.wcManager.send(message: WatchMessage(heartRate: 75.0))
         let touchLocation = touches.first!.location(in: self)
-        print("Touch: (\(touchLocation))")
         if (!hasCalibrated) {
             if let currentAttitude = motionManager.deviceMotion?.attitude {
                 referenceAttitude = currentAttitude.copy() as? CMAttitude
