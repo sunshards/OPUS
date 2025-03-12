@@ -12,7 +12,6 @@ enum MessageType : Codable {
     case heartrate
     case calibration
     case gyroscope
-    case accelerometer
 }
 
 struct Vector3D : Codable {

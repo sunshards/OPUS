@@ -28,9 +28,9 @@ class WCManager: NSObject, WCSessionDelegate {
     }
     
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-        if let messageData = message["data"] as? WatchMessage {
+        if let messageData = message["data"] {
             if let delegate {
-                delegate.wcManager(self, didReceive: messageData)
+                delegate.wcManager(self, didReceive: WatchMessage.toMessage(from: messageData as! Data)!)
             }
         }
     }

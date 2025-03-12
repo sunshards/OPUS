@@ -16,9 +16,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // START OF THE GAME
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
-
+        
         sceneManager.assignScene(scene: scene!)
         sceneManager.initializePopulator()
+        sceneManager.textManager = TextManager(textNode: childNode(withName: "Text") as! SKLabelNode)
+        sceneManager.textManager.hideText()
 
         laboratorio.assignNode(node: childNode(withName: "laboratorio"))
         titolo.assignNode(node: childNode(withName: "title"))
@@ -36,9 +38,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sceneManager.populator!.swap(interactable: mostro.sprite)
         let sp = mostro.sprite as SKSpriteNode
         mostro.startIdleAnimation()
-        sceneManager.inventory.addItem(InventoryItem(name: "chiave"))
-       sceneManager.inventory.addItem(InventoryItem(name: "mestolo"))
-
         
         sceneManager.selectRoom(.title)
     }
@@ -76,22 +75,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }else {
             conn?.color = .red
         }
-        /*let conn = childNode(withName: "connection")
-        if ((mpcManager.delegate?.mpcManager(mpcManager, userIsConnected: mpcManager.peerID.displayName)) != nil){
-            conn?.inputView?.tintColor = .green
-        }
-        else
-        {
-            conn?.inputView?.tintColor = .red
-        }*/
-        
-//        if !(sceneManager.sceneState == .minigame) {
-//            light?.highlightObjects()
-//        }
-    }
-    
-    func playSound(soundName : String) {
-        self.scene?.run(SKAction.playSoundFileNamed(soundName, waitForCompletion: true))
     }
     
     func highlightObjects() {

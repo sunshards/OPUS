@@ -12,7 +12,6 @@ enum MessageType : Codable {
     case heartrate
     case calibration
     case gyroscope
-    case accelerometer
 }
 
 struct Vector3D : Codable {
@@ -26,8 +25,6 @@ struct Message : Codable {
     let vector : Vector3D?
     var state : Bool?
     
-    
-
     func toData() -> Data? {
         var data : Data? = nil
         

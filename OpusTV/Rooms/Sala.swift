@@ -44,6 +44,9 @@ let sala = Stanza(state: .sala,
     }),
     
     InteractiveSprite(name: "salasedia",
+                      hoverOnAction: {(self) in
+                          sceneManager.textManager.showForDuration(5)
+                      },
                       touchAction: {(self) in
                           self.playSound(soundName: "SediaAperturaLegno")
                       }),

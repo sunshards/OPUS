@@ -10,12 +10,6 @@ enum axis {
     case y
 }
 
-enum MinigameState {
-    case hidden
-    case cauldron
-    case insect
-}
-
 enum SceneState {
     case sala
     case cucina

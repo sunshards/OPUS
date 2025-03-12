@@ -9,6 +9,7 @@ import MultipeerConnectivity
 
 extension SceneManager : MPCManagerDelegate {
     func mpcManager(_ manager: MPCManager, didReceive message: Message, from peer: MCPeerID) {
+        
         if message.type == .gyroscope {
             guard let vector = message.vector else {return}
             self.xGyro = vector.x
@@ -17,18 +18,20 @@ extension SceneManager : MPCManagerDelegate {
             if let light = sceneManager.light {
                 light.move(to: CGPoint(x: -xGyro * light.sensibility, y: yGyro * light.sensibility))
             }
-            
-        } else if message.type == .accelerometer {
-            guard let vector = message.vector else {return}
-//            self.xAcc = vector.x
-//            self.yAcc = vector.y
-//            self.zAcc = vector.z
-        } else if message.type == .calibration {
+        }
+        
+        else if message.type == .heartrate {
+            self.heartRate = Double(message.vector?.x ?? -1)
+        }
+        
+        else if message.type == .calibration {
             guard let state = message.state else {return}
             if state == true {
                 recalibrate()
             }
-        } else if message.type == .touch {
+        }
+        
+        else if message.type == .touch {
             phoneTouch()
         }
     }

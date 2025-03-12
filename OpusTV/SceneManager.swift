@@ -10,6 +10,7 @@ import SwiftUI
 
 // Metto qui tutti gli oggetti a cui devono avere accesso altre classi
 class SceneManager {
+    static let shared : SceneManager = SceneManager()
     @ObservedObject var mpcManager: MPCManager = MPCManager.shared
 
     var scene : SKScene?
@@ -18,12 +19,16 @@ class SceneManager {
     var populator : Populator? = nil
     
     var sceneState : SceneState = .sala
-    var minigame : MinigameState = .hidden
+    var minigameState : Bool = false
     var stanze : [SceneState : Stanza] = [.sala: sala,.cucina : cucina,.laboratorio : laboratorio,.libreria: libreria, .title: titolo]
     
     var xGyro : CGFloat = 0.0
     var yGyro : CGFloat = 0.0
     var zGyro : CGFloat = 0.0
+    
+    var heartRate : Double = -1
+    
+    var textManager : TextManager = TextManager(textNode: SKLabelNode())
     
     init() {
         mpcManager.delegate = self
@@ -52,6 +57,7 @@ class SceneManager {
     }
     
     func selectRoom(_ newScene : SceneState) {
+        guard (minigameState == false) else { print("Trying to select room in minigame"); return }
         stanze[sceneState]?.hide()
         stanze[newScene]?.setup()
         stanze[newScene]?.show()
@@ -60,13 +66,14 @@ class SceneManager {
     
     func phoneTouch() {
         light?.touch()
-        
     }
     
     func recalibrate() {
         light?.move(to:CGPoint.zero)
     }
     
+    
+    
 }
 
-let sceneManager = SceneManager()
+let sceneManager = SceneManager.shared
