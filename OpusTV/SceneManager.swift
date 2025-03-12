@@ -19,8 +19,14 @@ class SceneManager {
     var populator : Populator? = nil
     
     var sceneState : SceneState = .sala
-    var minigameState : Bool = false
+    var minigameState : MinigameState = .hidden
+    
     var stanze : [SceneState : Stanza] = [.sala: sala,.cucina : cucina,.laboratorio : laboratorio,.libreria: libreria, .title: titolo]
+    let gameScenes : [MinigameState : String] = [
+        .hidden : "GameScene",
+        .labirinto : "Labirinto",
+        .pozione : "Pozione"
+    ]
     
     var xGyro : CGFloat = 0.0
     var yGyro : CGFloat = 0.0
@@ -58,7 +64,7 @@ class SceneManager {
     }
     
     func selectRoom(_ newScene : SceneState) {
-        guard (minigameState == false) else { print("Trying to select room in minigame"); return }
+        guard (minigameState == .hidden) else { print("Trying to select room in minigame"); return }
         stanze[sceneState]?.hide()
         stanze[newScene]?.setup()
         stanze[newScene]?.show()
@@ -73,6 +79,14 @@ class SceneManager {
         self.light?.move(to:CGPoint.zero)
     }
     
+    func switchToMinigame(state : MinigameState) {
+        guard let sceneName = gameScenes[state] else {print("Could not find new scene name"); return}
+        let newScene = SKScene(fileNamed: sceneName)
+        newScene!.size = CGSize(width: 1920, height: 1080)
+        newScene?.scaleMode = .aspectFit
+        self.scene?.view?.presentScene(newScene!, transition: .crossFade(withDuration: 0.5))
+        return;
+    }
     
 }
 

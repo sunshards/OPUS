@@ -16,22 +16,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // START OF THE GAME
     override func didMove(to view: SKView) {
-        
-        
-        
-        sceneManager.inventory.addItem(InventoryItem(name: "boccia"))
-        sceneManager.inventory.addItem(InventoryItem(name: "chiave"))
-        sceneManager.inventory.addItem(InventoryItem(name: "fiore"))
-        sceneManager.inventory.addItem(InventoryItem(name: "mestolo"))
-        sceneManager.inventory.addItem(InventoryItem(name: "veleno"))
-
-        let pozione = SKScene(fileNamed: "Pozione")
-        pozione!.size = CGSize(width: 1920, height: 1080)
-        pozione?.scaleMode = .aspectFit
-        self.scene?.view?.presentScene(pozione!,
-                                       transition: .crossFade(withDuration: 0.5))
-        return;
-        
         physicsWorld.contactDelegate = self
         
         sceneManager.assignScene(scene: scene!)
