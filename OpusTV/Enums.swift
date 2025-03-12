@@ -18,3 +18,9 @@ enum SceneState {
     case minigame
     case title
 }
+
+enum MinigameState {
+    case hidden
+    case pozione
+    case labirinto
+}

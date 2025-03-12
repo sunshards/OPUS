@@ -16,7 +16,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // START OF THE GAME
     override func didMove(to view: SKView) {
-        
         physicsWorld.contactDelegate = self
         
         sceneManager.assignScene(scene: scene!)
