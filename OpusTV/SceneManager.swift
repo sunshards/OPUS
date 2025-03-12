@@ -84,11 +84,14 @@ class SceneManager {
     }
     
     func switchToMinigame(state : MinigameState) {
+        self.minigameState = state
+
         guard let sceneName = gameScenes[state] else {print("Could not find new scene name"); return}
         let newScene = SKScene(fileNamed: sceneName)
         newScene!.size = CGSize(width: 1920, height: 1080)
         newScene?.scaleMode = .aspectFit
         self.scene?.view?.presentScene(newScene!, transition: .crossFade(withDuration: 0.5))
+        
         return;
     }
     
