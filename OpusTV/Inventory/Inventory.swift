@@ -42,6 +42,7 @@ class Inventory {
         regenerateNode()
     }
     
+    
     func removeItem(_ item: InventoryItem) {
         items.removeAll { $0.name == item.name }
         regenerateNode()

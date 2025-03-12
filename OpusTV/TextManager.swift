@@ -18,8 +18,6 @@ class TextManager {
         textNode.text = newText
     }
     
-    
-    
     func showForDuration(_ duration: TimeInterval) {
         let sequence : [SKAction] = [
             SKAction.hide().reversed(),

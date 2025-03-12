@@ -19,7 +19,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         sceneManager.assignScene(scene: scene!)
         sceneManager.initializePopulator()
-        sceneManager.textManager = TextManager(textNode: childNode(withName: "Text") as! SKLabelNode)
+        /*sceneManager.textManager = TextManager(textNode: childNode(withName: "Text") as! SKLabelNode)*/
         sceneManager.textManager.hideText()
 
         laboratorio.assignNode(node: childNode(withName: "laboratorio"))

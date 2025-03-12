@@ -18,7 +18,7 @@ let libreria = Stanza(state: .libreria,
     
     InteractiveSprite(name: "libporta", touchAction: {(self) in
         sceneManager.selectRoom(.sala)
-    }),
+    },active: true),
     
     InteractiveSprite(name: "libsedia",
                       touchAction: {(self) in
@@ -35,5 +35,5 @@ let libreria = Stanza(state: .libreria,
     InteractiveSprite(name: "libscale",
                       touchAction: {(self) in
                           sceneManager.selectRoom(.laboratorio)
-                      }),
+                      },active: true),
 ])

@@ -47,7 +47,7 @@ let titolo = Stanza(
                   self.room?.childNode(withName:"playoff")?.isHidden = true
               }, touchAction: { (self) in
                   sceneManager.selectRoom(.sala)
-              }),
+              }, active: true),
         InteractiveSprite(name: "playon",
               hoverOffAction: {(self) in
                   self.room?.childNode(withName:"playoff")?.isHidden = false
@@ -55,12 +55,12 @@ let titolo = Stanza(
               },
               touchAction: {(self) in
                   sceneManager.selectRoom(.sala)
-          }),
+              }, active: true),
         InteractiveSprite(name: "creditsoff",
               hoverOnAction: {(self) in
                   self.room?.childNode(withName:"creditson")?.isHidden = false
                   self.room?.childNode(withName:"creditsoff")?.isHidden = true
-              }),
+              }, active: true),
         InteractiveSprite(name: "creditson",
               hoverOffAction: {(self) in
                   self.room?.childNode(withName:"creditsoff")?.isHidden = false
@@ -68,7 +68,7 @@ let titolo = Stanza(
               },
               touchAction: {(self) in
                   //sceneManager.selectRoom(.sala)
-          }),
+              }, active: true),
     ]
 )
 

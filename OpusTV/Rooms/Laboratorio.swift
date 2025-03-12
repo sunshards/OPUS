@@ -18,7 +18,7 @@ let laboratorio = Stanza(state: .laboratorio,
     
     InteractiveSprite(name: "libporta", touchAction: {(self) in
         sceneManager.selectRoom(.sala)
-    }),
+    },active: true),
     
     InteractiveSprite(name: "labarile",
                       touchAction: {(self) in
@@ -28,7 +28,7 @@ let laboratorio = Stanza(state: .laboratorio,
     InteractiveSprite(name: "labscale",
                       touchAction: {(self) in
                           sceneManager.selectRoom(.libreria)
-                      }),
+                      },active: true),
     
 //https://youtu.be/f8mL0_4GeV0?si=czQ1LuuEcC3cZZqO
     
@@ -44,6 +44,6 @@ let laboratorio = Stanza(state: .laboratorio,
     
     InteractiveSprite(name: "labscale", touchAction: {(self) in
         sceneManager.selectRoom(.libreria)
-    }),
+    },active: true),
     
 ])

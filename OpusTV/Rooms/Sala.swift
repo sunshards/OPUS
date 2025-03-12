@@ -37,11 +37,11 @@ let sala = Stanza(state: .sala,
     
     InteractiveSprite(name: "salaportacucina", touchAction: {(self) in
         sceneManager.selectRoom(.cucina)
-    }),
+    },active: true),
     
     InteractiveSprite(name: "salaportalibreria", touchAction: {(self) in
         sceneManager.selectRoom(.libreria)
-    }),
+    },active: true),
     
     InteractiveSprite(name: "salasedia",
                       hoverOnAction: {(self) in

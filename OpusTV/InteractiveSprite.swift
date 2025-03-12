@@ -13,8 +13,9 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
     private var hoverOnAction: ((InteractiveSprite) -> Void)?
     private var hoverOffAction: ((InteractiveSprite) -> Void)?
     var hasTouched : Bool = false
+    var isActive = false
     var text : String?
-
+    
     var room : SKNode? {
         return self.parent
     }
@@ -27,25 +28,33 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
          sprite : SKSpriteNode = defaultSpriteNode ,
          hoverOnAction: ((InteractiveSprite) -> Void)? = nil,
          hoverOffAction: ((InteractiveSprite) -> Void)? = nil,
-         touchAction: ((InteractiveSprite) -> Void)? = nil) {
+         touchAction: ((InteractiveSprite) -> Void)? = nil,
+         active: Bool? = false){
         self.text = text
         super.init(texture:sprite.texture, color:sprite.color, size:sprite.size)
         self.touchAction = touchAction
         self.hoverOnAction = hoverOnAction
         self.hoverOffAction = hoverOffAction
         self.name = name
+        self.isActive = active!
     }
     
     // we pass self to the action so that the action can control the sprite's properties
     func hoverOn() {
-        self.hoverOnAction?(self)
+        if self.isActive {
+            self.hoverOnAction?(self)
+        }
     }
     func hoverOff() {
-        self.hoverOffAction?(self)
+        if self.isActive{
+            self.hoverOffAction?(self)
+        }
     }
     func run() {
-        self.touchAction?(self)
-        self.hasTouched = true
+        if self.isActive{
+            self.touchAction?(self)
+            self.hasTouched = true
+        }
     }
     
     func playSound(soundName : String) {
