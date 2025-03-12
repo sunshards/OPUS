@@ -39,7 +39,8 @@ class SceneManager {
         self.scene = scene
         let lightNode = scene.childNode(withName: "torch") as! SKLightNode
         let cursor = scene.childNode(withName: "cursor") as! SKSpriteNode
-        light = Light(lightNode: lightNode, cursor: cursor)
+        self.light = Light(lightNode: lightNode, cursor: cursor)
+        self.populator = Populator(scene: self.scene!)
     }
     
     func initializePopulator() {
@@ -65,13 +66,12 @@ class SceneManager {
     }
     
     func phoneTouch() {
-        light?.touch()
+        self.light?.touch()
     }
     
     func recalibrate() {
-        light?.move(to:CGPoint.zero)
+        self.light?.move(to:CGPoint.zero)
     }
-    
     
     
 }

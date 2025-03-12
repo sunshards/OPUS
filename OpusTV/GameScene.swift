@@ -32,10 +32,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                                        transition: .crossFade(withDuration: 0.5))
         return;
         
-        
-        
-        
-        
         physicsWorld.contactDelegate = self
         
         sceneManager.assignScene(scene: scene!)
@@ -93,44 +89,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }else {
             conn?.color = .red
         }
-    }
-    
-    func highlightObjects() {
-        guard let scene = self.scene else {print("highlight objects could not find scene"); return}
-        guard let light = sceneManager.light else {print("highlight objects could not find light"); return}
-        guard let cursorBody = light.cursor.physicsBody else { print("highlight objects could not find cursor body"); return }
-        
-        // Tiene un conto del numero di oggetti toccati al momento dal cursore
-        // Se il numero cambia, significa che ci sono luci da togliere o da aggiungere
-        let currentCursorContacts : Int = cursorBody.allContactedBodies().count
-        if currentCursorContacts != light.lastCursorContacts {
-            if currentCursorContacts == 0 {
-                // Remove all lights
-                for child in scene.children {
-                    if child.name == "objectLight" {
-                        child.removeFromParent()
-                    }
-                }
-            }
-            else {
-                // Spawn lights for object in contact with the cursor
-                for body in cursorBody.allContactedBodies() {
-                    guard let node = body.node as? SKSpriteNode else { continue }
-                    if body.categoryBitMask == 2 { // Categoria degli interagibili
-                        let objectLight = SKSpriteNode(imageNamed: "light")
-                        objectLight.name = "objectLight"
-                        objectLight.position = node.position
-                        objectLight.zPosition = -50 // relativo al padre
-                        objectLight.size = node.size
-                        objectLight.setScale(0.8)
-                        objectLight.color = .yellow
-                        objectLight.alpha = 0.5
-                        scene.addChild(objectLight)
-                    }
-                }
-            }
-        }
-        light.lastCursorContacts = currentCursorContacts
     }
 }
 
