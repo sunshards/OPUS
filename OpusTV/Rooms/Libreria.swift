@@ -26,14 +26,17 @@ let libreria = Stanza(state: .libreria,
                       }),
     InteractiveSprite(name: "libquadro",
                       touchAction: {(self) in
-                          if !self.hasTouched {
+                          if   !sceneManager.hasMoved && sceneManager.hasCollectedWater {
                               self.run(SKAction.move(to: CGPoint(x: 220, y: 115), duration: 5))
                               self.playSound(soundName: "PassaggioSegreto")
+                              sceneManager.hasMoved = true
                           }
 
-                      }),
+                      }, active: true),
     InteractiveSprite(name: "libscale",
                       touchAction: {(self) in
                           sceneManager.selectRoom(.laboratorio)
                       },active: true),
+    
+    
 ])

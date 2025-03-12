@@ -72,7 +72,9 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
     }
     
     func playSound(soundName : String) {
-        self.parent?.run(SKAction.playSoundFileNamed(soundName, waitForCompletion: true))
+        if self.isActive {
+            self.parent?.run(SKAction.playSoundFileNamed(soundName, waitForCompletion: true))
+        }
     }
     
     func assignSprite(sprite : SKSpriteNode) {

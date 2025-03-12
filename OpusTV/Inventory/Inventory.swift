@@ -48,6 +48,10 @@ class Inventory {
         regenerateNode()
     }
     
+    func checkItemExists(_ itemName: String) -> Bool {
+        return items.contains { $0.name == itemName }
+    }
+    
     func regenerateNode() {
         // The node is placed such that the inventory position is in the bottom left of the background
         DispatchQueue.main.async {
