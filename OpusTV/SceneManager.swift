@@ -40,9 +40,9 @@ class SceneManager {
     
     var hasInitializedMainScene : Bool = false
     var hasCollectedWater : Bool = false
+    var hasPaintingMoved : Bool = false
     var hasMoved: Bool = false
     var poisonCollected = false
-    
     
     var textManager : TextManager = TextManager(textNode: SKLabelNode())
     
@@ -78,6 +78,27 @@ class SceneManager {
         for (_, stanza) in stanze {
             populator.depopulate(room: stanza)
         }
+    }
+    
+    func removeAntonio(){
+        DispatchQueue.main.async {
+            let antonio = self.scene?.childNode(withName: "sala")!.childNode(withName: "antonio")
+            antonio!.removeFromParent()
+        }
+    }
+    
+    func firstBoot(){
+        if sceneState == .sala && !hasCollectedWater{
+            self.textManager.changeText("Hey I'm kinda thirsty")
+            self.textManager.showForDuration(5)
+            self.textManager.changeText("Could you grab me some water please?")
+            self.textManager.showForDuration(5)
+            self.textManager.textNode.zPosition = 7
+        }
+    }
+    
+    func getCurrentScene() -> SceneState{
+        return sceneState
     }
     
     func selectRoom(_ newScene : SceneState) {

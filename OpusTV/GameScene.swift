@@ -1,8 +1,8 @@
 //
 //  GameScene.swift
-//  templateSpriteKit
+//  opusTV
 //
-//  Created by Ignazio Finizio on 07/04/22.
+//  Created by Andrea Iannaccone on 13/02/25.
 //
 
 import SpriteKit
@@ -19,6 +19,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         
         sceneManager.assignScene(scene: scene!)
+        sceneManager.textManager = TextManager(textNode: childNode(withName: "Text") as! SKLabelNode)
         sceneManager.textManager.hideText()
         sceneManager.light?.setSensibility(sensibility: lightSensibility)
         laboratorio.assignNode(node: childNode(withName: "laboratorio"))
@@ -27,7 +28,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sala.assignNode(node:childNode(withName: "sala"))
         cucina.assignNode(node:childNode(withName: "cucina"))
         sceneManager.populate()
-        recursivePrintInteractives(node: scene!)
+        
+        sceneManager.inventory.setPosition(point: CGPoint(x: -width/2+xInventoryPadding, y: -height/2+yInventoryPadding))
+        sceneManager.inventory.regenerateNode()
+        addChild(sceneManager.inventory.node)
 
         if (sceneManager.hasInitializedMainScene == false) {
 
@@ -36,9 +40,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             sceneManager.selectRoom(.title)
             sceneManager.hasInitializedMainScene = true
         } else {
-            sceneManager.selectRoom(.sala)
-
+            sceneManager.selectRoom(sceneManager.sceneState)
         }
+        
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -68,6 +72,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         sceneManager.light?.smoothUpdate()
+        sceneManager.firstBoot()
         let conn = childNode(withName: "title")?.childNode(withName: "connection") as? SKSpriteNode
         if (sceneManager.mpcManager.iPhoneConnected){
             conn?.color = .green
