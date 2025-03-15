@@ -52,3 +52,11 @@ func normalize(vector : CGPoint) -> CGPoint {
     newVector.y = vector.y / CGFloat(norm)
     return newVector
 }
+
+func copyInteractivesArray(_ array : [InteractiveSprite]) -> [InteractiveSprite] {
+    var newArray : [InteractiveSprite] = []
+    for sprite in array {
+        newArray.append(sprite.duplicateWithoutSprite())
+    }
+    return newArray
+}

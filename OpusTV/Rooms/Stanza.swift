@@ -8,7 +8,8 @@ import SpriteKit
 
 class Stanza {
     let state : SceneState
-    let interactives : [InteractiveSprite]
+    let defaultInteractives : [InteractiveSprite]
+    var interactives : [InteractiveSprite]
     var sounds : [String]?
     var node : SKNode? = nil
     private var audioNodes : [SKAudioNode] = []
@@ -16,7 +17,8 @@ class Stanza {
 
     init(state: SceneState, action: ((Stanza) -> Void)? = nil, sounds: [String]? = nil, interactives: [InteractiveSprite], node: SKNode? = nil) {
         self.state = state
-        self.interactives = interactives
+        self.defaultInteractives = interactives
+        self.interactives = copyInteractivesArray(defaultInteractives)
         self.action = action
         self.sounds = sounds
         self.node = node

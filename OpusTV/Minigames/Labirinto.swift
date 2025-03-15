@@ -7,15 +7,16 @@
 
 import SpriteKit
 
-class Labirinto: SKScene {
+class Labirinto: SKScene, SKPhysicsContactDelegate {
     var muro = SKSpriteNode()
     var insetto = SKSpriteNode()
-    let velocity : CGFloat = 1.5
+    let velocity : CGFloat = 2
     let lightSensibility : CGFloat = 500
     
     override func didMove(to view: SKView) {
-        let labirinto = childNode(withName: "labirinto")
-        insetto = labirinto!.childNode(withName: "insetto") as! SKSpriteNode
+        physicsWorld.contactDelegate = self
+
+        insetto = childNode(withName: "insetto") as! SKSpriteNode
         insetto.physicsBody?.usesPreciseCollisionDetection = true
         camera = childNode(withName:"camera") as? SKCameraNode
         sceneManager.assignScene(scene: scene!)
@@ -32,14 +33,18 @@ class Labirinto: SKScene {
         insetto.position.y += direction.y * (velocity)
         camera!.position = insetto.position
         let rotation = atan2(direction.y, direction.x)
-        //let rotation = angle(p1: insetto.position, p2: light.position)
         insetto.zRotation = rotation
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touch = touches.first!
-        let location = touch.location(in: self)
-        
+    func didBegin(_ contact: SKPhysicsContact) {
+        if contact.bodyA.node?.name == "detector" || contact.bodyB.node?.name == "detector" {
+            endGame()
+        }
+    }
+    
+    private func endGame() {
+        sceneManager.inventory.addItem(InventoryItem(name: "chiave"))
+        sceneManager.switchToMinigame(state: .hidden)
     }
     
     private func distance(p1: CGPoint, p2: CGPoint) -> CGFloat {

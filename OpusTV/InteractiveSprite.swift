@@ -13,7 +13,8 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
     private var hoverOnAction: ((InteractiveSprite) -> Void)?
     private var hoverOffAction: ((InteractiveSprite) -> Void)?
     var hasTouched : Bool = false
-    var isActive = false
+    var isActive = true
+    var isAssigned : Bool = false
     var text : String?
     
     var room : SKNode? {
@@ -34,7 +35,7 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
          hoverOnAction: ((InteractiveSprite) -> Void)? = nil,
          hoverOffAction: ((InteractiveSprite) -> Void)? = nil,
          touchAction: ((InteractiveSprite) -> Void)? = nil,
-         active: Bool? = false){
+         active: Bool? = true){
         self.text = text
         // Se lo sprite è assegnato allora viene subito fatta l'assegnazione,
         // altrimenti viene fatto l'init con lo sprite di default
@@ -51,6 +52,17 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
         self.hoverOffAction = hoverOffAction
         self.name = name
         self.isActive = active!
+    }
+    
+    func duplicateWithoutSprite() -> InteractiveSprite {
+        let duplicate = InteractiveSprite(name: self.name!,
+                                          text: self.text,
+                                          sprite: nil,
+                                          hoverOnAction: self.hoverOnAction,
+                                          hoverOffAction: self.hoverOffAction,
+                                          touchAction: self.touchAction,
+                                          active: self.isActive)
+        return duplicate
     }
     
     // we pass self to the action so that the action can control the sprite's properties
@@ -95,6 +107,7 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
             self.color = .clear
             self.alpha = 0
         }
+        self.isAssigned = true
     }
     
     required init?(coder aDecoder: NSCoder) {

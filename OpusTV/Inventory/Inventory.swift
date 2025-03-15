@@ -55,7 +55,7 @@ class Inventory {
     func regenerateNode() {
         // The node is placed such that the inventory position is in the bottom left of the background
         DispatchQueue.main.async {
-            self.node.removeChildren(in: self.itemNodes) // Clear previous items
+            self.node.removeAllChildren()// Clear previous items
         }
 
         var xOffset : CGFloat = 0

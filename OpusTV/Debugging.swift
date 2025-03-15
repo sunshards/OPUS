@@ -52,4 +52,15 @@ extension GameScene {
                 }
             }
         }
+    
+    func recursivePrintInteractives(node : SKNode) {
+        for child in node.children {
+            if let interactive = child as? InteractiveSprite {
+                print("INTERACTIVE: \(interactive)")
+            } else if let sprite = child as? SKSpriteNode {
+                print("SPRITE: \(sprite)")
+            }
+            recursivePrintInteractives(node: child)
+        }
+    }
 }

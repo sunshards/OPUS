@@ -38,5 +38,10 @@ let libreria = Stanza(state: .libreria,
                           sceneManager.selectRoom(.laboratorio)
                       },active: true),
     
+    InteractiveSprite(name: "libteca",
+                      touchAction: {(self) in
+                          sceneManager.switchToMinigame(state: .labirinto)
+                      }, active: true),
+    
     
 ])

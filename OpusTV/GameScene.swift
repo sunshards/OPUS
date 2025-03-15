@@ -19,25 +19,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         
         sceneManager.assignScene(scene: scene!)
-        sceneManager.initializePopulator()
-        /*sceneManager.textManager = TextManager(textNode: childNode(withName: "Text") as! SKLabelNode)*/
         sceneManager.textManager.hideText()
-        
         sceneManager.light?.setSensibility(sensibility: lightSensibility)
-
         laboratorio.assignNode(node: childNode(withName: "laboratorio"))
         titolo.assignNode(node: childNode(withName: "title"))
         libreria.assignNode(node:childNode(withName: "libreria"))
         sala.assignNode(node:childNode(withName: "sala"))
         cucina.assignNode(node:childNode(withName: "cucina"))
         sceneManager.populate()
-        
-        sceneManager.inventory.setPosition(point: CGPoint(x: -width/2+xInventoryPadding, y: -height/2+yInventoryPadding))
-        addChild(sceneManager.inventory.node)
-        
-        let mostro = Mostro(position : CGPoint(x:300,y:-87), room: sala)
-        
-        sceneManager.selectRoom(.title)
+        recursivePrintInteractives(node: scene!)
+
+        if (sceneManager.hasInitializedMainScene == false) {
+
+            sceneManager.inventory.setPosition(point: CGPoint(x: -width/2+xInventoryPadding, y: -height/2+yInventoryPadding))
+            addChild(sceneManager.inventory.node)
+            sceneManager.selectRoom(.title)
+            sceneManager.hasInitializedMainScene = true
+        } else {
+            sceneManager.selectRoom(.sala)
+
+        }
     }
     
     func didBegin(_ contact: SKPhysicsContact) {

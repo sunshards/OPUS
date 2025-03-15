@@ -21,10 +21,15 @@ class SceneManager {
     var minigameState : MinigameState = .hidden
     
     var stanze : [SceneState : Stanza] = [.sala: sala,.cucina : cucina,.laboratorio : laboratorio,.libreria: libreria, .title: titolo]
-    let gameScenes : [MinigameState : String] = [
+    let sceneNames : [MinigameState : String] = [
         .hidden : "GameScene",
         .labirinto : "Labirinto",
         .pozione : "Pozione"
+    ]
+    var savedScenes : [MinigameState : SKScene?] = [
+        .hidden : nil,
+        .labirinto : nil,
+        .pozione : nil
     ]
     
     var xGyro : CGFloat = 0.0
@@ -33,6 +38,7 @@ class SceneManager {
     
     var heartRate : Double = -1
     
+    var hasInitializedMainScene : Bool = false
     var hasCollectedWater : Bool = false
     var hasMoved: Bool = false
     var poisonCollected = false
@@ -61,9 +67,16 @@ class SceneManager {
     func populate() {
         guard let populator = self.populator else {print("Trying to populate but populator not assigned"); return}
         for (_, stanza) in stanze {
-            populator.populate(interactables: stanza.interactives, room: stanza)
+            populator.populate(room: stanza)
             stanza.node?.position = CGPoint.zero
             stanza.hide()
+        }
+    }
+    
+    func depopulate() {
+        guard let populator = self.populator else {print("Trying to depopulate but populator not assigned"); return}
+        for (_, stanza) in stanze {
+            populator.depopulate(room: stanza)
         }
     }
     
@@ -84,17 +97,30 @@ class SceneManager {
     }
     
     func switchToMinigame(state : MinigameState) {
+        if state == .hidden { // Se sei nel gioco principale
+            depopulate()
+        }
+        if self.savedScenes[self.minigameState] == nil {
+            print("saving scene")
+            self.savedScenes[self.minigameState] = self.scene
+        }
+        
         self.minigameState = state
 
-        guard let sceneName = gameScenes[state] else {print("Could not find new scene name"); return}
-        let newScene = SKScene(fileNamed: sceneName)
-        newScene!.size = CGSize(width: 1920, height: 1080)
-        newScene?.scaleMode = .aspectFit
-        self.scene?.view?.presentScene(newScene!, transition: .crossFade(withDuration: 0.5))
-        
+        // faccio prima l'unwrap dal dictionary e poi l'unwrap dell'optional del tipo
+        if let value = savedScenes[self.minigameState], let savedScene = value {
+            print("accessing saved scene")
+            self.scene?.view?.presentScene(savedScene, transition: .crossFade(withDuration: 0.5))
+        } else {
+            guard let sceneName = sceneNames[state] else {print("Could not find new scene name"); return}
+            let newScene = SKScene(fileNamed: sceneName)
+            newScene!.size = CGSize(width: 1920, height: 1080)
+            newScene?.scaleMode = .aspectFit
+            self.scene?.view?.presentScene(newScene!, transition: .crossFade(withDuration: 0.5))
+        }
+
         return;
     }
-    
 }
 
 let sceneManager = SceneManager()

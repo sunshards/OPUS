@@ -29,9 +29,7 @@ let laboratorio = Stanza(state: .laboratorio,
                       touchAction: {(self) in
                           sceneManager.selectRoom(.libreria)
                       },active: true),
-    
-//https://youtu.be/f8mL0_4GeV0?si=czQ1LuuEcC3cZZqO
-    
+        
     InteractiveSprite(name: "labmannaia",
                       touchAction: {(self) in
                           self.playSound(soundName: "Metal")

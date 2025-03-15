@@ -18,8 +18,13 @@ class Populator {
     }
     
     // Rimuove gli sprite normali e li sostituisce con quelli con cui si può interagire
-    func populate(interactables: [InteractiveSprite], room: Stanza) {
+    func populate(room: Stanza) {
+        let interactables : [InteractiveSprite] = room.interactives
         for interactable in interactables {
+            if interactable.isAssigned == true {
+                print("Trying to populate interactable \(interactable) that is already assigned.")
+                return
+            }
             guard let name = interactable.name else {print("Interactable in room \(room.state) has no name"); return}
             guard let node = room.node else {print("Room \(room.state) has no node"); return}
             let child = node.childNode(withName: name)
@@ -29,6 +34,15 @@ class Populator {
                 node.addChild(interactable)
             }
         }
+    }
+    
+    func depopulate(room: Stanza) {
+        for interactive in room.interactives {
+            interactive.removeAllActions()
+            interactive.removeFromParent()
+        }
+        room.interactives.removeAll(keepingCapacity: true)
+        room.interactives = copyInteractivesArray(room.defaultInteractives)
     }
     
     // swap di uno sprite normale con uno interattivo
