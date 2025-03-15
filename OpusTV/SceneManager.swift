@@ -14,8 +14,9 @@ class SceneManager {
 
     var scene : SKScene?
     var light : Light?
-    let inventory = Inventory(position: .zero)
+    let inventory = Inventory()
     var populator : Populator? = nil
+    var textManager : TextManager = TextManager(textNode: SKLabelNode())
     
     var sceneState : SceneState = .sala
     var minigameState : MinigameState = .hidden
@@ -39,12 +40,12 @@ class SceneManager {
     var heartRate : Double = -1
     
     var hasInitializedMainScene : Bool = false
+    var removedAntonio : Bool = false
     var hasCollectedWater : Bool = false
     var hasPaintingMoved : Bool = false
     var hasMoved: Bool = false
     var poisonCollected = false
     
-    var textManager : TextManager = TextManager(textNode: SKLabelNode())
     
     init() {
         mpcManager.delegate = self
@@ -68,7 +69,6 @@ class SceneManager {
         guard let populator = self.populator else {print("Trying to populate but populator not assigned"); return}
         for (_, stanza) in stanze {
             populator.populate(room: stanza)
-            stanza.node?.position = CGPoint.zero
             stanza.hide()
         }
     }
@@ -77,23 +77,6 @@ class SceneManager {
         guard let populator = self.populator else {print("Trying to depopulate but populator not assigned"); return}
         for (_, stanza) in stanze {
             populator.depopulate(room: stanza)
-        }
-    }
-    
-    func removeAntonio(){
-        DispatchQueue.main.async {
-            let antonio = self.scene?.childNode(withName: "sala")!.childNode(withName: "antonio")
-            antonio!.removeFromParent()
-        }
-    }
-    
-    func firstBoot(){
-        if sceneState == .sala && !hasCollectedWater{
-            self.textManager.changeText("Hey I'm kinda thirsty")
-            self.textManager.showForDuration(5)
-            self.textManager.changeText("Could you grab me some water please?")
-            self.textManager.showForDuration(5)
-            self.textManager.textNode.zPosition = 7
         }
     }
     
@@ -107,6 +90,7 @@ class SceneManager {
         stanze[newScene]?.setup()
         stanze[newScene]?.show()
         sceneState = newScene
+        
     }
     
     func phoneTouch() {

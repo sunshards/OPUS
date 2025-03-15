@@ -7,7 +7,7 @@
 
 import SpriteKit
 
-extension GameScene {
+extension SceneManager {
     //MARK: - Analyse the cosllision/contact set up.
     func checkPhysics() {
 
@@ -15,7 +15,7 @@ extension GameScene {
         var physicsNodes = [SKNode]()
 
         //Get all physics bodies
-            enumerateChildNodes(withName: "//.") { node, _ in
+            self.scene?.enumerateChildNodes(withName: "//.") { node, _ in
             if let _ = node.physicsBody {
                 physicsNodes.append(node)
             } else {

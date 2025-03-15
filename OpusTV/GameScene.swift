@@ -10,8 +10,7 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     var width : CGFloat = 1920
     var height : CGFloat = 1080
-    var xInventoryPadding : CGFloat = 80
-    let yInventoryPadding : CGFloat = 80
+
     let lightSensibility : CGFloat = 2000
     
     // START OF THE GAME
@@ -21,7 +20,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sceneManager.assignScene(scene: scene!)
         sceneManager.textManager = TextManager(textNode: childNode(withName: "Text") as! SKLabelNode)
         sceneManager.textManager.hideText()
+        
         sceneManager.light?.setSensibility(sensibility: lightSensibility)
+        
         laboratorio.assignNode(node: childNode(withName: "laboratorio"))
         titolo.assignNode(node: childNode(withName: "title"))
         libreria.assignNode(node:childNode(withName: "libreria"))
@@ -29,14 +30,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         cucina.assignNode(node:childNode(withName: "cucina"))
         sceneManager.populate()
         
-        sceneManager.inventory.setPosition(point: CGPoint(x: -width/2+xInventoryPadding, y: -height/2+yInventoryPadding))
+        let inventoryNode = SKNode()
+        addChild(inventoryNode)
+        sceneManager.inventory.assignNode(n: inventoryNode)
         sceneManager.inventory.regenerateNode()
-        addChild(sceneManager.inventory.node)
 
         if (sceneManager.hasInitializedMainScene == false) {
-
-            sceneManager.inventory.setPosition(point: CGPoint(x: -width/2+xInventoryPadding, y: -height/2+yInventoryPadding))
-            addChild(sceneManager.inventory.node)
             sceneManager.selectRoom(.title)
             sceneManager.hasInitializedMainScene = true
         } else {
@@ -46,6 +45,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
+        //print("beginContact: ", contact.bodyA.node?.name, contact.bodyB.node?.name)
         if contact.bodyA.node?.name == "cursor" {
             if let interactive = contact.bodyB.node as? InteractiveSprite {
                 interactive.hoverOn()
@@ -72,7 +72,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         sceneManager.light?.smoothUpdate()
-        sceneManager.firstBoot()
         let conn = childNode(withName: "title")?.childNode(withName: "connection") as? SKSpriteNode
         if (sceneManager.mpcManager.iPhoneConnected){
             conn?.color = .green

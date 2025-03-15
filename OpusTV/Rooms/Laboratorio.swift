@@ -18,31 +18,31 @@ let laboratorio = Stanza(state: .laboratorio,
     
     InteractiveSprite(name: "libporta", touchAction: {(self) in
         sceneManager.selectRoom(.sala)
-    },active: true),
+    }),
     
     InteractiveSprite(name: "labarile",
                       touchAction: {(self) in
                           self.playSound(soundName: "Legno")
-                      },active: true),
+                      }),
     
     InteractiveSprite(name: "labscale",
                       touchAction: {(self) in
                           sceneManager.selectRoom(.libreria)
-                      },active: true),
+                      }),
         
     InteractiveSprite(name: "labmannaia",
                       touchAction: {(self) in
                           self.playSound(soundName: "Metal")
-                      },active: true),
+                      }),
     
     InteractiveSprite(name: "labcadavere",
                       touchAction: {(self) in
                           self.playSound(soundName: "EasterEgg")
-                      },active: false),
+                      }),
     
     InteractiveSprite(name: "labscale", touchAction: {(self) in
         sceneManager.selectRoom(.libreria)
-    },active: true),
+    }),
     
     InteractiveSprite(name: "labcadavere",
                       touchAction: {(self) in
@@ -50,5 +50,5 @@ let laboratorio = Stanza(state: .laboratorio,
                               sceneManager.inventory.removeItem(InventoryItem(name: "cucfiala"))
                               sceneManager.inventory.addItem(InventoryItem(name: "boccia"))
                           }
-                      } ,active: true)
+                      })
 ])

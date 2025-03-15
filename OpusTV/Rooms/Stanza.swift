@@ -14,6 +14,8 @@ class Stanza {
     var node : SKNode? = nil
     private var audioNodes : [SKAudioNode] = []
     private var action: ((Stanza) -> Void)?
+    static var hiddenRoomPosition : CGPoint = CGPoint(x: 3000, y:3000)
+
 
     init(state: SceneState, action: ((Stanza) -> Void)? = nil, sounds: [String]? = nil, interactives: [InteractiveSprite], node: SKNode? = nil) {
         self.state = state
@@ -56,11 +58,20 @@ class Stanza {
     
     func hide() {
         self.node?.isHidden = true
+        self.node?.position = Stanza.hiddenRoomPosition
         self.stopSounds()
+        for interactive in interactives {
+            interactive.despawn()
+        }
     }
     
     func show() {
         self.node?.isHidden = false
+        self.node?.position = CGPoint.zero
         self.playSounds()
+        for interactive in interactives {
+            interactive.spawn()
+        }
+
     }
 }

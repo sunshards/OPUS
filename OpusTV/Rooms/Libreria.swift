@@ -18,7 +18,7 @@ let libreria = Stanza(state: .libreria,
     
     InteractiveSprite(name: "libporta", touchAction: {(self) in
         sceneManager.selectRoom(.sala)
-    },active: true),
+    }),
     
     InteractiveSprite(name: "libsedia",
                       touchAction: {(self) in
@@ -32,16 +32,16 @@ let libreria = Stanza(state: .libreria,
                               sceneManager.hasMoved = true
                           }
 
-                      }, active: true),
+                      }),
     InteractiveSprite(name: "libscale",
                       touchAction: {(self) in
                           sceneManager.selectRoom(.laboratorio)
-                      },active: true),
+                      }),
     
     InteractiveSprite(name: "libteca",
                       touchAction: {(self) in
                           sceneManager.switchToMinigame(state: .labirinto)
-                      }, active: true),
+                      }),
     
     
 ])

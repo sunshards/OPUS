@@ -9,7 +9,9 @@ import Foundation
 import SpriteKit
 
 let cucina = Stanza(state: .cucina,
-                    
+    action: {(self) in
+        sceneManager.removedAntonio = true
+    },
    sounds : [
     "fuoco"
   ],
@@ -18,29 +20,23 @@ let cucina = Stanza(state: .cucina,
     
     InteractiveSprite(name: "cucporta", touchAction: {(self) in
         sceneManager.selectRoom(.sala)
-    },active: true),
+    }),
     
     InteractiveSprite(name: "cucmestolopieno",
-                      touchAction: {(self) in
-                          if sceneManager.hasCollectedWater{
-                              self.playSound(soundName: "Mestolo2")
-                          }
-                      },active: true),
-    
-    InteractiveSprite(name: "cuccamino",
-                      touchAction: {(self) in
-                          self.playSound(soundName: "Scream")
-                      },active: false),
+      touchAction: {(self) in
+          if sceneManager.hasCollectedWater{
+              self.playSound(soundName: "Mestolo2")
+          }
+      }),
     
     InteractiveSprite(name: "cucacqua",touchAction: {
         (self) in
         sceneManager.hasCollectedWater = true
         sceneManager.inventory.addItem(InventoryItem(name: "cucacqua"))
-        sceneManager.removeAntonio()
         DispatchQueue.main.async {
             self.removeFromParent()
         }
-    },active: true),
+    }),
     
     //MARK: Fiala ancora visbile alla rimozione
     InteractiveSprite(name: "cucfiala",touchAction: {
@@ -51,6 +47,6 @@ let cucina = Stanza(state: .cucina,
                 self.removeFromParent()
             }
         }
-    },active: true)
+    })
     
 ])

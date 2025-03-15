@@ -9,6 +9,7 @@ import Foundation
 import SpriteKit
 
 class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
+    private var spawnAction : ((InteractiveSprite) -> Void)?
     private var touchAction: ((InteractiveSprite) -> Void)?
     private var hoverOnAction: ((InteractiveSprite) -> Void)?
     private var hoverOffAction: ((InteractiveSprite) -> Void)?
@@ -29,13 +30,16 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
     // - hoverOnAction: quando si passa sopra con la torcia,
     // - hoverOffAction: quando si toglie la torcia,
     // - touchAction: quando si ha la torcia sopra e si preme.
+    
+    // SE AGGIORNI INIT RICORDATI DI AGGIORNARE DUPLICATE CHE VIENE CHIAMATA QUANDO VIENE INIZIALIZZATA LA SCENA
     init(name: String,
          text : String? = nil,
          sprite spriteNode: SKSpriteNode? = nil ,
+         spawnAction : ((InteractiveSprite) -> Void)? = nil,
          hoverOnAction: ((InteractiveSprite) -> Void)? = nil,
          hoverOffAction: ((InteractiveSprite) -> Void)? = nil,
          touchAction: ((InteractiveSprite) -> Void)? = nil,
-         active: Bool? = true){
+         active: Bool? = true) {
         self.text = text
         // Se lo sprite è assegnato allora viene subito fatta l'assegnazione,
         // altrimenti viene fatto l'init con lo sprite di default
@@ -47,6 +51,7 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
             super.init(texture:sprite!.texture, color:sprite!.color, size:sprite!.size)
             assignSprite(sprite: sprite!)
         }
+        self.spawnAction = spawnAction
         self.touchAction = touchAction
         self.hoverOnAction = hoverOnAction
         self.hoverOffAction = hoverOffAction
@@ -58,6 +63,7 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
         let duplicate = InteractiveSprite(name: self.name!,
                                           text: self.text,
                                           sprite: nil,
+                                          spawnAction: self.spawnAction,
                                           hoverOnAction: self.hoverOnAction,
                                           hoverOffAction: self.hoverOffAction,
                                           touchAction: self.touchAction,
@@ -82,6 +88,12 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
             self.hasTouched = true
         }
     }
+    func spawn() {
+        self.spawnAction?(self)
+    }
+    func despawn() {
+        self.removeAllActions()
+    }
     
     func playSound(soundName : String) {
         if self.isActive {
@@ -89,12 +101,27 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
         }
     }
     
+    func generatePhysicsBody(size: CGSize) -> SKPhysicsBody {
+        let physicsBody = SKPhysicsBody(rectangleOf: size)
+        physicsBody.affectedByGravity = false
+        physicsBody.allowsRotation = false
+        physicsBody.categoryBitMask = 2
+        physicsBody.collisionBitMask = 0
+        physicsBody.contactTestBitMask = 0
+        physicsBody.fieldBitMask = 0
+        physicsBody.mass = 1
+        return physicsBody
+    }
+    
     func assignSprite(sprite : SKSpriteNode) {
         self.size = sprite.size
         self.lightingBitMask = sprite.lightingBitMask
         self.position = sprite.position
         self.zPosition = sprite.zPosition
-        self.physicsBody = sprite.physicsBody?.copy() as? SKPhysicsBody
+        
+        if let body = sprite.physicsBody {self.physicsBody = body.copy() as? SKPhysicsBody}
+        else {self.physicsBody = generatePhysicsBody(size: self.size)}
+        
         self.lightingBitMask = sprite.lightingBitMask
         self.isPaused = false
         // Controlla se la texture è presente negli asset, altrimenti lo sprite è solo un placeholder

@@ -9,6 +9,8 @@ import SpriteKit
 
 class TextManager {
     let textNode : SKLabelNode
+    var isDisplaying : Bool = false
+    static let textAnimationKey = "textAnimation"
     
     init(textNode: SKLabelNode) {
         self.textNode = textNode
@@ -19,14 +21,35 @@ class TextManager {
     }
     
     func showForDuration(_ duration: TimeInterval) {
-        let sequence : [SKAction] = [
+        let newSequence : [SKAction] = [
             SKAction.hide().reversed(),
             SKAction.wait(forDuration: duration),
             SKAction.hide()
         ]
-        self.textNode.run(SKAction.sequence(sequence))
+//        let currentSequence : [SKAction]
+//        if let currentAnimation = self.textNode.action(forKey: TextManager.textAnimationKey) {
+//            currentSequence = [currentAnimation] + newSequence
+//        } else {
+//            currentSequence = newSequence
+//        }
+        self.textNode.run(SKAction.sequence(newSequence), withKey: TextManager.textAnimationKey)
     }
     
+    func showDialogue(lines : [String], duration: TimeInterval) {
+        guard isDisplaying == false else { print("trying to show dialogue when one is already displayed;"); return }
+        isDisplaying = true
+        var sequence : [SKAction] = []
+        self.changeText(lines[0])
+        sequence.append(SKAction.hide().reversed())
+        for line in lines {
+            sequence.append(SKAction.run({self.changeText(line)}))
+            sequence.append(SKAction.wait(forDuration: duration))
+        }
+        sequence.append(SKAction.hide())
+        sequence.append(SKAction.run({self.isDisplaying = false }))
+        self.textNode.run(SKAction.sequence(sequence), withKey: TextManager.textAnimationKey)
+
+    }
     
     func hideText() {
         textNode.isHidden = true

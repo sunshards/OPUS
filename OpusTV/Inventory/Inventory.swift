@@ -13,35 +13,37 @@ class Inventory {
     private var itemNodes : [SKSpriteNode] = []
 
     var items: [InventoryItem] = []
-    let node : SKNode = SKNode()
-    let background : SKSpriteNode
-    let itemHeight : CGFloat = 100
-    let itemOffset : CGFloat = 40
+    var node : SKNode?
+    var background : SKSpriteNode = SKSpriteNode()
+    let itemHeight : CGFloat = 80
+    let itemOffset : CGFloat = 30
     let padding : CGFloat = 50
-    let zPosition : CGFloat = 5
+    let zPosition : CGFloat = 20
     
-    init(position: CGPoint) {
-        background = SKSpriteNode(color: .black, size: .zero)
-        setPosition(point: position)
-        background.alpha = 0.2
-        node.zPosition = self.zPosition
-        node.addChild(background)
-        background.zPosition = 1
-        regenerateNode()
+    var scene : SKScene? {
+        return self.node?.scene
     }
     
+    let xInventoryPadding : CGFloat = 80
+    let yInventoryPadding : CGFloat = 80
+        
     func setPosition(point : CGPoint) {
         position = point
-        node.position = point
+        node?.position = point
         background.position = point
-        regenerateNode()
+    }
+    
+    func positionOnScreen() {
+        // positions the inventory on the top left
+        guard let width = scene?.frame.width else { print("couldnt find width in inventory placement"); return }
+        guard let height = scene?.frame.height else { print("couldnt find height in inventory placement"); return  }
+        self.setPosition(point: CGPoint(x: -width/2+self.xInventoryPadding, y: height/2-self.yInventoryPadding))
     }
     
     func addItem(_ item: InventoryItem) {
         items.append(item)
         regenerateNode()
     }
-    
     
     func removeItem(_ item: InventoryItem) {
         items.removeAll{ $0.name == item.name }
@@ -52,10 +54,22 @@ class Inventory {
         return items.contains { $0.name == itemName }
     }
     
+    func assignNode(n : SKNode) {
+        self.node?.removeAllActions()
+        self.node?.removeFromParent()
+        self.node = n
+        node?.zPosition = self.zPosition
+        background = SKSpriteNode(color: .black, size: .zero)
+        background.alpha = 0.2
+        background.zPosition = 15
+        node?.addChild(background)
+        positionOnScreen()
+    }
+    
     func regenerateNode() {
         // The node is placed such that the inventory position is in the bottom left of the background
         DispatchQueue.main.async {
-            self.node.removeAllChildren()// Clear previous items
+            self.node?.removeAllChildren()
         }
 
         var xOffset : CGFloat = 0
@@ -66,7 +80,7 @@ class Inventory {
             itemNode.position.x = xOffset
             itemNode.position.y = itemHeight/2+padding/2
             itemNode.zPosition = 1
-            node.addChild(itemNode)
+            self.node?.addChild(itemNode)
             itemNodes.append(itemNode)
         }
         background.size = CGSize(width: xOffset+padding, height: itemHeight+padding)
