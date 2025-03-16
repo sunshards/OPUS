@@ -2,7 +2,7 @@
 //  InventoryScene.swift
 //  OpusTV
 //
-//  Created by Andrea Iannaccone on 06/03/25.
+//  Created by Simone Boscaglia on 06/03/25.
 //
 
 import SpriteKit

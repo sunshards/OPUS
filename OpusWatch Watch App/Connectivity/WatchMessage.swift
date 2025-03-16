@@ -1,6 +1,6 @@
 //
 //  WatchMessage.swift
-//  OpusIOS
+//  OpusWatch Watch App
 //
 //  Created by Simone Boscaglia on 11/03/25.
 //

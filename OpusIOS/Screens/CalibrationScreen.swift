@@ -1,5 +1,5 @@
 //
-//  Calibrazione.swift
+//  CalibrationScreen.swift
 //  OpusIOS
 //
 //  Created by Simone Boscaglia on 16/03/2025.

@@ -1,6 +1,6 @@
 //
 //  Interactable.swift
-//  OpusIOS
+//  OpusTV
 //
 //  Created by Simone Boscaglia on 05/03/25.
 //

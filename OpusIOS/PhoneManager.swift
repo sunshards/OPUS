@@ -7,7 +7,6 @@
 
 import SpriteKit
 import CoreMotion
-//import _SpriteKit_SwiftUI
 
 class PhoneManager {
     static let shared: PhoneManager = PhoneManager() //singleton

@@ -1,8 +1,8 @@
 //
-//  GameScene.swift
-//  templateSpriteKit
+//  Labirinto.swift
+//  OpusTV
 //
-//  Created by Ignazio Finizio on 07/04/22.
+//  Created by Simone Boscaglia on 28/02/25.
 //
 
 import SpriteKit

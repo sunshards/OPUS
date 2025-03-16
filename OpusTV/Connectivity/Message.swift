@@ -1,6 +1,6 @@
 //
 //  Message.swift
-//  opusTV
+//  OpusTV
 //
 //  Created by Simone Boscaglia on 10/02/25.
 //
@@ -28,7 +28,7 @@ struct Vector3D : Codable {
 }
 
 struct Message : Codable {
-    let type : MessageType?
+    let type : MessageType
     let pauseAction : pauseAction?
     let vector : Vector3D?
     var state : Bool?

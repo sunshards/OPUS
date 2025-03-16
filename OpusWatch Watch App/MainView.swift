@@ -1,8 +1,8 @@
 //
 //  MainView.swift
-//  HeartLogger
+//  OpusWatch Watch App
 //
-//  Created by Andrea Iannaccone on 09/03/25.
+//  Created by Simone Boscaglia on 09/03/25.
 //
 
 import SwiftUI

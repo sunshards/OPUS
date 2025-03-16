@@ -1,6 +1,6 @@
 //
 //  MPCManager.swift
-//  PartyEat_iOS
+//  OpusIOS
 //
 //  Created by Simone Boscaglia on 10/02/25.
 //

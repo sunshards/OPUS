@@ -1,8 +1,8 @@
 //
 //  GameScene.swift
-//  opusTV
+//  OpusTV
 //
-//  Created by Andrea Iannaccone on 13/02/25.
+//  Created by Simone Boscaglia on 13/02/25.
 //
 
 import SpriteKit

@@ -1,5 +1,5 @@
 //
-//  RoomGenerator.swift
+//  Populator.swift
 //  OpusTV
 //
 //  Created by Simone Boscaglia on 06/03/25.

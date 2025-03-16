@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  HeartLogger Watch App
+//  OpusWatch Watch App
 //
 //  Created by Simone Boscaglia on 07/02/25.
 //

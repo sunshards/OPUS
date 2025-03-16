@@ -1,6 +1,6 @@
 //
 //  MPCManager.swift
-//  opusTV
+//  OpusTV
 //
 //  Created by Simone Boscaglia on 10/02/25.
 //

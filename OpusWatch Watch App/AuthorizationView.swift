@@ -1,6 +1,6 @@
 //
 //  AuthorizationView.swift
-//  HeartLogger
+//  OpusWatch Watch App
 //
 //  Created by Andrea Iannaccone on 10/03/25.
 //
