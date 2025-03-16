@@ -23,15 +23,15 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
     }
     static let defaultSpriteNode = SKSpriteNode(color: .clear, size: CGSize(width: 1, height: 1))
     
-    // Dato uno sprite a schermo, creane la versione interagibile (devi rimuovere lo sprite sottostante)
-    // Se non viene dato uno sprite ne viene assegnato uno blank di default, poi bisogna assegnarlo
+    /// Dato uno sprite a schermo, creane la versione interagibile (devi rimuovere lo sprite sottostante)
+    /// Se non viene dato uno sprite ne viene assegnato uno blank di default, poi bisogna assegnarlo
     
-    // Ogni sprite ha una:
-    // - hoverOnAction: quando si passa sopra con la torcia,
-    // - hoverOffAction: quando si toglie la torcia,
-    // - touchAction: quando si ha la torcia sopra e si preme.
+    /// Ogni sprite ha una:
+    /// - hoverOnAction: quando si passa sopra con la torcia,
+    /// - hoverOffAction: quando si toglie la torcia,
+    /// - touchAction: quando si ha la torcia sopra e si preme.
     
-    // SE AGGIORNI INIT RICORDATI DI AGGIORNARE DUPLICATE CHE VIENE CHIAMATA QUANDO VIENE INIZIALIZZATA LA SCENA
+    /// SE AGGIORNI INIT RICORDATI DI AGGIORNARE DUPLICATE CHE VIENE CHIAMATA QUANDO VIENE INIZIALIZZATA LA SCENA
     init(name: String,
          text : String? = nil,
          sprite spriteNode: SKSpriteNode? = nil ,
@@ -154,8 +154,4 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
-    
-    
-    
 }

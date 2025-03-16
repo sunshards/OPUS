@@ -1,6 +1,6 @@
 //
 //  Message.swift
-//  PartyEat_iOS
+//  opusTV
 //
 //  Created by Simone Boscaglia on 10/02/25.
 //
@@ -12,6 +12,13 @@ enum MessageType : Codable {
     case heartrate
     case calibration
     case gyroscope
+    case pauseAction
+}
+
+enum pauseAction : Codable {
+    case resume
+    case calibration
+    case backtotitle
 }
 
 struct Vector3D : Codable {
@@ -21,7 +28,8 @@ struct Vector3D : Codable {
 }
 
 struct Message : Codable {
-    let type : MessageType
+    let type : MessageType?
+    let pauseAction : pauseAction?
     let vector : Vector3D?
     var state : Bool?
 

@@ -30,9 +30,11 @@ let sala : Stanza = Stanza(state: .sala,
                       },
                       hoverOnAction: {(self) in
                           sceneManager.textManager.showDialogue(lines: [
-                            "I don't feel well...",
-                            "Please, go grab me some water."
-                          ], duration: 3)
+                            "Oh hey there!",
+                            "Thanks for coming so fast!",
+                            "I'm not feeling well...",
+                            "Could you grab me some water, please?"
+                          ], duration: 2.5)
                       }),
     
     InteractiveSprite(name: "salavasopieno",

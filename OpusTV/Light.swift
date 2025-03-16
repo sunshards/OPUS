@@ -34,8 +34,8 @@ class Light {
         hasInitialized = true
     }
     
-    // Questa è la posizione che viene impostata ma la luce non viene mossa.
-    // La luce viene mostrata nella posizione displayPosition che viene modificata nello smoothUpdate
+    /// Questa è la posizione che viene impostata ma la luce non viene mossa.
+    /// La luce viene mostrata nella posizione displayPosition che viene modificata nello smoothUpdate
     func move(to point : CGPoint) {
         position = point
     }
@@ -92,8 +92,8 @@ class Light {
         self.sensibility = sensibility
     }
     
-    // fa partire l'azione del primo sprite interattivo non nascosto che trova
-    // se la luce non è abilitata invece il tocco viene gestito in modo diverso dallo sceneManager
+    /// fa partire l'azione del primo sprite interattivo non nascosto che trova
+    /// se la luce non è abilitata invece il tocco viene gestito in modo diverso dallo sceneManager
     func touch() {
         guard isEnabled == true else {sceneManager.handleDisabledTouch(); return}
         var displayed : [InteractiveSprite] = []

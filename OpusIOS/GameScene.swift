@@ -1,8 +1,8 @@
 //
 //  GameScene.swift
-//  templateSpriteKit
+//  opusTV
 //
-//  Created by Ignazio Finizio on 07/04/22.
+//  Created by Andrea Iannaccone on 03/02/25.
 //
 
 import SpriteKit
@@ -52,7 +52,7 @@ class GameScene: SKScene {
                 }
                 
                 let attitudeVector = Vector3D(x: motion.attitude.yaw, y: motion.attitude.pitch, z: motion.attitude.roll)
-                let message = Message(type: .gyroscope, vector : attitudeVector)
+                let message = Message(type: .gyroscope, pauseAction: nil, vector : attitudeVector)
                 self.mpcManager.send(message: message)
             }
         }
@@ -70,7 +70,7 @@ class GameScene: SKScene {
             self.xGyroTotal = 0
             self.yGyroTotal = 0
             self.zGyroTotal = 0
-            let message = Message(type: .calibration, vector: nil, state: true)
+            let message = Message(type: .calibration, pauseAction: nil, vector: nil, state: true)
             self.mpcManager.send(message: message)
             hasCalibrated = true
         } else {
@@ -78,7 +78,7 @@ class GameScene: SKScene {
                 print("toccato")
                 scene?.view?.presentScene(pauseScreen)
             }
-            let message = Message(type: .touch, vector: nil, state: nil)
+            let message = Message(type: .touch, pauseAction: nil, vector: nil, state: nil)
             self.mpcManager.send(message: message)
         }
     }

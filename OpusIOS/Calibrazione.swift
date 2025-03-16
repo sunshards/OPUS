@@ -33,7 +33,7 @@ class Calibrazione: SKScene{
         let touchLocation = touches.first!.location(in: self)
         print("\(ack.contains(touchLocation))")
         if ack.contains(touchLocation) {
-            let message = Message(type: .calibration, vector: nil, state: true)
+            let message = Message(type: .calibration, pauseAction: nil, vector: nil, state: true)
             mpcManager.send(message: message)
             print("fatto")
             scene?.view?.presentScene(mainScene)

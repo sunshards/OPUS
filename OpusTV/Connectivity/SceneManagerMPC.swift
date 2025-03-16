@@ -35,11 +35,22 @@ extension SceneManager : MPCManagerDelegate {
         else if message.type == .touch {
             phoneTouch()
         }
+        
+        else if message.type == .pauseAction {
+            scene?.view?.isPaused = true
+            if message.pauseAction == .resume {
+                scene?.view?.isPaused = false
+            }
+            else if message.pauseAction == .backtotitle {
+                sceneManager.selectRoom(.title)
+            }
+            else if message.pauseAction == .calibration {
+                
+            }
+        }
     }
     
     func mpcManager(_ manager: MPCManager, userIsConnected user: String) {
         mpcManager.iPhoneConnected = true
     }
-    
-    
 }
