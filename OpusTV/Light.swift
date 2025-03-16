@@ -10,6 +10,7 @@ import SpriteKit
 class Light {
     var lightNode : SKLightNode = SKLightNode()
     var cursor : SKSpriteNode = SKSpriteNode()
+    var cursorAlpha : CGFloat = 0.2
 
     var position = CGPoint.zero
     var displayPosition = CGPoint.zero
@@ -22,10 +23,27 @@ class Light {
     var cursorVisible : Bool = true
     var hasInitialized : Bool = false
     
+    var flickerAnimation : SKAction {
+        var actions : [SKAction] = []
+        for i in 1...5 {
+            actions.append(SKAction.run {print("disable\(i)"); self.disable()})
+            actions.append(SKAction.wait(forDuration: 0.5/Double(i)))
+            actions.append(SKAction.run {print("enable\(i)");self.enable()})
+            actions.append(SKAction.wait(forDuration: 0.5/Double(i)))
+        }
+        actions.append(SKAction.run {self.enable()})
+        
+        return SKAction.sequence(actions)
+    }
+    
     init() {}
     
     init(lightNode : SKLightNode, cursor : SKSpriteNode) {
         setup(lightNode: lightNode, cursor: cursor)
+    }
+    
+    func flicker() {
+        self.lightNode.run(flickerAnimation)
     }
     
     func setup(lightNode : SKLightNode, cursor : SKSpriteNode) {
@@ -60,7 +78,7 @@ class Light {
     }
     
     func showCursor() {
-        cursor.alpha = 1
+        cursor.alpha = cursorAlpha
         cursorVisible = true
     }
     

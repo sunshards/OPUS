@@ -21,6 +21,8 @@ class SceneManager {
     var sceneState : SceneState = .sala
     var minigameState : MinigameState = .hidden
     
+    var mostro : Mostro = Mostro()
+    
     var stanze : [SceneState : Stanza] = [.sala: sala,.cucina : cucina,.laboratorio : laboratorio,.libreria: libreria, .title: titolo]
     let sceneNames : [MinigameState : String] = [
         .hidden : "GameScene",

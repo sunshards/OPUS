@@ -37,7 +37,7 @@ class Inventory {
         // positions the inventory on the top left
         guard let width = scene?.frame.width else { print("couldnt find width in inventory placement"); return }
         guard let height = scene?.frame.height else { print("couldnt find height in inventory placement"); return  }
-        self.setPosition(point: CGPoint(x: -width/2+self.xInventoryPadding, y: height/2-self.yInventoryPadding))
+        self.setPosition(point: CGPoint(x: -width/2+self.xInventoryPadding, y: height/2-2*self.yInventoryPadding))
     }
     
     func addItem(_ item: InventoryItem) {

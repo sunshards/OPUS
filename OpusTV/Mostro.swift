@@ -5,14 +5,24 @@
 //  Created by Simone Boscaglia on 09/03/25.
 //
 
+enum MonsterState {
+    case idle
+    case heartrate
+    case jumpscare
+}
+
 import SpriteKit
 
 class Mostro {
     var sprite : InteractiveSprite?
+    var light : SKLightNode? = nil
     let jumpscareAnimation : SKAction
+    var state : MonsterState = .idle
 
-    init(position : CGPoint?, room: Stanza?) {
-        jumpscareAnimation = AnimationManager.generateAnimation(atlasName: "jumpscare", animationName: "m", numberOfFrames: 6, timePerFrame: 0.5)
+    init(position : CGPoint? = nil, room: Stanza? = nil) {
+        let animation = AnimationManager.generateAnimation(atlasName: "jumpscare", animationName: "m", numberOfFrames: 6, timePerFrame: 0.05)
+        let scaleAction = SKAction.scale(by: 1.5, duration: 0.3)
+        jumpscareAnimation = SKAction.group([animation, scaleAction])
         if let position, let room {
             spawn(position: position, room: room)
         }
@@ -24,16 +34,27 @@ class Mostro {
     }
     
     func spawn(position: CGPoint, room: Stanza) {
+        guard let populator = sceneManager.populator else {print("Trying to spawn monster without populator"); return}
         guard let stanza = room.node else { print("Trying to spawn monster in room without node "); return}
         let monsterNode : SKSpriteNode = SKSpriteNode(imageNamed: "mostro")
         monsterNode.position = position
         monsterNode.zPosition = 5
         monsterNode.lightingBitMask = 2
-        let interactive = InteractiveSprite(name: "mostro", sprite: monsterNode, hoverOnAction: {(self) in
-            print("ciao")
+        room.node?.addChild(monsterNode)
+        let interactive = InteractiveSprite(name: "mostro", sprite: monsterNode, touchAction: {(self) in
+            sceneManager.light?.flicker()
+            if sceneManager.mostro.state == .idle {
+                //sceneManager.mostro.startIdleAnimation()
+                sceneManager.mostro.state = .jumpscare
+            }
         })
+        populator.swap(interactable: interactive, sprite: monsterNode)
+        let lightNode = SKLightNode()
+        lightNode.falloff = 5
+        lightNode.position = CGPoint(x: 0, y: interactive.frame.maxY * 0.8)
+        interactive.addChild(lightNode)
+        self.light = lightNode
         self.sprite = interactive
-        stanza.addChild(interactive)
     }
     
     func despawn() {

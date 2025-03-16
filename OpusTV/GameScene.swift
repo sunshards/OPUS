@@ -29,7 +29,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sala.assignNode(node:childNode(withName: "sala"))
         cucina.assignNode(node:childNode(withName: "cucina"))
         sceneManager.populate()
-        
+        sceneManager.mostro.spawn(position: .zero, room: cucina)
+
         let inventoryNode = SKNode()
         addChild(inventoryNode)
         sceneManager.inventory.assignNode(n: inventoryNode)

@@ -14,9 +14,6 @@ class GameScene: SKScene {
     let wcManager = WCManager.shared
     let wcDelegate = WCDelegate()
     let motionManager = CMMotionManager()
-    var xGyroTotal : Double = 0.0
-    var yGyroTotal : Double = 0.0
-    var zGyroTotal : Double = 0.0
     
     var hasCalibrated : Bool = false
 
@@ -67,19 +64,18 @@ class GameScene: SKScene {
                 referenceAttitude = currentAttitude.copy() as? CMAttitude
                 print("Attitude frame reset!")
             }
-            self.xGyroTotal = 0
-            self.yGyroTotal = 0
-            self.zGyroTotal = 0
             let message = Message(type: .calibration, vector: nil, state: true)
             self.mpcManager.send(message: message)
             hasCalibrated = true
         } else {
             if(button.contains(touchLocation)){
-                print("toccato")
+                let message = Message(type: .pause, vector: nil, state: true)
                 scene?.view?.presentScene(pauseScreen)
             }
-            let message = Message(type: .touch, vector: nil, state: nil)
-            self.mpcManager.send(message: message)
+            else {
+                let message = Message(type: .touch, vector: nil, state: nil)
+                self.mpcManager.send(message: message)
+            }
         }
     }
     
