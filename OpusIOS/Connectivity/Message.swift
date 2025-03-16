@@ -12,7 +12,13 @@ enum MessageType : Codable {
     case heartrate
     case calibration
     case gyroscope
-    case pause
+    case pauseAction
+}
+
+enum PauseAction : Codable {
+    case resume
+    case calibration
+    case backtotitle
 }
 
 struct Vector3D : Codable {
@@ -22,7 +28,8 @@ struct Vector3D : Codable {
 }
 
 struct Message : Codable {
-    let type : MessageType
+    let type : MessageType?
+    let pauseAction : PauseAction?
     let vector : Vector3D?
     var state : Bool?
     
