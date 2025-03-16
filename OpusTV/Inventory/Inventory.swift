@@ -50,7 +50,7 @@ class Inventory {
         regenerateNode()
     }
     
-    func checkItemExists(_ itemName: String) -> Bool {
+    func hasItem(_ itemName: String) -> Bool {
         return items.contains { $0.name == itemName }
     }
     

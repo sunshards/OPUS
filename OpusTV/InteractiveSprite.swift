@@ -83,16 +83,23 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
         }
     }
     func run() {
-        if self.isActive{
-            self.touchAction?(self)
-            self.hasTouched = true
-        }
+        self.touchAction?(self)
+        self.hasTouched = true
     }
     func spawn() {
         self.spawnAction?(self)
     }
     func despawn() {
         self.removeAllActions()
+    }
+    
+    func hide() {
+        self.isActive = false
+        self.isHidden = true
+    }
+    func show() {
+        self.isActive = true
+        self.isHidden = false
     }
     
     func playSound(soundName : String) {
@@ -111,6 +118,13 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
         physicsBody.fieldBitMask = 0
         physicsBody.mass = 1
         return physicsBody
+    }
+    
+    func delete() {
+        DispatchQueue.main.async {
+            self.removeAllActions()
+            self.removeFromParent()
+        }
     }
     
     func assignSprite(sprite : SKSpriteNode) {

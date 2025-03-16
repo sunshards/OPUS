@@ -28,7 +28,6 @@ class Pozione: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        guard let light = sceneManager.light else {print("update could not find light"); return}
         sceneManager.light?.smoothUpdate()
         highlightObjects()
 

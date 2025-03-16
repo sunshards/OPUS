@@ -33,9 +33,7 @@ let cucina = Stanza(state: .cucina,
         (self) in
         sceneManager.hasCollectedWater = true
         sceneManager.inventory.addItem(InventoryItem(name: "cucacqua"))
-        DispatchQueue.main.async {
-            self.removeFromParent()
-        }
+        self.delete()
     }),
     
     //MARK: Fiala ancora visbile alla rimozione
@@ -43,9 +41,7 @@ let cucina = Stanza(state: .cucina,
         (self) in
         if sceneManager.hasCollectedWater{
             sceneManager.inventory.addItem(InventoryItem(name: "cucfiala"))
-            DispatchQueue.main.async {
-                self.removeFromParent()
-            }
+            self.delete()
         }
     })
     

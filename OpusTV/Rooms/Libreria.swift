@@ -25,13 +25,17 @@ let libreria = Stanza(state: .libreria,
                           self.playSound(soundName: "Sedia2")
                       }),
     InteractiveSprite(name: "libquadro",
+                      spawnAction: {(self) in
+                          if sceneManager.hasPaintingMoved {
+                              self.position = CGPoint(x: 220, y: 115)
+                          }
+                      },
                       touchAction: {(self) in
-                          if   !sceneManager.hasMoved && sceneManager.hasCollectedWater {
+                          if   !sceneManager.hasPaintingMoved && sceneManager.canMovePainting {
                               self.run(SKAction.move(to: CGPoint(x: 220, y: 115), duration: 5))
                               self.playSound(soundName: "PassaggioSegreto")
-                              sceneManager.hasMoved = true
+                              sceneManager.hasPaintingMoved = true
                           }
-
                       }),
     InteractiveSprite(name: "libscale",
                       touchAction: {(self) in
@@ -43,5 +47,15 @@ let libreria = Stanza(state: .libreria,
                           sceneManager.switchToMinigame(state: .labirinto)
                       }),
     
+    InteractiveSprite(name: "liblibro1", touchAction: {(self) in
+        sceneManager.popupImage(imageName: "libro1")
+    }),
+    InteractiveSprite(name: "liblibro2", touchAction: {(self) in
+        sceneManager.popupImage(imageName: "libro2")
+    }),
+    InteractiveSprite(name: "liblibro3", touchAction: {(self) in
+        sceneManager.popupImage(imageName: "libro3")
+        sceneManager.canMovePainting = true
+    }),
     
 ])

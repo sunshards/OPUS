@@ -39,12 +39,15 @@ class SceneManager {
     
     var heartRate : Double = -1
     
+    var isPopupDisplayed : Bool = false
+    
     var hasInitializedMainScene : Bool = false
     var removedAntonio : Bool = false
     var hasCollectedWater : Bool = false
+    var canMovePainting : Bool = false
     var hasPaintingMoved : Bool = false
-    var hasMoved: Bool = false
     var poisonCollected = false
+    var hasOpenedChest = false
     
     
     init() {
@@ -125,6 +128,42 @@ class SceneManager {
         }
 
         return;
+    }
+    
+    func handleDisabledTouch() {
+        if isPopupDisplayed {
+            disablePopup()
+        }
+    }
+    
+    func popupImage(imageName: String) {
+        guard let scene = self.scene else {print("popupimage could not find scene"); return}
+        guard let _ = UIImage(named: imageName) else {print("popupImage could not find imageName: \(imageName)"); return}
+        let darkNode = SKSpriteNode(color:.black, size: scene.size)
+        darkNode.name = "SceneManager_DarkBackdrop"
+        darkNode.alpha = 0.5
+        darkNode.zPosition = 100
+        let imageNode = SKSpriteNode(imageNamed: imageName)
+        imageNode.name = "SceneManager_Popup"
+        imageNode.position = CGPoint(x: 0, y: 0)
+        imageNode.zPosition = darkNode.zPosition+1
+        scaleProportionally(sprite: imageNode, axis: .x, value: scene.frame.width/2)
+        scene.addChild(darkNode)
+        scene.addChild(imageNode)
+        self.light?.disable()
+        isPopupDisplayed = true
+    }
+    
+    func disablePopup() {
+        guard let scene = self.scene else {print("disablepopup could not find scene"); return}
+        DispatchQueue.main.async {
+            scene.childNode(withName: "SceneManager_Popup")?.removeAllActions()
+            scene.childNode(withName: "SceneManager_Popup")?.removeFromParent()
+            scene.childNode(withName: "SceneManager_DarkBackdrop")?.removeAllActions()
+            scene.childNode(withName: "SceneManager_DarkBackdrop")?.removeFromParent()
+        }
+        self.light?.enable()
+        isPopupDisplayed = false
     }
 }
 

@@ -17,8 +17,9 @@ class Light {
     var smoothness : Double = 0.15
     var lastCursorContacts : Int = 0
     
+    var isEnabled : Bool = true
     var lightVisible : Bool = true
-    var cursorVisible : Bool = false
+    var cursorVisible : Bool = true
     var hasInitialized : Bool = false
     
     init() {}
@@ -53,16 +54,6 @@ class Light {
         cursor.position = CGPoint(x: displayPosition.x + transpose.x, y: displayPosition.y + transpose.y)
     }
     
-    func hideLight() {
-        lightNode.isEnabled = false
-        lightVisible = false
-    }
-    
-    func showLight() {
-        lightNode.isEnabled = true
-        lightVisible = true
-    }
-    
     func hideCursor() {
         cursor.alpha = 0
         cursorVisible = false
@@ -73,24 +64,50 @@ class Light {
         cursorVisible = true
     }
     
+    func hideLight() {
+        lightNode.isEnabled = false
+        lightVisible = false
+    }
+    
+    func showLight() {
+        lightNode.isEnabled = true
+        lightVisible = true
+
+    }
+    
+    func enable() {
+        showLight()
+        showCursor()
+        self.isEnabled = true
+    }
+    
+    func disable() {
+        hideLight()
+        hideCursor()
+        self.isEnabled = false
+    }
+
+    
     func setSensibility(sensibility : CGFloat) {
         self.sensibility = sensibility
     }
     
     // fa partire l'azione del primo sprite interattivo non nascosto che trova
+    // se la luce non è abilitata invece il tocco viene gestito in modo diverso dallo sceneManager
     func touch() {
+        guard isEnabled == true else {sceneManager.handleDisabledTouch(); return}
         var displayed : [InteractiveSprite] = []
         guard let contacts = cursor.physicsBody?.allContactedBodies() else {return}
         for sprite in contacts {
             if let interactive = sprite.node as? InteractiveSprite {
-                if interactive.room?.isHidden == false {//&& !alreadyInteracted.contains(interactive){
+                if interactive.room?.isHidden == false && interactive.isActive {
                     displayed.append(interactive)
                 }
             }
         }
         if let highestTouched = displayed.max(by: {$0.zPosition < $1.zPosition}) {
             highestTouched.run()
+            print("run")
         }
-
     }
 }

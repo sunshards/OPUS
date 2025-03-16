@@ -48,9 +48,7 @@ class Mostro {
     }
     
     func despawn() {
-        DispatchQueue.main.async {
-            self.sprite?.removeFromParent()
-        }
+        self.sprite?.delete()
     }
 
 }

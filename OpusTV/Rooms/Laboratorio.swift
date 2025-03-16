@@ -46,7 +46,7 @@ let laboratorio = Stanza(state: .laboratorio,
     
     InteractiveSprite(name: "labcadavere",
                       touchAction: {(self) in
-                          if sceneManager.inventory.checkItemExists("cucfiala"){
+                          if sceneManager.inventory.hasItem("boccia"){
                               sceneManager.inventory.removeItem(InventoryItem(name: "cucfiala"))
                               sceneManager.inventory.addItem(InventoryItem(name: "boccia"))
                           }
