@@ -14,8 +14,8 @@ class PhoneManager {
     let mpcManager = MPCManager.shared
     let wcManager = WCManager.shared
     
+    var currentScene : SKScene? = nil
     let motionManager = CMMotionManager()
-    var hasCalibrated : Bool = false
     let gyroBound : Double = 0.05
     private var referenceAttitude : CMAttitude?
     
@@ -55,7 +55,6 @@ class PhoneManager {
         
         let message = Message(type: .calibration, pauseAction: nil, vector: nil, state: true)
         self.mpcManager.send(message: message)
-        hasCalibrated = true
     }
     
 }

@@ -47,13 +47,6 @@
 			);
 			target = 3DF46D802D6CA6E2008109BE /* OpusIOS */;
 		};
-		3DDBB5292D877AE90031CDDA /* Exceptions for "OpusWatch Watch App" folder in "OpusWatch Watch App" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"OpusWatch-Watch-App-Info.plist",
-			);
-			target = 3DFEB5A12D80F202008CA402 /* OpusWatch Watch App */;
-		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -67,9 +60,6 @@
 		};
 		3DFEB5A32D80F202008CA402 /* OpusWatch Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				3DDBB5292D877AE90031CDDA /* Exceptions for "OpusWatch Watch App" folder in "OpusWatch Watch App" target */,
-			);
 			path = "OpusWatch Watch App";
 			sourceTree = "<group>";
 		};
