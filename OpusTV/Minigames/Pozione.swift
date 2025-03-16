@@ -10,7 +10,6 @@ import SpriteKit
 class Pozione: SKScene {
     let velocity : CGFloat = 1.5
     let lightSensibility : CGFloat = 2000
-    var cauldronTextures : [SKTexture] = []
     var cauldronNode : SKSpriteNode = SKSpriteNode()
     var itemPositionsNode : SKNode = SKNode()
     var totalItems : Int = 9
@@ -21,8 +20,8 @@ class Pozione: SKScene {
         
         self.itemPositionsNode = childNode(withName: "ItemPositions")!
         self.cauldronNode = childNode(withName: "calderone") as! SKSpriteNode
-        self.cauldronTextures = importAnimationAtlas(atlas: SKTextureAtlas(named: "calderone"), animationName: "calderone", numberOfFrames: 16)
-        let cauldronAnimation = SKAction.animate(with: cauldronTextures, timePerFrame: 0.1)
+        let cauldronAnimation = AnimationManager.generateAnimation(atlasName: "calderone", animationName: "calderone", numberOfFrames: 16, timePerFrame: 0.1)
+        //let cauldronAnimation = SKAction.animate(with: cauldronTextures, timePerFrame: 0.1)
         cauldronNode.run(SKAction.repeatForever(cauldronAnimation))
         placeInventory()
     }
@@ -31,15 +30,6 @@ class Pozione: SKScene {
         sceneManager.light?.smoothUpdate()
         highlightObjects()
 
-    }
-    
-    private func importAnimationAtlas(atlas : SKTextureAtlas, animationName : String, numberOfFrames : Int) -> [SKTexture] {
-        var animation : [SKTexture] = []
-        for i in 1...numberOfFrames {
-            let textureName = animationName + "_\(i)"
-            animation.append(atlas.textureNamed(textureName))
-        }
-        return animation
     }
     
     func addToCauldron(item : InteractiveSprite) {
@@ -58,14 +48,14 @@ class Pozione: SKScene {
             let node = inventory.createInventoryNode(itemName: item.name, point: position)
             scaleProportionally(sprite: node, axis: .y, value: positionNode.frame.height)
             node.lightingBitMask = 1
-            node.zPosition = positionNode.zPosition + 1
-            node.physicsBody = SKPhysicsBody(circleOfRadius: node.size.height)
-            node.physicsBody?.affectedByGravity = false
-            node.physicsBody?.allowsRotation = false
-            node.physicsBody?.categoryBitMask = 2
-            node.physicsBody?.collisionBitMask = 0
-            node.physicsBody?.fieldBitMask = 0
-            node.physicsBody?.contactTestBitMask = 0
+//            node.zPosition = positionNode.zPosition + 1
+//            node.physicsBody = SKPhysicsBody(circleOfRadius: node.size.height)
+//            node.physicsBody?.affectedByGravity = false
+//            node.physicsBody?.allowsRotation = false
+//            node.physicsBody?.categoryBitMask = 2
+//            node.physicsBody?.collisionBitMask = 0
+//            node.physicsBody?.fieldBitMask = 0
+//            node.physicsBody?.contactTestBitMask = 0
 
             itemPositionsNode.addChild(node)
             let interactive : InteractiveSprite = InteractiveSprite(name: item.name, sprite: node, touchAction: {(self) in
@@ -81,6 +71,7 @@ class Pozione: SKScene {
             positionNode.isHidden = true
         }
     }
+    
     
     func highlightObjects() {
         guard let scene = self.scene else {print("highlight objects could not find scene"); return}

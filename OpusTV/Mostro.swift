@@ -9,29 +9,18 @@ import SpriteKit
 
 class Mostro {
     var sprite : InteractiveSprite?
-    
-    private var jumpscare: [SKTexture] = []
+    let jumpscareAnimation : SKAction
 
     init(position : CGPoint?, room: Stanza?) {
+        jumpscareAnimation = AnimationManager.generateAnimation(atlasName: "jumpscare", animationName: "m", numberOfFrames: 6, timePerFrame: 0.5)
         if let position, let room {
             spawn(position: position, room: room)
         }
-        self.jumpscare = importAnimationAtlas(atlas: SKTextureAtlas(named: "jumpscare"), animationName: "m", numberOfFrames: 6)
     }
     
     func startIdleAnimation() {
         guard let sprite = self.sprite else { print("Trying to start animation without a sprite"); return }
-        let jumpscareAnimation = SKAction.animate(with: jumpscare, timePerFrame: 0.3)
         sprite.run(jumpscareAnimation)
-    }
-    
-    private func importAnimationAtlas(atlas : SKTextureAtlas, animationName : String, numberOfFrames : Int) -> [SKTexture] {
-        var animation : [SKTexture] = []
-        for i in 1...numberOfFrames {
-            let textureName = animationName + "_\(i)"
-            animation.append(atlas.textureNamed(textureName))
-        }
-        return animation
     }
     
     func spawn(position: CGPoint, room: Stanza) {

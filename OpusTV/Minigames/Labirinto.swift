@@ -18,6 +18,12 @@ class Labirinto: SKScene, SKPhysicsContactDelegate {
 
         insetto = childNode(withName: "insetto") as! SKSpriteNode
         insetto.physicsBody?.usesPreciseCollisionDetection = true
+        let insettoSprite = insetto.childNode(withName: "sprite") as! SKSpriteNode
+        let changeVolumeAction = SKAction.changeVolume(to: 0.3, duration: 0.3)
+        let insettoAnimation = AnimationManager.generateAnimation(atlasName: "insetto", animationName: "insetto", numberOfFrames: 4, timePerFrame: 0.05)
+        let group = SKAction.group([changeVolumeAction, SKAction.playSoundFileNamed("InsettoCamminata3", waitForCompletion: true)])
+        insettoSprite.run(SKAction.repeatForever(insettoAnimation))
+        insettoSprite.run(SKAction.repeatForever(group))
         camera = childNode(withName:"camera") as? SKCameraNode
         sceneManager.assignScene(scene: scene!)
         sceneManager.light?.setSensibility(sensibility: lightSensibility)
@@ -26,12 +32,15 @@ class Labirinto: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         guard let light = sceneManager.light else {print("update could not find light"); return}
         sceneManager.light?.smoothUpdate(transpose: insetto.position)
-        // alla posizionle della luce viene aggiunta la posizione dell'insetto e poi tolta per fare il delta
+        
+        // alla posizione della luce viene aggiunta la posizione dell'insetto e poi tolta per fare il delta
         // quindi alla fine la direzione è semplicemente la posizione della luce
         let direction = normalize(vector: light.position)//vector: CGPoint(x: dxx, y: dy))
-        insetto.position.x += direction.x * (velocity)
-        insetto.position.y += direction.y * (velocity)
-        camera!.position = insetto.position
+        if module(light.position) > 0.1 {
+            insetto.position.x += direction.x * (velocity)
+            insetto.position.y += direction.y * (velocity)
+        }
+        camera?.position = insetto.position
         let rotation = atan2(direction.y, direction.x)
         insetto.zRotation = rotation
     }
@@ -45,19 +54,5 @@ class Labirinto: SKScene, SKPhysicsContactDelegate {
     private func endGame() {
         sceneManager.inventory.addItem(InventoryItem(name: "chiave"))
         sceneManager.switchToMinigame(state: .hidden)
-    }
-    
-    private func distance(p1: CGPoint, p2: CGPoint) -> CGFloat {
-        let dx = p2.x - p1.x
-        let dy = p2.y - p1.y
-        return sqrt(dx*dx + dy*dy)
-    }
-    
-    private func angle(p1: CGPoint, p2: CGPoint) -> CGFloat {
-        let dx = p2.x - p1.x
-        let dy = p2.y - p1.y
-        let direction = normalize(vector: CGPoint(x: dx, y: dy))//vector: CGPoint(x: dx, y: dy))
-        let tetha = atan2(direction.y, direction.x)
-        return tetha
     }
 }

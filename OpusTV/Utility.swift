@@ -60,3 +60,21 @@ func copyInteractivesArray(_ array : [InteractiveSprite]) -> [InteractiveSprite]
     }
     return newArray
 }
+
+func distance(p1: CGPoint, p2: CGPoint) -> CGFloat {
+    let dx = p2.x - p1.x
+    let dy = p2.y - p1.y
+    return sqrt(dx*dx + dy*dy)
+}
+
+func angle(p1: CGPoint, p2: CGPoint) -> CGFloat {
+    let dx = p2.x - p1.x
+    let dy = p2.y - p1.y
+    let direction = normalize(vector: CGPoint(x: dx, y: dy))//vector: CGPoint(x: dx, y: dy))
+    let tetha = atan2(direction.y, direction.x)
+    return tetha
+}
+
+func module(_ vector : CGPoint) -> CGFloat {
+    return sqrt((vector.x * vector.x) + (vector.y * vector.y))
+}
