@@ -12,7 +12,7 @@ import HealthKit
 struct ContentView: View {
 
     var scene: SKScene {
-        let scene = SKScene(fileNamed: "GameScene")
+        let scene = SKScene(fileNamed: "MainScreen")
         scene?.scaleMode = .aspectFill
         return scene!
     }

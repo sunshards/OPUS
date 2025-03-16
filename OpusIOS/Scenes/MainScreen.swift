@@ -9,7 +9,7 @@ import SpriteKit
 import CoreMotion
 import _SpriteKit_SwiftUI
 
-class GameScene: SKScene {
+class MainScreen: SKScene {
     let mpcManager = MPCManager.shared
     let wcManager = WCManager.shared
     let wcDelegate = WCDelegate()
