@@ -47,6 +47,13 @@
 			);
 			target = 3DF46D802D6CA6E2008109BE /* OpusIOS */;
 		};
+		3DDBB5292D877AE90031CDDA /* Exceptions for "OpusWatch Watch App" folder in "OpusWatch Watch App" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"OpusWatch-Watch-App-Info.plist",
+			);
+			target = 3DFEB5A12D80F202008CA402 /* OpusWatch Watch App */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -60,6 +67,9 @@
 		};
 		3DFEB5A32D80F202008CA402 /* OpusWatch Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				3DDBB5292D877AE90031CDDA /* Exceptions for "OpusWatch Watch App" folder in "OpusWatch Watch App" target */,
+			);
 			path = "OpusWatch Watch App";
 			sourceTree = "<group>";
 		};
@@ -359,7 +369,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OpusIOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 2C3JSATD54;
+				DEVELOPMENT_TEAM = K3D3D89R3N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OpusIOS/Info.plist;
@@ -381,7 +391,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.andrea.OPUS;
+				PRODUCT_BUNDLE_IDENTIFIER = it.simoneboscaglia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -437,20 +447,21 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OpusWatch Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 2C3JSATD54;
+				DEVELOPMENT_TEAM = K3D3D89R3N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "OpusWatch-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = OpusWatch;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Permetti l'accesso al battito cardiaco.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Permetti di modificare i tuoi dati.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.andrea.OPUS;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = it.simoneboscaglia;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.andrea.OPUS.watchapp;
+				PRODUCT_BUNDLE_IDENTIFIER = it.simoneboscaglia.watchapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -473,11 +484,12 @@
 				DEVELOPMENT_TEAM = K3D3D89R3N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "OpusWatch-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = OpusWatch;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Permetti l'accesso al battito cardiaco.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Permetti di modificare i tuoi dati.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.andrea.OPUS;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = it.simoneboscaglia;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

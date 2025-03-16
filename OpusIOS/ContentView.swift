@@ -22,7 +22,9 @@ struct ContentView: View {
             .edgesIgnoringSafeArea(.all)
             .onAppear(){
             }
+            .statusBar(hidden: true)
         }
+       
 }
 
 struct ContentView_Previews: PreviewProvider {
