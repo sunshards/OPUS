@@ -1,35 +1,28 @@
 //
-//  GameScene.swift
-//  opusTV
+//  PhoneManager.swift
+//  OpusIOS
 //
-//  Created by Simone Boscaglia on 16/03/2025.
+//  Created by Simone Boscaglia on 16/03/25.
 //
 
 import SpriteKit
 import CoreMotion
+//import _SpriteKit_SwiftUI
 
-class BackScreen: SKScene {
-    /*let mpcManager = MPCManager.shared
+class PhoneManager {
+    static let shared: PhoneManager = PhoneManager() //singleton
+    let mpcManager = MPCManager.shared
     let wcManager = WCManager.shared
-    let wcDelegate = WCDelegate()
+    
     let motionManager = CMMotionManager()
-    
     var hasCalibrated : Bool = false
-
     let gyroBound : Double = 0.05
-    
     private var referenceAttitude : CMAttitude?
     
-    var pauseScreen: SKScene {
-        let scene = SKScene(fileNamed: "pauseScreen")
-        print("\(String(describing: scene?.sceneDidLoad()))")
-        scene?.scaleMode = .aspectFill
-        return scene!
-    }
-    
-    override func didMove(to view: SKView) {
+    private init() {
         mpcManager.startService()
-        
+        wcManager.delegate = self
+
         if motionManager.isDeviceMotionAvailable {
             motionManager.deviceMotionUpdateInterval = 0.02
             motionManager.startDeviceMotionUpdates(to: .main) {  (motion, error) in
@@ -52,31 +45,17 @@ class BackScreen: SKScene {
                 self.mpcManager.send(message: message)
             }
         }
-        
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let button = childNode(withName: "button") as! SKSpriteNode
-        let touchLocation = touches.first!.location(in: self)
-        if (!hasCalibrated) {
-            if let currentAttitude = motionManager.deviceMotion?.attitude {
-                referenceAttitude = currentAttitude.copy() as? CMAttitude
-                print("Attitude frame reset!")
-            }
-            
-            let message = Message(type: .calibration, pauseAction: nil, vector: nil, state: true)
-            self.mpcManager.send(message: message)
-            hasCalibrated = true
-        } else {
-            let message = Message(type: .touch, pauseAction: nil, vector: nil, state: nil)
-            self.mpcManager.send(message: message)
-
+    func calibrate() {
+        if let currentAttitude = motionManager.deviceMotion?.attitude {
+            referenceAttitude = currentAttitude.copy() as? CMAttitude
+            //print("Attitude frame reset!")
         }
+        
+        let message = Message(type: .calibration, pauseAction: nil, vector: nil, state: true)
+        self.mpcManager.send(message: message)
+        hasCalibrated = true
     }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {}
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {}
-    */
     
 }
-

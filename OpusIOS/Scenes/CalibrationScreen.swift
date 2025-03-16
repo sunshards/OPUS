@@ -2,13 +2,13 @@
 //  Calibrazione.swift
 //  OpusIOS
 //
-//  Created by Andrea Iannaccone on 10/03/25.
+//  Created by Simone Boscaglia on 16/03/2025.
 //
 
 import SpriteKit
 
 class Calibrazione: SKScene{
-    let mpcManager = MPCManager.shared
+    /*let mpcManager = MPCManager.shared
 
     var mainScene: SKScene {
         let scene = SKScene(fileNamed: "GameScene")
@@ -39,4 +39,5 @@ class Calibrazione: SKScene{
             scene?.view?.presentScene(mainScene)
         }
     }
+     */
 }

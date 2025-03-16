@@ -2,7 +2,7 @@
 //  GameScene.swift
 //  opusTV
 //
-//  Created by Andrea Iannaccone on 03/02/25.
+//  Created by Simone Boscaglia on 16/03/2025.
 //
 
 import SpriteKit
@@ -10,7 +10,7 @@ import CoreMotion
 import _SpriteKit_SwiftUI
 
 class ConfirmScreen: SKScene {
-    let mpcManager = MPCManager.shared
+    /*let mpcManager = MPCManager.shared
     let wcManager = WCManager.shared
     let wcDelegate = WCDelegate()
     let motionManager = CMMotionManager()
@@ -77,7 +77,7 @@ class ConfirmScreen: SKScene {
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {}
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {}
-    
+    */
     
 }
 

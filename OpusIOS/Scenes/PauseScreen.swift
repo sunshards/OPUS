@@ -2,14 +2,14 @@
 //  pauseScreen.swift
 //  OpusIOS
 //
-//  Created by Andrea Iannaccone on 11/03/25.
+//  Created by Simone Boscaglia on 16/03/2025.
 //
 
 import SpriteKit
 
 class pauseScreen: SKScene {
     
-    let mpcManager = MPCManager.shared
+    /*let mpcManager = MPCManager.shared
     
     var sceneCalibrate: SKScene {
         let scene = SKScene(fileNamed: "Calibrazione")
@@ -53,4 +53,5 @@ class pauseScreen: SKScene {
         }
         
     }
+     */
 }
