@@ -23,6 +23,7 @@ enum MinigameState {
     case hidden
     case pozione
     case labirinto
+    case intro
 }
 
 enum deviceType {

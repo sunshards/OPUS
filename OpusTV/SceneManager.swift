@@ -34,7 +34,8 @@ class SceneManager {
     let sceneNames : [MinigameState : String] = [
         .hidden : "GameScene",
         .labirinto : "Labirinto",
-        .pozione : "Pozione"
+        .pozione : "Pozione",
+        .intro: "FirstCutscene"
     ]
     var savedScenes : [MinigameState : SKScene?] = [
         .hidden : nil,
@@ -102,7 +103,6 @@ class SceneManager {
         stanze[newScene]?.setup()
         stanze[newScene]?.show()
         sceneState = newScene
-        
     }
     
     func phoneTouch() {
@@ -135,7 +135,6 @@ class SceneManager {
             newScene?.scaleMode = .aspectFit
             self.scene?.view?.presentScene(newScene!, transition: .crossFade(withDuration: 0.5))
         }
-
         return;
     }
     
