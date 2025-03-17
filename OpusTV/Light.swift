@@ -25,11 +25,11 @@ class Light {
     
     var flickerAnimation : SKAction {
         var actions : [SKAction] = []
-        for i in 1...5 {
+        for i in 1...6 {
             actions.append(SKAction.run {print("disable\(i)"); self.disable()})
-            actions.append(SKAction.wait(forDuration: 0.5/Double(i)))
+            actions.append(SKAction.wait(forDuration: 0.25/Double(i)))
             actions.append(SKAction.run {print("enable\(i)");self.enable()})
-            actions.append(SKAction.wait(forDuration: 0.5/Double(i)))
+            actions.append(SKAction.wait(forDuration: 0.25/Double(i)))
         }
         actions.append(SKAction.run {self.enable()})
         

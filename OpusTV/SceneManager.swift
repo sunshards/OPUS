@@ -67,6 +67,7 @@ class SceneManager {
     var hasPaintingMoved = false
     var poisonCollected = false
     var hasOpenedChest = false
+    var monsterMet : Bool = false
     
     
     init() {

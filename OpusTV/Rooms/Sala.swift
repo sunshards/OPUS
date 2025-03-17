@@ -16,6 +16,12 @@ import SpriteKit
  */
 
 let sala : Stanza = Stanza(state: .sala,
+                           
+       action: {(self) in
+    if sceneManager.monsterMet == true && sceneManager.inventory.hasItem("chiave") {
+                //sceneManager.mostro.spawn(position: ., room: )
+            }
+    },
                   
   sounds : [
     "OrologioTick2"

@@ -43,11 +43,20 @@ class Mostro {
         monsterNode.zPosition = 5
         monsterNode.lightingBitMask = 2
         room.node?.addChild(monsterNode)
-        let interactive = InteractiveSprite(name: "mostro", sprite: monsterNode, touchAction: {(self) in
-            sceneManager.light?.flicker()
-            if sceneManager.mostro.state == .idle {
-                sceneManager.mostro.startIdleAnimation()
-                sceneManager.mostro.state = .jumpscare
+        let interactive = InteractiveSprite(name: "mostro", sprite: monsterNode,
+        
+        hoverOnAction: {(self) in
+            if sceneManager.monsterMet == false {
+                let sequence = SKAction.sequence([
+                    SKAction.run({sceneManager.light?.flicker()}),
+                    SKAction.wait(forDuration: 3),
+                    SKAction.run({sceneManager.mostro.despawn()}),
+                    //SKAction.playSoundFileNamed(<#T##soundFile: String##String#>, waitForCompletion: true)
+                ])
+            } else {
+                if sceneManager.mostro.state == .idle {
+                    sceneManager.mostro.jumpscare()
+                }
             }
         })
         populator.swap(interactable: interactive, sprite: monsterNode)
@@ -61,6 +70,11 @@ class Mostro {
     
     func despawn() {
         self.sprite?.delete()
+    }
+    
+    func jumpscare() {
+        sceneManager.mostro.startIdleAnimation()
+        sceneManager.mostro.state = .jumpscare
     }
 
 }
