@@ -11,7 +11,7 @@ class TextManager {
     let textNode : SKLabelNode
     var isDisplaying : Bool = false
     static let textAnimationKey = "textAnimation"
-    let fontSize : CGFloat = 24
+    let fontSize : CGFloat = 50
     
     init(textNode: SKLabelNode) {
         self.textNode = textNode as SKLabelNode
@@ -38,14 +38,17 @@ class TextManager {
     }
     
     func showDialogue(lines : [String], duration: TimeInterval) {
-        guard isDisplaying == false else { print("trying to show dialogue when one is already displayed;"); return }
+        guard isDisplaying == false else { print("Trying to show dialogue when one is already displayed;"); return }
         isDisplaying = true
         var sequence : [SKAction] = []
         self.changeText(lines[0])
+        
         sequence.append(SKAction.hide().reversed())
         for line in lines {
             sequence.append(SKAction.run({self.changeText(line)}))
+            sequence.append(SKAction.fadeIn(withDuration: 1))
             sequence.append(SKAction.wait(forDuration: duration))
+            sequence.append(SKAction.fadeOut(withDuration: 1))
         }
         sequence.append(SKAction.hide())
         sequence.append(SKAction.run({self.isDisplaying = false }))
@@ -61,7 +64,7 @@ class TextManager {
         textNode.zPosition = 7
         textNode.isHidden = false
     }
-    
+
     
     
 }

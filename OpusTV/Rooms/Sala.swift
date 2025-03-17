@@ -94,8 +94,5 @@ let sala : Stanza = Stanza(state: .sala,
                           sceneManager.poisonCollected = true
                           self.delete()
                       }),
-
- 
-
  ]
 )
