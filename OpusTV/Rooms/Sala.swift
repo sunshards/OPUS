@@ -85,6 +85,7 @@ let sala : Stanza = Stanza(state: .sala,
                               s1?.show()
                               s2?.show()
                               sceneManager.hasOpenedChest = true
+                              sceneManager.inventory.removeItem(name: "chiave")
                               self.delete()
                           }
                       }),

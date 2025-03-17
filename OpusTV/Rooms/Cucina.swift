@@ -43,11 +43,16 @@ let cucina = Stanza(state: .cucina,
         self.delete()
     }),
     
-    //MARK: Fiala ancora visbile alla rimozione
-    InteractiveSprite(name: "cucfiala",touchAction: {
-        (self) in
+    InteractiveSprite(name: "cucfiala",
+                      spawnAction: {(self) in
+                          if sceneManager.hasCollectedBecker {
+                              self.delete()
+                          }
+                      },
+        touchAction: {(self) in
         if sceneManager.hasCollectedWater{
             sceneManager.inventory.addItem(InventoryItem(name: "boccia"))
+            sceneManager.hasCollectedBecker = true
             self.delete()
         }
     })
