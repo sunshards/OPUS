@@ -29,22 +29,29 @@ let sala : Stanza = Stanza(state: .sala,
                           }
                       },
                       hoverOnAction: {(self) in
-                          sceneManager.textManager.showDialogue(lines: [
-                            "Oh hey there!",
-                            "Thanks for coming so fast!",
-                            "I'm not feeling well...",
-                            "Could you grab me some water, please?"
-                          ], duration: 0.5)
-                      }),
+                          if !sceneManager.hasCollectedWater{
+                              sceneManager.textManager.showDialogue(lines: [
+                                "Oh hey there!",
+                                "Thanks for coming so fast!",
+                                "I'm not feeling well...",
+                                "Could you grab me some water, please?"
+                              ], duration: 0.5)
+                          }}),
     
     InteractiveSprite(name: "salavasopieno",
-      touchAction: {(self) in
-          if sceneManager.hasCollectedWater{
-              self.playSound(soundName: "Ceramica")
-              sceneManager.inventory.addItem(InventoryItem(name: "fiore"))
-              self.delete()
-          }
-      }),
+                      spawnAction: {(self) in
+                          if sceneManager.hasCollectedFlower{
+                              self.delete()
+                          }
+                      },
+                      touchAction: {(self) in
+                          if sceneManager.hasCollectedWater{
+                              self.playSound(soundName: "Ceramica")
+                              sceneManager.inventory.addItem(InventoryItem(name: "fiore"))
+                              sceneManager.hasCollectedFlower = true
+                              self.delete()
+                          }
+                      }),
     
     InteractiveSprite(name: "salaportacucina", touchAction: {(self) in
         sceneManager.selectRoom(.cucina)

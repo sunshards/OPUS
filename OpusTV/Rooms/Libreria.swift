@@ -46,7 +46,7 @@ let libreria = Stanza(state: .libreria,
                       touchAction: {(self) in
                           if !sceneManager.hasCollectedKey {
                               sceneManager.switchToMinigame(newState: .labirinto)
-                          }aa
+                          }
                       }),
     
     InteractiveSprite(name: "liblibro1", touchAction: {(self) in

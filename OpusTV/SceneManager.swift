@@ -50,17 +50,21 @@ class SceneManager {
     
     var heartRate : Double = -1
     
-    var isPopupDisplayed : Bool = false
+
     var winItems : [String] = ["acqua", "veleno", "bocciasangue", "fiore"]
     var addedItems : [String] = []
     
-    var hasCollectedKey : Bool = false
-    var hasShownMenu : Bool = false
-    var hasStartedGame : Bool = false
-    var removedAntonio : Bool = false
-    var hasCollectedWater : Bool = false
-    var canMovePainting : Bool = false
-    var hasPaintingMoved : Bool = false
+    
+    //MARK: flags
+    var hasCollectedFlower = false
+    var isPopupDisplayed = false
+    var hasCollectedKey = false
+    var hasShownMenu = false
+    var hasStartedGame = false
+    var removedAntonio = false
+    var hasCollectedWater = false
+    var canMovePainting = false
+    var hasPaintingMoved = false
     var poisonCollected = false
     var hasOpenedChest = false
     

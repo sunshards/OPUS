@@ -29,7 +29,14 @@ let cucina = Stanza(state: .cucina,
           }
       }),
     
-    InteractiveSprite(name: "cucacqua",touchAction: {
+    InteractiveSprite(name: "cucacqua",
+          spawnAction: {(self) in
+              if sceneManager.hasCollectedWater {
+                  self.delete()
+              }
+          },
+                      
+          touchAction: {
         (self) in
         sceneManager.hasCollectedWater = true
         sceneManager.inventory.addItem(InventoryItem(name: "acqua"))
