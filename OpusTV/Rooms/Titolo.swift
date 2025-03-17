@@ -36,19 +36,22 @@ let titolo = Stanza(
                       self.room?.childNode(withName:"activeon")?.isHidden = false
                       self.room?.childNode(withName:"activeoff")?.isHidden = true
                   }
-              }),
-        InteractiveSprite(name: "activeon",
-              hoverOffAction: {(self) in
-                  if self.isHidden == false {
-                      self.room?.childNode(withName:"activeon")?.isHidden = false
-                      self.room?.childNode(withName:"activeoff")?.isHidden = true
-                  }
               },
-              touchAction: {(self) in
-                  if self.isHidden == false {
-                      sceneManager.switchToMinigame(newState: .intro)
-                  }
-              }),
+            touchAction: {(self) in
+                sceneManager.switchToMinigame(newState: .intro)
+            }),
+//        InteractiveSprite(name: "activeon",
+//              hoverOffAction: {(self) in
+//                  if self.isHidden == false {
+//                      self.room?.childNode(withName:"activeon")?.isHidden = false
+//                      self.room?.childNode(withName:"activeoff")?.isHidden = true
+//                  }
+//              },
+//              touchAction: {(self) in
+//                  if self.isHidden == false {
+//                      sceneManager.switchToMinigame(newState: .intro)
+//                  }
+//              }),
     ]
 )
 

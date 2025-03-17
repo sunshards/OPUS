@@ -9,9 +9,6 @@ import Foundation
 import SpriteKit
 
 let laboratorio = Stanza(state: .laboratorio,
-     action: {(self) in
-        sceneManager.light?.flicker()
-    },
                 
    sounds : [
   ],

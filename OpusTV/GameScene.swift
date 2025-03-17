@@ -22,7 +22,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sceneManager.textManager.hideText()
         
         sceneManager.light?.setSensibility(sensibility: lightSensibility)
-        sceneManager.light?.disable()
         
         laboratorio.assignNode(node: childNode(withName: "laboratorio"))
         titolo.assignNode(node: childNode(withName: "title"))
@@ -30,8 +29,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sala.assignNode(node:childNode(withName: "sala"))
         cucina.assignNode(node:childNode(withName: "cucina"))
         sceneManager.populate()
-        sceneManager.mostro.spawn(position: CGPoint(x:100, y:-240), room: laboratorio)
+        //sceneManager.mostro.spawn(position: CGPoint(x:100, y:-240), room: laboratorio)
         //sceneManager.mostro.sprite?.size = CGSize(width: 500, height: 700)
+        sceneManager.mostro.spawn(position: CGPoint.zero, room: libreria)
         sceneManager.mostro.sprite?.size = CGSize(width: 1000, height: 1400)
 
 

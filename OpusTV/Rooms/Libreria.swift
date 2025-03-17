@@ -9,7 +9,9 @@ import Foundation
 import SpriteKit
 
 let libreria = Stanza(state: .libreria,
-                    
+    action: {(self) in
+       sceneManager.light?.flicker()
+   },                    
                     
    sounds : [
   ],
