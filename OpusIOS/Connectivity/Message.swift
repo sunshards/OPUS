@@ -8,17 +8,20 @@
 import Foundation
 
 enum MessageType : Codable {
+    // per la tv
     case touch
     case heartrate
     case calibration
     case gyroscope
-    case pauseAction
-}
+    case pause
+    case yes
+    case no
+    // per il telefono cambiano lo screen; per la tv mandano il messaggio
+    case back
+    case confirm
+    // per il telefono
+    case vibration
 
-enum PauseAction : Codable {
-    case resume
-    case calibration
-    case backtotitle
 }
 
 struct Vector3D : Codable {
@@ -29,10 +32,9 @@ struct Vector3D : Codable {
 
 struct Message : Codable {
     let type : MessageType
-    let pauseAction : PauseAction?
     let vector : Vector3D?
     var state : Bool?
-    
+
     func toData() -> Data? {
         var data : Data? = nil
         
@@ -49,4 +51,3 @@ struct Message : Codable {
         try? JSONDecoder().decode(Message.self, from: data)
     }
 }
-

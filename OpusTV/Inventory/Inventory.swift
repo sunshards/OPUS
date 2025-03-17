@@ -70,21 +70,21 @@ class Inventory {
         // The node is placed such that the inventory position is in the bottom left of the background
         DispatchQueue.main.async {
             self.node?.removeAllChildren()
+            
+            var xOffset : CGFloat = 0
+            for item in self.items {
+                let itemNode = SKSpriteNode(imageNamed: item.name)
+                scaleProportionally(sprite: itemNode, axis: .y, value: self.itemHeight)
+                xOffset += itemNode.size.width + self.itemOffset
+                itemNode.position.x = xOffset
+                itemNode.position.y = self.itemHeight/2+self.padding/2
+                itemNode.zPosition = 1
+                self.node?.addChild(itemNode)
+                self.itemNodes.append(itemNode)
+            }
+            self.background.size = CGSize(width: xOffset+self.padding, height: self.itemHeight+self.padding)
+            self.background.position = CGPoint(x: self.background.size.width/2+self.padding/2, y: self.itemHeight/2+self.padding/2)
         }
-
-        var xOffset : CGFloat = 0
-        for item in items {
-            let itemNode = SKSpriteNode(imageNamed: item.name)
-            scaleProportionally(sprite: itemNode, axis: .y, value: itemHeight)
-            xOffset += itemNode.size.width + itemOffset
-            itemNode.position.x = xOffset
-            itemNode.position.y = itemHeight/2+padding/2
-            itemNode.zPosition = 1
-            self.node?.addChild(itemNode)
-            itemNodes.append(itemNode)
-        }
-        background.size = CGSize(width: xOffset+padding, height: itemHeight+padding)
-        background.position = CGPoint(x: background.size.width/2+padding/2, y: itemHeight/2+padding/2)
 
     }
     

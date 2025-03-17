@@ -14,7 +14,7 @@ class MainScreen: SKScene {
     let mpcManager = MPCManager.shared
         
     override func didMove(to view: SKView) {
-        phoneManager.currentScene = self
+        phoneManager.scene = self
         ScreenUtilities.setBodiesTransparency(scene: scene!)
     }
     
@@ -22,7 +22,7 @@ class MainScreen: SKScene {
         let touchLocation = touches.first!.location(in: self)
         let node = self.atPoint(touchLocation)
         if (node.name == "PauseButton") {
-            scene?.view?.presentScene(ScreenUtilities.getScreen(name: "PauseScreen"))
+            phoneManager.changeScreen(name: "PauseScreen")
         }
         else if (node.name == "body") {
             ScreenUtilities.activateButton(body: node)
@@ -44,7 +44,7 @@ class MainScreen: SKScene {
             guard let buttonName = ScreenUtilities.anchoredBody?.parent?.name else { return }
             
             if buttonName == "ActButton" {
-                let message = Message(type: .touch, pauseAction: nil, vector: nil, state: nil)
+                let message = Message(type: .touch, vector: nil, state: nil)
                 mpcManager.send(message: message)
             }
             ScreenUtilities.deactivateButton(body: node)

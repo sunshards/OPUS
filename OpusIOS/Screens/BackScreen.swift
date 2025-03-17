@@ -14,14 +14,17 @@ class BackScreen: SKScene {
     let mpcManager = MPCManager.shared
         
     override func didMove(to view: SKView) {
-        phoneManager.currentScene = self
+        phoneManager.scene = self
         ScreenUtilities.setBodiesTransparency(scene: scene!)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touchLocation = touches.first!.location(in: self)
         let node = self.atPoint(touchLocation)
-        if (node.name == "body") {
+        if (node.name == "PauseButton") {
+            phoneManager.changeScreen(name: "PauseScreen")
+        }
+        else if (node.name == "body") {
             ScreenUtilities.activateButton(body: node)
         }
     }
@@ -42,9 +45,12 @@ class BackScreen: SKScene {
             
             if buttonName == "BackButton" {
                 
-                // CODE GOES HERE
-                
-                scene?.view?.presentScene(ScreenUtilities.getScreen(name: "MainScreen"))
+                let message = Message(type: .back, vector: nil, state: nil)
+                mpcManager.send(message: message)
+                phoneManager.changeScreen(name: "MainScreen")
+            } else if buttonName == "ActButton" {
+                let message = Message(type: .touch, vector: nil, state: nil)
+                mpcManager.send(message: message)
             }
             
             ScreenUtilities.deactivateButton(body: node)

@@ -37,38 +37,41 @@ class Pozione: SKScene {
     }
     
     private func placeInventory() {
-        let inventory = sceneManager.inventory
-        print(inventory.items.count)
-        for i in 0..<inventory.items.count {
-            guard let positionNode = itemPositionsNode.childNode(withName: "\(i)") else { print("Could not find position \(i)"); return }
-            guard let populator = sceneManager.populator else { print("Could not find populator"); return}
-
-            let item = inventory.items[i]
-            let position = positionNode.position
-            let node = inventory.createInventoryNode(itemName: item.name, point: position)
-            scaleProportionally(sprite: node, axis: .y, value: positionNode.frame.height)
-            node.lightingBitMask = 1
-//            node.zPosition = positionNode.zPosition + 1
-//            node.physicsBody = SKPhysicsBody(circleOfRadius: node.size.height)
-//            node.physicsBody?.affectedByGravity = false
-//            node.physicsBody?.allowsRotation = false
-//            node.physicsBody?.categoryBitMask = 2
-//            node.physicsBody?.collisionBitMask = 0
-//            node.physicsBody?.fieldBitMask = 0
-//            node.physicsBody?.contactTestBitMask = 0
-
-            itemPositionsNode.addChild(node)
-            let interactive : InteractiveSprite = InteractiveSprite(name: item.name, sprite: node, touchAction: {(self) in
-                print("tocco")
-                self.color = .black
-                self.colorBlendFactor = 1
-            }, active : true)
-            populator.swap(interactable: interactive, sprite: node)
-            positionNode.isHidden = true
-        }
-        for i in inventory.items.count ..< totalItems {
-            guard let positionNode = itemPositionsNode.childNode(withName: "\(i)") else { print("Could not find position \(i)"); return }
-            positionNode.isHidden = true
+        DispatchQueue.main.async {
+            
+            let inventory = sceneManager.inventory
+            print(inventory.items.count)
+            for i in 0..<inventory.items.count {
+                guard let positionNode = self.itemPositionsNode.childNode(withName: "\(i)") else { print("Could not find position \(i)"); return }
+                guard let populator = sceneManager.populator else { print("Could not find populator"); return}
+                
+                let item = inventory.items[i]
+                let position = positionNode.position
+                let node = inventory.createInventoryNode(itemName: item.name, point: position)
+                scaleProportionally(sprite: node, axis: .y, value: positionNode.frame.height)
+                node.lightingBitMask = 1
+                //            node.zPosition = positionNode.zPosition + 1
+                //            node.physicsBody = SKPhysicsBody(circleOfRadius: node.size.height)
+                //            node.physicsBody?.affectedByGravity = false
+                //            node.physicsBody?.allowsRotation = false
+                //            node.physicsBody?.categoryBitMask = 2
+                //            node.physicsBody?.collisionBitMask = 0
+                //            node.physicsBody?.fieldBitMask = 0
+                //            node.physicsBody?.contactTestBitMask = 0
+                
+                self.itemPositionsNode.addChild(node)
+                let interactive : InteractiveSprite = InteractiveSprite(name: item.name, sprite: node, touchAction: {(self) in
+                    print("tocco")
+                    self.color = .black
+                    self.colorBlendFactor = 1
+                }, active : true)
+                populator.swap(interactable: interactive, sprite: node)
+                positionNode.isHidden = true
+            }
+            for i in inventory.items.count ..< self.totalItems {
+                guard let positionNode = self.itemPositionsNode.childNode(withName: "\(i)") else { print("Could not find position \(i)"); return }
+                positionNode.isHidden = true
+            }
         }
     }
     

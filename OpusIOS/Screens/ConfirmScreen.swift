@@ -15,14 +15,17 @@ class ConfirmScreen: SKScene {
     let mpcManager = MPCManager.shared
         
     override func didMove(to view: SKView) {
-        phoneManager.currentScene = self
+        phoneManager.scene = self
         ScreenUtilities.setBodiesTransparency(scene: scene!)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touchLocation = touches.first!.location(in: self)
         let node = self.atPoint(touchLocation)
-        if (node.name == "body") {
+        if (node.name == "PauseButton") {
+            phoneManager.changeScreen(name: "PauseScreen")
+        }
+        else if (node.name == "body") {
             ScreenUtilities.activateButton(body: node)
         }
     }
@@ -45,14 +48,14 @@ class ConfirmScreen: SKScene {
                 
                 // CODE GOES HERE
                 
-                
-                scene?.view?.presentScene(ScreenUtilities.getScreen(name: "MainScreen"))
+                phoneManager.changeScreen(name: "MainScreen")
+
             } else if buttonName == "NoButton" {
                 
                 // CODE GOES HERE
                 
-                
-                scene?.view?.presentScene(ScreenUtilities.getScreen(name: "MainScreen"))
+                phoneManager.changeScreen(name: "MainScreen")
+
             }
             ScreenUtilities.deactivateButton(body: node)
         }

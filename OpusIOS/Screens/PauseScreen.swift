@@ -13,7 +13,7 @@ class PauseScreen: SKScene {
     let mpcManager = MPCManager.shared
         
     override func didMove(to view: SKView) {
-        phoneManager.currentScene = self
+        phoneManager.scene = self
         ScreenUtilities.setBodiesTransparency(scene: scene!)
     }
     
@@ -40,9 +40,9 @@ class PauseScreen: SKScene {
             guard let buttonName = ScreenUtilities.anchoredBody?.parent?.name else { return }
             
             if buttonName == "ResumeButton" {
-                scene?.view?.presentScene(ScreenUtilities.getScreen(name: "MainScreen"))
+                phoneManager.previousScreen()
             } else if buttonName == "CalibrateButton" {
-                scene?.view?.presentScene(ScreenUtilities.getScreen(name: "CalibrationScreen"))
+                phoneManager.changeScreen(name: "CalibrationScreen")
             }
             ScreenUtilities.deactivateButton(body: node)
         }

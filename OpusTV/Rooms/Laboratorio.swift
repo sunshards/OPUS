@@ -47,8 +47,16 @@ let laboratorio = Stanza(state: .laboratorio,
     InteractiveSprite(name: "labcadavere",
                       touchAction: {(self) in
                           if sceneManager.inventory.hasItem("boccia"){
-                              sceneManager.inventory.removeItem(InventoryItem(name: "cucfiala"))
-                              sceneManager.inventory.addItem(InventoryItem(name: "boccia"))
+                              sceneManager.inventory.removeItem(InventoryItem(name: "boccia"))
+                              sceneManager.inventory.addItem(InventoryItem(name: "bocciasangue"))
                           }
-                      })
+                      }),
+    
+    InteractiveSprite(name: "labcalderone",
+                      touchAction: {(self) in
+                          sceneManager.switchToMinigame(state: .pozione)
+                          let message = Message(type: .back, vector: nil, state: nil)
+                          sceneManager.mpcManager.send(message: message)
+                          print("sending")
+                      }),
 ])

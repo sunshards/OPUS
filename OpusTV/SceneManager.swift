@@ -8,6 +8,11 @@
 import SpriteKit
 import SwiftUI
 
+
+// TODO:
+// L'intero sistema degli interactive sprite e del populator è troppo instabile ed è da eliminare
+// Meglio fare la gestione su scene come sul telefono
+
 // Metto qui tutti gli oggetti a cui devono avere accesso altre classi
 class SceneManager {
     @ObservedObject var mpcManager: MPCManager = MPCManager.shared

@@ -13,7 +13,7 @@ class CalibrationScreen : SKScene {
     let mpcManager = MPCManager.shared
         
     override func didMove(to view: SKView) {
-        phoneManager.currentScene = self
+        phoneManager.scene = self
         ScreenUtilities.setBodiesTransparency(scene: scene!)
     }
     
@@ -41,7 +41,7 @@ class CalibrationScreen : SKScene {
             
             if buttonName == "CalibrateButton" {
                 phoneManager.calibrate()
-                scene?.view?.presentScene(ScreenUtilities.getScreen(name: "MainScreen"))
+                phoneManager.changeScreen(name: "MainScreen")
             }
             ScreenUtilities.deactivateButton(body: node)
         }

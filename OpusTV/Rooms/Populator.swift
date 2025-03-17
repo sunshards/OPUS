@@ -27,19 +27,26 @@ class Populator {
             }
             guard let name = interactable.name else {print("Interactable in room \(room.state) has no name"); return}
             guard let node = room.node else {print("Room \(room.state) has no node"); return}
-            let child = node.childNode(withName: name)
-            if let child = child as? SKSpriteNode {
-                interactable.assignSprite(sprite: child)
-                child.removeFromParent()
-                node.addChild(interactable)
+            var child : SKNode?
+            DispatchQueue.main.async {
+                child = node.childNode(withName: name)
+                if let child = child as? SKSpriteNode {
+                    interactable.assignSprite(sprite: child)
+                    child.removeFromParent()
+                    node.addChild(interactable)
+                }
             }
+
         }
     }
     
     func depopulate(room: Stanza) {
         for interactive in room.interactives {
-            interactive.removeAllActions()
-            interactive.removeFromParent()
+            DispatchQueue.main.async {
+                interactive.removeAllActions()
+                interactive.removeFromParent()
+            }
+
         }
         room.interactives.removeAll(keepingCapacity: true)
         room.interactives = copyInteractivesArray(room.defaultInteractives)
@@ -51,7 +58,9 @@ class Populator {
         if parent == nil { parent = scene }
         interactable.assignSprite(sprite: sprite)
         parent!.addChild(interactable)
-        sprite.removeFromParent()
+        DispatchQueue.main.async {
+            sprite.removeFromParent()
+        }
     }
     
     // swap di uno sprite interattivo sapendo la stanza in cui si trova quello normale ed il suo nome

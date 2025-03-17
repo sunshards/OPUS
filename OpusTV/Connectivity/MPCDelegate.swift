@@ -36,6 +36,10 @@ extension SceneManager : MPCManagerDelegate {
             phoneTouch()
         }
         
+        else if message.type == .back {
+            switchToMinigame(state: .hidden)
+        }
+        
 //        else if message.type == .pauseAction {
 //            scene?.view?.isPaused = true
 //            if message.pauseAction == .resume {
