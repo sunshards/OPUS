@@ -54,6 +54,7 @@ class SceneManager {
     var winItems : [String] = ["acqua", "veleno", "bocciasangue", "fiore"]
     var addedItems : [String] = []
     
+    var hasCollectedKey : Bool = false
     var hasShownMenu : Bool = false
     var hasStartedGame : Bool = false
     var removedAntonio : Bool = false
