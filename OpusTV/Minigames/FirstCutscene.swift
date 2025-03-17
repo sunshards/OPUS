@@ -11,14 +11,22 @@ class FirstCutscene: SKScene {
     let textManager = TextManager(textNode: SKLabelNode())
     
     override func didMove(to view: SKView) {
+        sceneManager.assignScene(scene: scene!)
         let textLabel = childNode(withName: "Text") as! SKLabelNode
         let text = TextManager(textNode: textLabel)
-        text.showDialogue(lines: [
-            "It was a dark night",
-            "You are coming back home from a walk",
-            "You hear a voice coming from the main door",
-        ], duration: 4)
-//        sceneManager.switchToMinigame(state: .hidden)
-//        sceneManager.selectRoom(.sala)
+        let lines: [ String ] = [
+        "It was a dark night",
+        "You are coming back home from a walk",
+        "You hear a voice coming from the main door",
+        ]
+        let duration : Int = 2
+        let totalDuration = lines.count * (duration+2) // 2 is the fade animation 
+        text.showDialogue(lines: lines, duration: TimeInterval(duration))
+        let actions : [SKAction] =
+            [
+                SKAction.wait(forDuration: TimeInterval(totalDuration)),
+                SKAction.run({sceneManager.switchToMinigame(newState: .hidden)})
+            ]
+        self.run(SKAction.sequence(actions))
     }
 }

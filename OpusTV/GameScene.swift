@@ -37,7 +37,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sceneManager.inventory.regenerateNode()
 
         if (sceneManager.hasInitializedMainScene == false) {
-            sceneManager.switchToMinigame(state: .intro)
             sceneManager.selectRoom(.title)
             sceneManager.hasInitializedMainScene = true
         } else {

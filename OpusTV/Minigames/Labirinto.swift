@@ -53,6 +53,6 @@ class Labirinto: SKScene, SKPhysicsContactDelegate {
     
     private func endGame() {
         sceneManager.inventory.addItem(InventoryItem(name: "chiave"))
-        sceneManager.switchToMinigame(state: .hidden)
+        sceneManager.switchToMinigame(newState: .hidden)
     }
 }

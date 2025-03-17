@@ -48,6 +48,7 @@ let titolo = Stanza(
                   if self.isHidden == false {
                       print(self.isHidden)
                       sceneManager.selectRoom(.sala)
+                      sceneManager.switchToMinigame(newState: .intro)
                   }
               }),
     ]

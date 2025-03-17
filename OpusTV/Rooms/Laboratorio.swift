@@ -49,7 +49,7 @@ let laboratorio = Stanza(state: .laboratorio,
     
     InteractiveSprite(name: "labcalderone",
                       touchAction: {(self) in
-                          sceneManager.switchToMinigame(state: .pozione)
+                          sceneManager.switchToMinigame(newState: .pozione)
                           let message = Message(type: .back, vector: nil, state: nil)
                           sceneManager.mpcManager.send(message: message)
                           print("sending")

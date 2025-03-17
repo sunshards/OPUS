@@ -39,7 +39,7 @@ extension SceneManager : MPCManagerDelegate {
         }
         
         else if message.type == .back {
-            switchToMinigame(state: .hidden)
+            switchToMinigame(newState: .hidden)
         }
         
     }

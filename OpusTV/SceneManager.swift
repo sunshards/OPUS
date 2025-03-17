@@ -37,7 +37,7 @@ class SceneManager {
         .pozione : "Pozione",
         .intro: "FirstCutscene",
         .victory : "Vittoria"
-    ]
+     ]
     var savedScenes : [MinigameState : SKScene?] = [
         .hidden : nil,
         .labirinto : nil,
@@ -70,9 +70,11 @@ class SceneManager {
     
     func assignScene(scene : SKScene) {
         self.scene = scene
-        let lightNode = scene.childNode(withName: "torch") as! SKLightNode
-        let cursor = scene.childNode(withName: "cursor") as! SKSpriteNode
-        self.light = Light(lightNode: lightNode, cursor: cursor)
+        let lightNode = scene.childNode(withName: "torch") as? SKLightNode
+        let cursor = scene.childNode(withName: "cursor") as? SKSpriteNode
+        if let lightNode, let cursor {
+            self.light = Light(lightNode: lightNode, cursor: cursor)
+        }
         self.populator = Populator(scene: self.scene!)
     }
     
@@ -116,28 +118,28 @@ class SceneManager {
         self.light?.move(to:CGPoint.zero)
     }
     
-    func switchToMinigame(state : MinigameState) {
-        if state == .hidden { // Se sei nel gioco principale
+    func switchToMinigame(newState : MinigameState) {
+        if minigameState == .hidden { // Se sei nel gioco principale
             depopulate()
         }
-        if self.savedScenes[self.minigameState] == nil {
-            print("saving scene")
-            self.savedScenes[self.minigameState] = self.scene
-        }
+//        if self.savedScenes[self.minigameState] == nil {
+//            print("saving scene")
+//            self.savedScenes[self.minigameState] = self.scene
+//        }
         
-        self.minigameState = state
+        self.minigameState = newState
 
-        // faccio prima l'unwrap dal dictionary e poi l'unwrap dell'optional del tipo
-        if let value = savedScenes[self.minigameState], let savedScene = value {
-            print("accessing saved scene")
-            self.scene?.view?.presentScene(savedScene, transition: .crossFade(withDuration: 0.5))
-        } else {
-            guard let sceneName = sceneNames[state] else {print("Could not find new scene name"); return}
+//        // faccio prima l'unwrap dal dictionary e poi l'unwrap dell'optional del tipo
+//        if let value = savedScenes[self.minigameState], let savedScene = value {
+//            print("accessing saved scene")
+//            self.scene?.view?.presentScene(savedScene, transition: .crossFade(withDuration: 0.5))
+//        } else {
+            guard let sceneName = sceneNames[newState] else {print("Could not find new scene name"); return}
             let newScene = SKScene(fileNamed: sceneName)
             newScene!.size = CGSize(width: 1920, height: 1080)
             newScene?.scaleMode = .aspectFit
             self.scene?.view?.presentScene(newScene!, transition: .crossFade(withDuration: 0.5))
-        }
+//        }
         return;
     }
     
@@ -223,7 +225,7 @@ class SceneManager {
     }
     
     func endGame() {
-        switchToMinigame(state: .victory)
+        switchToMinigame(newState: .victory)
     }
     
 }
