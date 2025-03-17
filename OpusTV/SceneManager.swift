@@ -17,13 +17,18 @@ import SwiftUI
 class SceneManager {
     @ObservedObject var mpcManager: MPCManager = MPCManager.shared
 
+    //MARK: Contenuti scena
     var scene : SKScene?
     var light : Light?
     let inventory = Inventory()
     var populator : Populator? = nil
     var textManager : TextManager = TextManager(textNode: SKLabelNode())
-    var iphoneConnected: Bool = false
-    var watchConnected : Bool = false
+
+    var heartRate : Double = -1
+    
+
+    var winItems : [String] = ["acqua", "veleno", "bocciasangue", "fiore"]
+    var addedItems : [String] = []
     
     var sceneState : SceneState = .sala
     var minigameState : MinigameState = .hidden
@@ -44,18 +49,17 @@ class SceneManager {
         .pozione : nil
     ]
     
+    //MARK: Giroscopio
     var xGyro : CGFloat = 0.0
     var yGyro : CGFloat = 0.0
     var zGyro : CGFloat = 0.0
     
-    var heartRate : Double = -1
     
 
-    var winItems : [String] = ["acqua", "veleno", "bocciasangue", "fiore"]
-    var addedItems : [String] = []
     
     
     //MARK: flags
+    var hasCollectedBecker = false
     var hasCollectedFlower = false
     var isPopupDisplayed = false
     var hasCollectedKey = false
@@ -68,6 +72,9 @@ class SceneManager {
     var poisonCollected = false
     var hasOpenedChest = false
     var monsterMet : Bool = false
+    
+    var iphoneConnected = false
+    var watchConnected = false
     
     
     init() {
@@ -136,9 +143,9 @@ class SceneManager {
         
         self.minigameState = newState
 
-//        // faccio prima l'unwrap dal dictionary e poi l'unwrap dell'optional del tipo
+///        faccio prima l'unwrap dal dictionary e poi l'unwrap dell'optional del tipo
 //        if let value = savedScenes[self.minigameState], let savedScene = value {
-//            print("accessing saved scene")
+//           print("accessing saved scene")
 //            self.scene?.view?.presentScene(savedScene, transition: .crossFade(withDuration: 0.5))
 //        } else {
             guard let sceneName = sceneNames[newState] else {print("Could not find new scene name"); return}
