@@ -79,7 +79,7 @@ class PhoneManager {
             //print("Attitude frame reset!")
         }
         
-        let message = Message(type: .calibration, vector: nil, state: true)
+        let message = Message(type: .endCalibration, vector: nil, state: true)
         self.mpcManager.send(message: message)
     }
     

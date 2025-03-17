@@ -15,6 +15,8 @@ class CalibrationScreen : SKScene {
     override func didMove(to view: SKView) {
         phoneManager.scene = self
         ScreenUtilities.setBodiesTransparency(scene: scene!)
+        let message = Message(type: .startCalibration, vector: nil, state: true)
+        self.mpcManager.send(message: message)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

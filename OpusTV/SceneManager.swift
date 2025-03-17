@@ -132,7 +132,7 @@ class SceneManager {
         self.light?.move(to:CGPoint.zero)
     }
     
-    func switchToMinigame(newState : MinigameState) {
+    func switchToMinigame(newState : MinigameState, fade: Bool = false) {
         if minigameState == .hidden { // Se sei nel gioco principale
             depopulate()
         }

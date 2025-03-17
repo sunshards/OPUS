@@ -31,7 +31,8 @@ class Light {
             actions.append(SKAction.run {print("enable\(i)");self.enable()})
             actions.append(SKAction.wait(forDuration: 0.25/Double(i)))
         }
-        actions.append(SKAction.run {self.enable()})
+        //        actions.append(SKAction.run {self.enable()})
+        actions.append(SKAction.run {self.disable()})
         
         return SKAction.sequence(actions)
     }

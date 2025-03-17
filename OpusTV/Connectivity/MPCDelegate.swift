@@ -27,9 +27,14 @@ extension SceneManager : MPCManagerDelegate {
             self.updateTitleIcons()
         }
         
-        else if message.type == .calibration {
-            guard let state = message.state else {return}
+        else if message.type == .startCalibration {
+            sceneManager.light?.disable()
+        }
+        
+        else if message.type == .endCalibration {
+            guard let state = message.state else {print("end calibration with no state"); return}
             if state == true {
+                sceneManager.light?.enable()
                 recalibrate()
             }
         }

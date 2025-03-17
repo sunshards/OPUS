@@ -11,7 +11,8 @@ enum MessageType : Codable {
     // per la tv
     case touch
     case heartrate
-    case calibration
+    case startCalibration
+    case endCalibration
     case gyroscope
     case pause
     case yes
