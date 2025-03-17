@@ -7,19 +7,27 @@
 
 import SpriteKit
 
-class Vittoria: SKScene, SKPhysicsContactDelegate {
-   
+class Vittoria: SKScene {
+    let textManager = TextManager(textNode: SKLabelNode())
     
     override func didMove(to view: SKView) {
-      
+        sceneManager.assignScene(scene: scene!)
+        let textLabel = childNode(withName: "Text") as! SKLabelNode
+        let text = TextManager(textNode: textLabel)
+        let lines: [ String ] = [
+        "As you gave the potion to the monster,",
+        "You see the face of your old friend come back.",
+        "He smiles."
+        ]
+        let duration : Int = 1
+        let totalDuration = lines.count * (duration+2) // 2 is the fade animation
+        text.showDialogue(lines: lines, duration: TimeInterval(duration))
+        let actions : [SKAction] =
+            [
+                SKAction.wait(forDuration: TimeInterval(totalDuration)),
+                SKAction.run({sceneManager.switchToMinigame(newState: .hidden)})
+            ]
+        self.run(SKAction.sequence(actions))
     }
-    
-    override func update(_ currentTime: TimeInterval) {
-        
-    }
-    
-    func didBegin(_ contact: SKPhysicsContact) {
-        
-    }
-    
 }
+
