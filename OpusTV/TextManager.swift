@@ -11,9 +11,11 @@ class TextManager {
     let textNode : SKLabelNode
     var isDisplaying : Bool = false
     static let textAnimationKey = "textAnimation"
+    let fontSize : CGFloat = 24
     
     init(textNode: SKLabelNode) {
-        self.textNode = textNode
+        self.textNode = textNode as SKLabelNode
+        textNode.fontSize = fontSize
     }
     
     func changeText(_ newText: String) {

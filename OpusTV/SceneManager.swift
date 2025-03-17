@@ -22,6 +22,8 @@ class SceneManager {
     let inventory = Inventory()
     var populator : Populator? = nil
     var textManager : TextManager = TextManager(textNode: SKLabelNode())
+    var iphoneConnected: Bool = false
+    var watchConnected : Bool = false
     
     var sceneState : SceneState = .sala
     var minigameState : MinigameState = .hidden
@@ -172,6 +174,28 @@ class SceneManager {
         self.light?.enable()
         isPopupDisplayed = false
     }
+    
+    func updateTitleIcons() {
+        guard minigameState == .hidden else {return}
+        let iphoneNode =  scene?.childNode(withName: "//IphoneIcon")
+        let watchNode =  scene?.childNode(withName: "//WatchIcon")
+        if iphoneConnected == true {
+            iphoneNode?.childNode(withName: "on")?.isHidden = false
+            iphoneNode?.childNode(withName: "off")?.isHidden = true
+        } else {
+            iphoneNode?.childNode(withName: "on")?.isHidden = true
+            iphoneNode?.childNode(withName: "off")?.isHidden = false
+        }
+        if watchConnected == true {
+            watchNode?.childNode(withName: "on")?.isHidden = false
+            watchNode?.childNode(withName: "off")?.isHidden = true
+        } else {
+            watchNode?.childNode(withName: "on")?.isHidden = true
+            watchNode?.childNode(withName: "off")?.isHidden = false
+        }
+        
+    }
+    
 }
 
 let sceneManager = SceneManager()

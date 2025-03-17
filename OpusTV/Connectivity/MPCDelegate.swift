@@ -40,21 +40,20 @@ extension SceneManager : MPCManagerDelegate {
             switchToMinigame(state: .hidden)
         }
         
-//        else if message.type == .pauseAction {
-//            scene?.view?.isPaused = true
-//            if message.pauseAction == .resume {
-//                scene?.view?.isPaused = false
-//            }
-//            else if message.pauseAction == .backtotitle {
-//                sceneManager.selectRoom(.title)
-//            }
-//            else if message.pauseAction == .calibration {
-//                
-//            }
-//        }
     }
     
     func mpcManager(_ manager: MPCManager, userIsConnected user: String) {
-        mpcManager.iPhoneConnected = true
+        print(user)
     }
+    
+    func mpcManager(_ manager: MPCManager, device: deviceType, active : Bool) {
+        print(device, active)
+        if device == .iphone {
+            iphoneConnected = active
+        } else {
+            watchConnected = active
+        }
+        sceneManager.updateTitleIcons()
+    }
+
 }

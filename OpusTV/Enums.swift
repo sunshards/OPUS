@@ -24,3 +24,13 @@ enum MinigameState {
     case pozione
     case labirinto
 }
+
+enum deviceType {
+    case iphone
+    case watch
+}
+
+enum deviceState {
+    case connected
+    case disconnected
+}

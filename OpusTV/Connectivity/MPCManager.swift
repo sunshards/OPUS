@@ -12,11 +12,11 @@ import SwiftUI
 protocol MPCManagerDelegate : AnyObject  { // per compatibilità con NSObject
     func mpcManager(_ manager: MPCManager, didReceive message: Message, from peer: MCPeerID)
     func mpcManager(_ manager: MPCManager, userIsConnected user: String)
+    func mpcManager(_ manager: MPCManager, device: deviceType, active : Bool)
 }
 
 class MPCManager : NSObject,ObservableObject {
     
-    @Published var iPhoneConnected: Bool = false
     static let shared: MPCManager = MPCManager() // crea singleton threadsafe: ogni volta che istanzi se esiste già viene presa la copia esistente.
     
     private var peerID = MCPeerID(displayName: UIDevice.current.name) // può essere quello che si vuole, per semplicità mettiamo il nome del telefono
@@ -56,15 +56,14 @@ class MPCManager : NSObject,ObservableObject {
 
 extension MPCManager : MCSessionDelegate {
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
-        var stringState = " "
-        
+        var connection : Bool = false
         switch state {
-        case .connected: stringState = "Connected" ; iPhoneConnected = true
-        case .connecting: stringState = "Connecting" ; iPhoneConnected = false
-        case .notConnected: stringState = "Not Connected" ; iPhoneConnected = false
-        @unknown default: fatalError("State not recognized: \(state)")
+            case .connected: connection = true
+            case .connecting: connection = false
+            case .notConnected: connection = false
+            @unknown default: fatalError("State not recognized: \(state)")
         }
-        print("\(peerID.displayName): \(stringState)")
+        delegate?.mpcManager(self, device: .iphone, active: connection)
     }
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {

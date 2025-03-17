@@ -11,7 +11,7 @@ extension PhoneManager : MPCManagerDelegate {
     func mpcManager(_ manager: MPCManager, didReceive message: Message, from peer: MCPeerID) {
         
         if message.type == .back {
-            print("received")
+            self.vibrate()
             self.changeScreen(name: "BackScreen")
         }
         

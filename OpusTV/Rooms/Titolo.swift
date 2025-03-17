@@ -50,19 +50,6 @@ let titolo = Stanza(
               touchAction: {(self) in
                   sceneManager.selectRoom(.sala)
               }),
-        InteractiveSprite(name: "creditsoff",
-              hoverOnAction: {(self) in
-                  self.room?.childNode(withName:"creditson")?.isHidden = false
-                  self.room?.childNode(withName:"creditsoff")?.isHidden = true
-              }),
-        InteractiveSprite(name: "creditson",
-              hoverOffAction: {(self) in
-                  self.room?.childNode(withName:"creditsoff")?.isHidden = false
-                  self.room?.childNode(withName:"creditson")?.isHidden = true
-              },
-              touchAction: {(self) in
-                  //sceneManager.selectRoom(.sala)
-              }),
     ]
 )
 
