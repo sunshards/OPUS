@@ -34,7 +34,7 @@ let sala : Stanza = Stanza(state: .sala,
                             "Thanks for coming so fast!",
                             "I'm not feeling well...",
                             "Could you grab me some water, please?"
-                          ], duration: 2.5)
+                          ], duration: 0.5)
                       }),
     
     InteractiveSprite(name: "salavasopieno",

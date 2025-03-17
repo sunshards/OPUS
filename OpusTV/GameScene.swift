@@ -29,16 +29,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sala.assignNode(node:childNode(withName: "sala"))
         cucina.assignNode(node:childNode(withName: "cucina"))
         sceneManager.populate()
-        sceneManager.mostro.spawn(position: .zero, room: cucina)
+        sceneManager.mostro.spawn(position: CGPoint(x:370, y:-40), room: laboratorio)
 
         let inventoryNode = SKNode()
         addChild(inventoryNode)
         sceneManager.inventory.assignNode(n: inventoryNode)
         sceneManager.inventory.regenerateNode()
 
-        if (sceneManager.hasInitializedMainScene == false) {
+        if (sceneManager.hasShownMenu == false) {
             sceneManager.selectRoom(.title)
-            sceneManager.hasInitializedMainScene = true
+            sceneManager.hasShownMenu = true
+        } else if sceneManager.hasStartedGame == false {
+            sceneManager.selectRoom(.sala)
         } else {
             sceneManager.selectRoom(sceneManager.sceneState)
         }

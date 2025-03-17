@@ -21,7 +21,7 @@ class Mostro {
 
     init(position : CGPoint? = nil, room: Stanza? = nil) {
         let animation = AnimationManager.generateAnimation(atlasName: "jumpscare", animationName: "m", numberOfFrames: 6, timePerFrame: 0.05)
-        let scaleAction = SKAction.scale(by: 1.5, duration: 0.3)
+        let scaleAction = SKAction.scale(by: 3, duration: 0.3)
         jumpscareAnimation = SKAction.group([animation, scaleAction])
         if let position, let room {
             spawn(position: position, room: room)
@@ -31,6 +31,8 @@ class Mostro {
     func startIdleAnimation() {
         guard let sprite = self.sprite else { print("Trying to start animation without a sprite"); return }
         sprite.run(jumpscareAnimation)
+        sceneManager.textManager.changeText("Stay calm.")
+        sceneManager.textManager.showForDuration(5)
     }
     
     func spawn(position: CGPoint, room: Stanza) {
@@ -44,7 +46,7 @@ class Mostro {
         let interactive = InteractiveSprite(name: "mostro", sprite: monsterNode, touchAction: {(self) in
             sceneManager.light?.flicker()
             if sceneManager.mostro.state == .idle {
-                //sceneManager.mostro.startIdleAnimation()
+                sceneManager.mostro.startIdleAnimation()
                 sceneManager.mostro.state = .jumpscare
             }
         })

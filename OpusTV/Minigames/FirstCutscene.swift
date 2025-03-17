@@ -15,12 +15,14 @@ class FirstCutscene: SKScene {
         let textLabel = childNode(withName: "Text") as! SKLabelNode
         let text = TextManager(textNode: textLabel)
         let lines: [ String ] = [
-        "It was a dark night",
-        "You are coming back home from a walk",
-        "You hear a voice coming from the main door",
+        "It was a dark night.",
+        "As you approach your old friend's door,",
+        "a shiver runs down your spine.",
+        "Did he really drink it?",
+        "Did he really make the Opus Magna, the potion of immortality?"
         ]
-        let duration : Int = 2
-        let totalDuration = lines.count * (duration+2) // 2 is the fade animation 
+        let duration : Int = 1
+        let totalDuration = lines.count * (duration+2) // 2 is the fade animation
         text.showDialogue(lines: lines, duration: TimeInterval(duration))
         let actions : [SKAction] =
             [
