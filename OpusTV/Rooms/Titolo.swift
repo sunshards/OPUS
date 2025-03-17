@@ -19,36 +19,36 @@ import SpriteKit
 let titolo = Stanza(
     state: .title,
     action: {(self) in
-        let playoff = self.node?.childNode(withName:"playoff") as? SKSpriteNode
-        let playon = self.node?.childNode(withName:"playon") as? SKSpriteNode
-        let creditsoff = self.node?.childNode(withName:"creditsoff") as? SKSpriteNode
-        let creditson = self.node?.childNode(withName:"creditson") as? SKSpriteNode
+        let playoff = self.node?.childNode(withName:"activeoff") as? SKSpriteNode
+        let playon = self.node?.childNode(withName:"activeon") as? SKSpriteNode
         playon?.lightingBitMask = 0
-        creditson?.lightingBitMask = 0
-        playoff?.isHidden = false
+        playoff?.isHidden = true
         playon?.isHidden = true
-        creditsoff?.isHidden = false
-        creditson?.isHidden = true
     },
     
     sounds : [
     ],
     
     interactives: [
-        InteractiveSprite(name: "playoff",
+        InteractiveSprite(name: "activeoff",
               hoverOnAction: {(self) in
-                  self.room?.childNode(withName:"playon")?.isHidden = false
-                  self.room?.childNode(withName:"playoff")?.isHidden = true
-              }, touchAction: { (self) in
-                  sceneManager.selectRoom(.sala)
+                  if self.isHidden == false {
+                      self.room?.childNode(withName:"activeon")?.isHidden = false
+                      self.room?.childNode(withName:"activeoff")?.isHidden = true
+                  }
               }),
-        InteractiveSprite(name: "playon",
+        InteractiveSprite(name: "activeon",
               hoverOffAction: {(self) in
-                  self.room?.childNode(withName:"playoff")?.isHidden = false
-                  self.room?.childNode(withName:"playon")?.isHidden = true
+                  if self.isHidden == false {
+                      self.room?.childNode(withName:"activeon")?.isHidden = false
+                      self.room?.childNode(withName:"activeoff")?.isHidden = true
+                  }
               },
               touchAction: {(self) in
-                  sceneManager.selectRoom(.sala)
+                  if self.isHidden == false {
+                      print(self.isHidden)
+                      sceneManager.selectRoom(.sala)
+                  }
               }),
     ]
 )

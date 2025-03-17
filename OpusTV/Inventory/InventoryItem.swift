@@ -7,8 +7,20 @@
 
 import SpriteKit
 
+var isAddable : [String : Bool] =
+[
+    "acqua" : true,
+    "boccia" : false,
+    "bocciasangue" : true,
+    "chiave" : false,
+    "fiore" : true,
+    "mestolo" : false,
+    "veleno" : true
+]
+
 struct InventoryItem {
     var name: String
+    var isAdded : Bool = false
 }
 
 //enum Item : String {

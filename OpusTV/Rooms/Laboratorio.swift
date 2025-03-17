@@ -10,7 +10,6 @@ import SpriteKit
 
 let laboratorio = Stanza(state: .laboratorio,
                     
-                    
    sounds : [
   ],
   
@@ -35,19 +34,15 @@ let laboratorio = Stanza(state: .laboratorio,
                           self.playSound(soundName: "Metal")
                       }),
     
-    InteractiveSprite(name: "labcadavere",
-                      touchAction: {(self) in
-                          self.playSound(soundName: "EasterEgg")
-                      }),
-    
     InteractiveSprite(name: "labscale", touchAction: {(self) in
         sceneManager.selectRoom(.libreria)
     }),
     
     InteractiveSprite(name: "labcadavere",
                       touchAction: {(self) in
+                          print("boccia")
                           if sceneManager.inventory.hasItem("boccia"){
-                              sceneManager.inventory.removeItem(InventoryItem(name: "boccia"))
+                              sceneManager.inventory.removeItem(name: "boccia")
                               sceneManager.inventory.addItem(InventoryItem(name: "bocciasangue"))
                           }
                       }),

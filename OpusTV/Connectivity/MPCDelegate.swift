@@ -22,7 +22,9 @@ extension SceneManager : MPCManagerDelegate {
         }
         
         else if message.type == .heartrate {
+            self.watchConnected = true
             self.heartRate = Double(message.vector?.x ?? -1)
+            self.updateTitleIcons()
         }
         
         else if message.type == .calibration {

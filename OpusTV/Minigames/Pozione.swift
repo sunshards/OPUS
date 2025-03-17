@@ -21,7 +21,6 @@ class Pozione: SKScene {
         self.itemPositionsNode = childNode(withName: "ItemPositions")!
         self.cauldronNode = childNode(withName: "calderone") as! SKSpriteNode
         let cauldronAnimation = AnimationManager.generateAnimation(atlasName: "calderone", animationName: "calderone", numberOfFrames: 16, timePerFrame: 0.1)
-        //let cauldronAnimation = SKAction.animate(with: cauldronTextures, timePerFrame: 0.1)
         cauldronNode.run(SKAction.repeatForever(cauldronAnimation))
         placeInventory()
     }
@@ -32,9 +31,6 @@ class Pozione: SKScene {
 
     }
     
-    func addToCauldron(item : InteractiveSprite) {
-        
-    }
     
     private func placeInventory() {
         DispatchQueue.main.async {
@@ -50,20 +46,14 @@ class Pozione: SKScene {
                 let node = inventory.createInventoryNode(itemName: item.name, point: position)
                 scaleProportionally(sprite: node, axis: .y, value: positionNode.frame.height)
                 node.lightingBitMask = 1
-                //            node.zPosition = positionNode.zPosition + 1
-                //            node.physicsBody = SKPhysicsBody(circleOfRadius: node.size.height)
-                //            node.physicsBody?.affectedByGravity = false
-                //            node.physicsBody?.allowsRotation = false
-                //            node.physicsBody?.categoryBitMask = 2
-                //            node.physicsBody?.collisionBitMask = 0
-                //            node.physicsBody?.fieldBitMask = 0
-                //            node.physicsBody?.contactTestBitMask = 0
-                
                 self.itemPositionsNode.addChild(node)
                 let interactive : InteractiveSprite = InteractiveSprite(name: item.name, sprite: node, touchAction: {(self) in
                     print("tocco")
                     self.color = .black
                     self.colorBlendFactor = 1
+                    if isAddable[item.name] ?? false {
+                        sceneManager.addToCauldron(item: item.name)
+                    }
                 }, active : true)
                 populator.swap(interactable: interactive, sprite: node)
                 positionNode.isHidden = true

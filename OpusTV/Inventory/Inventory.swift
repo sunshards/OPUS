@@ -45,13 +45,17 @@ class Inventory {
         regenerateNode()
     }
     
-    func removeItem(_ item: InventoryItem) {
-        items.removeAll{ $0.name == item.name }
+    func removeItem(name : String) {
+        items.removeAll{ $0.name == name }
         regenerateNode()
     }
     
     func hasItem(_ itemName: String) -> Bool {
         return items.contains { $0.name == itemName }
+    }
+    
+    func getItem(_ itemName: String) -> InventoryItem? {
+        return items.first { $0.name == itemName }
     }
     
     func assignNode(n : SKNode) {

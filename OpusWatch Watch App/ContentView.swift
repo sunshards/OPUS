@@ -30,10 +30,6 @@ struct ContentView: View {
                 Text("Your heart rate:")
                     .padding()
                     .fontWeight(.bold)
-                Button("text") {
-                    print("sending")
-                    self.wcManager.send(message: WatchMessage(heartRate: 75.0))
-                }
                 if monitor.heartRate != nil {
                     Text("\(monitor.heartRate ?? -1) BPM")
                         .font(.system(size: animationAmount*10))

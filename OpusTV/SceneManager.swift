@@ -34,7 +34,9 @@ class SceneManager {
     let sceneNames : [MinigameState : String] = [
         .hidden : "GameScene",
         .labirinto : "Labirinto",
-        .pozione : "Pozione"
+        .pozione : "Pozione",
+        //.intro: "IntroCutScene";
+        .victory : "Vittoria"
     ]
     var savedScenes : [MinigameState : SKScene?] = [
         .hidden : nil,
@@ -49,6 +51,8 @@ class SceneManager {
     var heartRate : Double = -1
     
     var isPopupDisplayed : Bool = false
+    var winItems : [String] = ["acqua", "veleno", "bocciasangue", "fiore"]
+    var addedItems : [String] = []
     
     var hasInitializedMainScene : Bool = false
     var removedAntonio : Bool = false
@@ -177,8 +181,14 @@ class SceneManager {
     
     func updateTitleIcons() {
         guard minigameState == .hidden else {return}
+        
         let iphoneNode =  scene?.childNode(withName: "//IphoneIcon")
         let watchNode =  scene?.childNode(withName: "//WatchIcon")
+        let playButton =  scene?.childNode(withName: "//PlayButton")
+        let disactivePlay = scene?.childNode(withName: "//disactive")
+        let activePlayOff = scene?.childNode(withName: "//activeoff")
+        let activePlayOn = scene?.childNode(withName: "//activeon")
+
         if iphoneConnected == true {
             iphoneNode?.childNode(withName: "on")?.isHidden = false
             iphoneNode?.childNode(withName: "off")?.isHidden = true
@@ -193,7 +203,29 @@ class SceneManager {
             watchNode?.childNode(withName: "on")?.isHidden = true
             watchNode?.childNode(withName: "off")?.isHidden = false
         }
-        
+//        if iphoneConnected && watchConnected {
+//            disactivePlay?.isHidden = true
+//            activePlayOff?.isHidden = false
+//        }
+//        } else {
+//            disactivePlay?.isHidden = false
+//            activePlayOff?.isHidden = true
+//        }
+    }
+    
+    func addToCauldron(item: String) {
+        self.addedItems.append(item)
+        if checkVictory() == true {
+            endGame()
+        }
+    }
+    
+    func checkVictory() -> Bool {
+        return  Set(winItems).isSubset(of: addedItems)
+    }
+    
+    func endGame() {
+        switchToMinigame(state: .victory)
     }
     
 }

@@ -27,6 +27,9 @@ class Populator {
             }
             guard let name = interactable.name else {print("Interactable in room \(room.state) has no name"); return}
             guard let node = room.node else {print("Room \(room.state) has no node"); return}
+            if name == "//body" {
+                print("body")
+            }
             var child : SKNode?
             DispatchQueue.main.async {
                 child = node.childNode(withName: name)
