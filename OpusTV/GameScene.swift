@@ -29,10 +29,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sala.assignNode(node:childNode(withName: "sala"))
         cucina.assignNode(node:childNode(withName: "cucina"))
         sceneManager.populate()
-        //sceneManager.mostro.spawn(position: CGPoint(x:100, y:-240), room: laboratorio)
-        //sceneManager.mostro.sprite?.size = CGSize(width: 500, height: 700)
-        sceneManager.mostro.spawn(position: CGPoint.zero, room: libreria)
-        sceneManager.mostro.sprite?.size = CGSize(width: 1000, height: 1400)
+        sceneManager.mostro.spawn(position: CGPoint(x:100, y:-240), room: laboratorio)
+        sceneManager.mostro.sprite?.size = CGSize(width: 500, height: 700)
 
 
         let inventoryNode = SKNode()
@@ -45,6 +43,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             sceneManager.hasShownMenu = true
         } else if sceneManager.hasStartedGame == false {
             sceneManager.selectRoom(.sala)
+            sceneManager.hasStartedGame == true
         } else {
             sceneManager.selectRoom(sceneManager.sceneState)
         }
@@ -76,8 +75,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func playSound(soundName : String) {
+        var room : SKNode? {
+            return self.parent
+        }
+            room?.run(SKAction.playSoundFileNamed(soundName, waitForCompletion: true))
+            print("playing sound \(soundName)")
+        
+    }
+    
+    func killSound(){
+        var room : SKNode? {
+            return self.parent
+        }
+        room?.run(SKAction.stop())
+    }
     
     override func update(_ currentTime: TimeInterval) {
+        if sceneManager.getCurrentScene() != .laboratorio
+        {
+            self.killSound()
+            self.playSound(soundName: "Atmosfera")
+        }
+        else{
+            self.killSound()
+            self.playSound(soundName: "Atmosfera2")
+        }
         sceneManager.light?.smoothUpdate()
     }
 }

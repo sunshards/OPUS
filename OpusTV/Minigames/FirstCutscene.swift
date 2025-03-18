@@ -22,7 +22,7 @@ class FirstCutscene: SKScene {
         "Did he really make the Opus Magna, the potion of immortality?"
         ]
         let duration : Int = 1
-        let totalDuration = lines.count * (duration+2) // 2 is the fade animation
+        let totalDuration = 1//lines.count * (duration+2) // 2 is the fade animation
         text.showDialogue(lines: lines, duration: TimeInterval(duration))
         let actions : [SKAction] =
             [

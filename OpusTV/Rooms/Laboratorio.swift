@@ -15,7 +15,12 @@ let laboratorio = Stanza(state: .laboratorio,
   
   interactives: [
     
-    InteractiveSprite(name: "libporta", touchAction: {(self) in
+    InteractiveSprite(name: "libporta",
+                      spawnAction: {(self) in
+                          self.playSound(soundName: "Atmosfera2")
+                      },
+                      
+                      touchAction: {(self) in
         sceneManager.selectRoom(.sala)
     }),
     
@@ -42,6 +47,7 @@ let laboratorio = Stanza(state: .laboratorio,
                       touchAction: {(self) in
                           print("boccia")
                           if sceneManager.inventory.hasItem("boccia"){
+                              self.playSound(soundName: "Sangue")
                               sceneManager.inventory.removeItem(name: "boccia")
                               sceneManager.inventory.addItem(InventoryItem(name: "bocciasangue"))
                           }

@@ -9,9 +9,7 @@ import Foundation
 import SpriteKit
 
 let libreria = Stanza(state: .libreria,
-    action: {(self) in
-       sceneManager.light?.flicker()
-   },                    
+    action: {(self) in},                    
                     
    sounds : [
   ],
@@ -19,6 +17,7 @@ let libreria = Stanza(state: .libreria,
   interactives: [
     
     InteractiveSprite(name: "libporta", touchAction: {(self) in
+        self.playSound(soundName: "ChiaveApertura")
         sceneManager.selectRoom(.sala)
     }),
     

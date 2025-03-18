@@ -32,6 +32,8 @@ class Mostro {
         guard let sprite = self.sprite else { print("Trying to start animation without a sprite"); return }
         sprite.run(jumpscareAnimation)
         sceneManager.textManager.changeText("Stay calm.")
+        self.sprite?.playSound(soundName: "BattitoCrescente")
+        self.sprite?.playSound(soundName: "HorrorSuspance")
         sceneManager.textManager.showForDuration(5)
     }
     
