@@ -33,6 +33,7 @@ let sala : Stanza = Stanza(state: .sala,
                           if sceneManager.hasCollectedWater {
                               self.delete()
                           }
+
                       },
                       hoverOnAction: {(self) in
                           if !sceneManager.hasCollectedWater{
@@ -59,11 +60,17 @@ let sala : Stanza = Stanza(state: .sala,
                           }
                       }),
     
-    InteractiveSprite(name: "salaportacucina", touchAction: {(self) in
+    InteractiveSprite(name: "salaportacucina",
+                      spawnAction: {(self) in
+                          self.playSound(soundName: "Atmosfera")
+                      },
+                      touchAction: {(self) in
+        self.playSound(soundName: "ChiaveApertura")
         sceneManager.selectRoom(.cucina)
     }),
     
     InteractiveSprite(name: "salaportalibreria", touchAction: {(self) in
+        self.playSound(soundName: "ChiaveApertura")
         sceneManager.selectRoom(.libreria)
     }),
     
@@ -85,7 +92,7 @@ let sala : Stanza = Stanza(state: .sala,
                       },
                       touchAction: {(self) in
                           if sceneManager.inventory.hasItem("chiave") {
-                              self.playSound(soundName: "BauleApertura")
+                              self.playSound(soundName: "AperturaHorror")
                               let s1 = self.room?.childNode(withName: "salacassaaperta") as? InteractiveSprite
                               let s2 = self.room?.childNode(withName: "salaveleno") as? InteractiveSprite
                               s1?.show()

@@ -105,6 +105,7 @@ class InteractiveSprite: SKSpriteNode, SKPhysicsContactDelegate {
     func playSound(soundName : String) {
         if self.isActive {
             self.room?.run(SKAction.playSoundFileNamed(soundName, waitForCompletion: true))
+            print("playing sound \(soundName)")
         }
     }
     
