@@ -60,11 +60,11 @@ class Mostro {
             }
         })
         populator.swap(interactable: interactive, sprite: monsterNode)
-        let lightNode = SKLightNode()
-        lightNode.falloff = 5
-        lightNode.position = CGPoint(x: 0, y: interactive.frame.maxY * 0.8)
-        interactive.addChild(lightNode)
-        self.light = lightNode
+//        let lightNode = SKLightNode()
+//        lightNode.falloff = 5
+//        lightNode.position = CGPoint(x: 0, y: interactive.frame.maxY * 0.8)
+//        interactive.addChild(lightNode)
+//        self.light = lightNode
         self.sprite = interactive
     }
     
