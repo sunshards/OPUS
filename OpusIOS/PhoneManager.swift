@@ -21,7 +21,7 @@ class PhoneManager {
     let motionManager = CMMotionManager()
     let gyroBound : Double = 0.05
     private var referenceAttitude : CMAttitude?
-    var hapticEngine : CHHapticEngine
+    var hapticEngine : CHHapticEngine?
     
     let hapticDict = [
         CHHapticPattern.Key.pattern: [
@@ -40,7 +40,7 @@ class PhoneManager {
         self.hapticEngine = PhoneManager.setupHaptics()
         do {
             self.vibrationPattern = try CHHapticPattern(dictionary: hapticDict)
-            self.hapticPlayer = try hapticEngine.makePlayer(with: vibrationPattern!)
+            self.hapticPlayer = try hapticEngine?.makePlayer(with: vibrationPattern!)
         } catch let error {
             fatalError("Failed to create vibration player: \(error)")
         }
@@ -100,17 +100,21 @@ class PhoneManager {
         }
     }
     
-    static func setupHaptics() -> CHHapticEngine {
+    static func setupHaptics() -> CHHapticEngine? {
         // Check if the device supports haptics.
         let hapticCapability = CHHapticEngine.capabilitiesForHardware()
         guard hapticCapability.supportsHaptics == true else {
-            fatalError("Could not get haptic capabilities")
+            print("could not get haptic capabilities")
+            return nil
+            //fatalError("Could not get haptic capabilities")
         }
         let engine : CHHapticEngine
         do {
             engine = try CHHapticEngine()
         } catch let error {
-            fatalError("Engine Creation Error: \(error)")
+            print ( "Could not get engine")
+            return nil
+            //fatalError("Engine Creation Error: \(error)")
         }
         // The reset handler provides an opportunity to restart the engine.
         engine.resetHandler = {
@@ -126,7 +130,9 @@ class PhoneManager {
 
 
             } catch {
-                fatalError("Failed to restart the engine: \(error)")
+                print("Failed to restart the engine")
+                return
+                //fatalError("Failed to restart the engine: \(error)")
             }
             // The stopped handler alerts engine stoppage.
             engine.stoppedHandler = { reason in
@@ -149,9 +155,9 @@ class PhoneManager {
     
     func vibrate() {
         do {
-            try hapticEngine.start()
+            try hapticEngine?.start()
             try hapticPlayer?.start(atTime: 0)
-            hapticEngine.stop(completionHandler: nil)
+            hapticEngine?.stop(completionHandler: nil)
         } catch let error {
             print("Error in vibrate: \(error)")
         }
