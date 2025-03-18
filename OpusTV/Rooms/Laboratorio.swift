@@ -9,6 +9,11 @@ import Foundation
 import SpriteKit
 
 let laboratorio = Stanza(state: .laboratorio,
+                         
+                         action: {(self) in
+    audio.stopMusic()
+    audio.playMusic("Atmosfera2")
+},
                 
    sounds : [
   ],
@@ -16,17 +21,13 @@ let laboratorio = Stanza(state: .laboratorio,
   interactives: [
     
     InteractiveSprite(name: "libporta",
-                      spawnAction: {(self) in
-                          self.playSound(soundName: "Atmosfera2")
-                      },
-                      
                       touchAction: {(self) in
         sceneManager.selectRoom(.sala)
     }),
     
     InteractiveSprite(name: "labarile",
                       touchAction: {(self) in
-                          self.playSound(soundName: "Legno")
+                          audio.playSoundEffect(named: "Legno")
                       }),
     
     InteractiveSprite(name: "labscale",
@@ -36,10 +37,12 @@ let laboratorio = Stanza(state: .laboratorio,
         
     InteractiveSprite(name: "labmannaia",
                       touchAction: {(self) in
-                          self.playSound(soundName: "Metal")
+                          audio.playSoundEffect(named: "Metal")
                       }),
     
     InteractiveSprite(name: "labscale", touchAction: {(self) in
+        audio.stopMusic()
+        audio.playMusic("Atmosfera")
         sceneManager.selectRoom(.libreria)
     }),
     
@@ -47,7 +50,7 @@ let laboratorio = Stanza(state: .laboratorio,
                       touchAction: {(self) in
                           print("boccia")
                           if sceneManager.inventory.hasItem("boccia"){
-                              self.playSound(soundName: "Sangue")
+                              audio.playSoundEffect(named: "Sangue")
                               sceneManager.inventory.removeItem(name: "boccia")
                               sceneManager.inventory.addItem(InventoryItem(name: "bocciasangue"))
                           }
@@ -58,6 +61,5 @@ let laboratorio = Stanza(state: .laboratorio,
                           sceneManager.switchToMinigame(newState: .pozione)
                           let message = Message(type: .back, vector: nil, state: nil)
                           sceneManager.mpcManager.send(message: message)
-                          print("sending")
                       }),
 ])

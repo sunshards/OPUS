@@ -71,7 +71,9 @@ class SceneManager {
     var hasPaintingMoved = false
     var poisonCollected = false
     var hasOpenedChest = false
-    var monsterMet : Bool = false
+    var monsterPhase : Int = 0
+    
+    var isLightFlickering : Bool = true
     
     var iphoneConnected = false
     var watchConnected = false
@@ -240,6 +242,26 @@ class SceneManager {
     
     func endGame() {
         switchToMinigame(newState: .victory)
+    }
+    
+    func lightFlickering(flickerNumber : Int) {
+        if flickerNumber % 2 == 0 {
+            mostro.toggleVisibility()
+        }
+        if flickerNumber == light?.lightFlickers && monsterPhase > 0 {
+            mostro.sprite?.isHidden = false
+            mostro.jumpscare()
+        }
+    }
+    
+    func lightFlickeringStarted() {}
+    
+    func lightFlickeringOver() {
+        if monsterPhase == 0 {
+            self.mostro.increasePhase()
+            self.mostro.goToNextRoom()
+            self.mostro.sprite?.isActive = true
+        }
     }
     
 }

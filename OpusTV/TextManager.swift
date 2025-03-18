@@ -23,17 +23,13 @@ class TextManager {
     }
     
     func showForDuration(_ duration: TimeInterval) {
+        self.isDisplaying = true
         let newSequence : [SKAction] = [
             SKAction.hide().reversed(),
             SKAction.wait(forDuration: duration),
+            SKAction.run({sceneManager.textManager.isDisplaying = false}),
             SKAction.hide()
         ]
-//        let currentSequence : [SKAction]
-//        if let currentAnimation = self.textNode.action(forKey: TextManager.textAnimationKey) {
-//            currentSequence = [currentAnimation] + newSequence
-//        } else {
-//            currentSequence = newSequence
-//        }
         self.textNode.run(SKAction.sequence(newSequence), withKey: TextManager.textAnimationKey)
     }
     

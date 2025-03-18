@@ -11,6 +11,7 @@ class Light {
     var lightNode : SKLightNode = SKLightNode()
     var cursor : SKSpriteNode = SKSpriteNode()
     var cursorAlpha : CGFloat = 0.2
+    let lightFlickers = 8
 
     var position = CGPoint.zero
     var displayPosition = CGPoint.zero
@@ -25,16 +26,29 @@ class Light {
     
     var flickerAnimation : SKAction {
         var actions : [SKAction] = []
-        for i in 1...6 {
-            actions.append(SKAction.run {print("disable\(i)"); self.disable()})
+        actions.append(SKAction.run {sceneManager.lightFlickeringStarted()})
+
+        for i in 1...lightFlickers {
+            actions.append(SKAction.run {self.disable()})
             actions.append(SKAction.wait(forDuration: 0.25/Double(i)))
-            actions.append(SKAction.run {print("enable\(i)");self.enable()})
+            actions.append(SKAction.run {self.enable()})
             actions.append(SKAction.wait(forDuration: 0.25/Double(i)))
+            actions.append(SKAction.run {sceneManager.lightFlickering(flickerNumber: i)})
         }
-        //        actions.append(SKAction.run {self.enable()})
-        actions.append(SKAction.run {self.disable()})
+        actions.append(SKAction.run {self.enable()})
+        actions.append(SKAction.run {sceneManager.lightFlickeringOver()})
+
         
         return SKAction.sequence(actions)
+    }
+    
+    var constantFlickerAnimation : [SKAction] {
+        return [
+            SKAction.run {self.disable()},
+            SKAction.wait(forDuration: 0.12),
+            SKAction.run {self.disable()},
+            SKAction.wait(forDuration: 0.12)
+        ]
     }
     
     init() {}
@@ -105,6 +119,14 @@ class Light {
         hideCursor()
         self.isEnabled = false
     }
+    
+    func disableTouch() {
+        self.isEnabled = false
+    }
+    
+    func enableTouch() {
+        self.isEnabled = true
+    }
 
     
     func setSensibility(sensibility : CGFloat) {
@@ -126,7 +148,7 @@ class Light {
         }
         if let highestTouched = displayed.max(by: {$0.zPosition < $1.zPosition}) {
             highestTouched.run()
-            print("run")
+            //print("run")
         }
     }
 }

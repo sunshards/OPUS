@@ -17,11 +17,7 @@ import SpriteKit
 
 let sala : Stanza = Stanza(state: .sala,
                            
-       action: {(self) in
-    if sceneManager.monsterMet == true && sceneManager.inventory.hasItem("chiave") {
-                //sceneManager.mostro.spawn(position: ., room: )
-            }
-    },
+       action: {(self) in},
                   
   sounds : [
     "OrologioTick2"
@@ -35,11 +31,11 @@ let sala : Stanza = Stanza(state: .sala,
                           }
 
                       },
-                      hoverOnAction: {(self) in
+                      touchAction: {(self) in
                           if !sceneManager.hasCollectedWater{
                               sceneManager.textManager.showDialogue(lines: [
-                                "Oh hey there!",
-                                "Thanks for coming so fast!",
+                                "Oh! Hey there...",
+                                "Thanks for coming so fast.",
                                 "I'm not feeling well...",
                                 "Could you grab me some water, please?"
                               ], duration: 0.5)
@@ -53,7 +49,7 @@ let sala : Stanza = Stanza(state: .sala,
                       },
                       touchAction: {(self) in
                           if sceneManager.hasCollectedWater{
-                              self.playSound(soundName: "Ceramica")
+                              audio.playSoundEffect(named: "Ceramica")
                               sceneManager.inventory.addItem(InventoryItem(name: "fiore"))
                               sceneManager.hasCollectedFlower = true
                               self.delete()
@@ -61,16 +57,13 @@ let sala : Stanza = Stanza(state: .sala,
                       }),
     
     InteractiveSprite(name: "salaportacucina",
-                      spawnAction: {(self) in
-                          self.playSound(soundName: "Atmosfera")
-                      },
-                      touchAction: {(self) in
-        self.playSound(soundName: "ChiaveApertura")
-        sceneManager.selectRoom(.cucina)
+      touchAction: {(self) in
+          audio.playSoundEffect(named: "ChiaveApertura")
+          sceneManager.selectRoom(.cucina)
     }),
     
     InteractiveSprite(name: "salaportalibreria", touchAction: {(self) in
-        self.playSound(soundName: "ChiaveApertura")
+        audio.playSoundEffect(named: "ChiaveApertura")
         sceneManager.selectRoom(.libreria)
     }),
     
@@ -79,12 +72,12 @@ let sala : Stanza = Stanza(state: .sala,
   
                       },
                       touchAction: {(self) in
-                          self.playSound(soundName: "SediaAperturaLegno")
+                          audio.playSoundEffect(named: "SediaAperturaLegno")
                       }),
     
     InteractiveSprite(name: "salatazza",
                       touchAction: {(self) in
-                          self.playSound(soundName: "Ceramica")
+                          audio.playSoundEffect(named: "Ceramica")
                       }),
     InteractiveSprite(name: "salacassa",
                       spawnAction: {(self) in
@@ -92,7 +85,7 @@ let sala : Stanza = Stanza(state: .sala,
                       },
                       touchAction: {(self) in
                           if sceneManager.inventory.hasItem("chiave") {
-                              self.playSound(soundName: "AperturaHorror")
+                              audio.playSoundEffect(named: "AperturaHorror")
                               let s1 = self.room?.childNode(withName: "salacassaaperta") as? InteractiveSprite
                               let s2 = self.room?.childNode(withName: "salaveleno") as? InteractiveSprite
                               s1?.show()

@@ -17,13 +17,13 @@ let libreria = Stanza(state: .libreria,
   interactives: [
     
     InteractiveSprite(name: "libporta", touchAction: {(self) in
-        self.playSound(soundName: "ChiaveApertura")
+        audio.playSoundEffect(named: "ChiaveApertura")
         sceneManager.selectRoom(.sala)
     }),
     
     InteractiveSprite(name: "libsedia",
                       touchAction: {(self) in
-                          self.playSound(soundName: "Sedia2")
+                          audio.playSoundEffect(named: "Sedia2")
                       }),
     InteractiveSprite(name: "libquadro",
                       spawnAction: {(self) in

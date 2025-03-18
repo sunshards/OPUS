@@ -19,18 +19,15 @@ let cucina = Stanza(state: .cucina,
   interactives: [
     
     InteractiveSprite(name: "cucporta",
-                      spawnAction: {(self) in
-                          self.playSound(soundName: "Atmosfera")
-                      },
         touchAction: {(self) in
-        self.playSound(soundName: "ChiaveApertura")
+        audio.playSoundEffect(named: "ChiaveApertura")
         sceneManager.selectRoom(.sala)
     }),
     
     InteractiveSprite(name: "cucmestolopieno",
       touchAction: {(self) in
           if sceneManager.hasCollectedWater{
-              self.playSound(soundName: "Mestolo2")
+              audio.playSoundEffect(named: "Mestolo2")
           }
       }),
     
