@@ -105,7 +105,6 @@ class Light {
     func showLight() {
         lightNode.isEnabled = true
         lightVisible = true
-
     }
     
     func enable() {
@@ -136,7 +135,11 @@ class Light {
     /// fa partire l'azione del primo sprite interattivo non nascosto che trova
     /// se la luce non è abilitata invece il tocco viene gestito in modo diverso dallo sceneManager
     func touch() {
-        guard isEnabled == true else {sceneManager.handleDisabledTouch(); return}
+        if self.isEnabled == false {
+            print("light not enabled")
+            sceneManager.handleDisabledTouch()
+            return
+        }
         var displayed : [InteractiveSprite] = []
         guard let contacts = cursor.physicsBody?.allContactedBodies() else {return}
         for sprite in contacts {

@@ -16,11 +16,15 @@ extension PhoneManager : MPCManagerDelegate {
         }
         
         else if message.type == .confirm {
+            self.vibrate()
+            self.changeScreen(name: "ConfirmScreen")
         }
         
-        else if message.type == .vibration {
-
+        else if message.type == .no {
+            self.changeScreen(name: "MainScreen")
         }
+        
+        else if message.type == .vibration {}
     }
     
     func mpcManager(_ manager: MPCManager, userIsConnected user: String) {}

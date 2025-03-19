@@ -23,6 +23,8 @@ class MainScreen: SKScene {
         let node = self.atPoint(touchLocation)
         if (node.name == "PauseButton") {
             phoneManager.changeScreen(name: "PauseScreen")
+            let message = Message(type: .pause, vector: nil, state: nil)
+            mpcManager.send(message: message)
         }
         else if (node.name == "body") {
             ScreenUtilities.activateButton(body: node)

@@ -51,6 +51,8 @@ let sala : Stanza = Stanza(state: .sala,
                           if sceneManager.hasCollectedWater{
                               audio.playSoundEffect(named: "Ceramica")
                               sceneManager.inventory.addItem(InventoryItem(name: "fiore"))
+                              sceneManager.textManager.displayText("You collected a moon flower.", for: 4)
+
                               sceneManager.hasCollectedFlower = true
                               self.delete()
                           }
@@ -68,9 +70,6 @@ let sala : Stanza = Stanza(state: .sala,
     }),
     
     InteractiveSprite(name: "salasedia",
-                      hoverOnAction: {(self) in
-  
-                      },
                       touchAction: {(self) in
                           audio.playSoundEffect(named: "SediaAperturaLegno")
                       }),
@@ -105,6 +104,7 @@ let sala : Stanza = Stanza(state: .sala,
                       },
                       touchAction: {(self) in
                           sceneManager.inventory.addItem(InventoryItem(name: "veleno"))
+                          sceneManager.textManager.displayText("You collected poison.", for: 4)
                           sceneManager.poisonCollected = true
                           self.delete()
                       }),

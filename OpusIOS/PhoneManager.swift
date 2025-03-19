@@ -23,24 +23,31 @@ class PhoneManager {
     private var referenceAttitude : CMAttitude?
     var hapticEngine : CHHapticEngine?
     
-    let hapticDict = [
-        CHHapticPattern.Key.pattern: [
-            [CHHapticPattern.Key.event: [
-                CHHapticPattern.Key.eventType: CHHapticEvent.EventType.hapticTransient,
-                CHHapticPattern.Key.time: CHHapticTimeImmediate,
-                CHHapticPattern.Key.eventDuration: 1.0]
-            ]
-        ]
-    ]
+//    let hapticDict = [
+//        CHHapticPattern.Key.pattern: [
+//            [CHHapticPattern.Key.event: [
+//                CHHapticPattern.Key.eventType: CHHapticEvent.EventType.hapticContinuous,
+//                CHHapticPattern.Key.time: CHHapticTimeImmediate,
+//                CHHapticPattern.Key.eventDuration: 3.0]
+//            ]
+//        ]
+//    ]
+    let hapticEvent = CHHapticEvent(eventType: .hapticContinuous,
+                                  parameters: [CHHapticEventParameter(parameterID: .hapticIntensity, value: 1.0),
+                                               CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.5)],
+                                  relativeTime: 0,
+                                  duration: 3.0) // 3 secondi di vibrazione continua
+    
     var hapticPlayer : CHHapticPatternPlayer?
-    var vibrationPattern : CHHapticPattern? = nil
+    //var vibrationPattern : CHHapticPattern? = nil
 
     
     private init() {
         self.hapticEngine = PhoneManager.setupHaptics()
         do {
-            self.vibrationPattern = try CHHapticPattern(dictionary: hapticDict)
-            self.hapticPlayer = try hapticEngine?.makePlayer(with: vibrationPattern!)
+            //self.vibrationPattern = try CHHapticPattern(dictionary: hapticDict)
+            let pattern = try CHHapticPattern(events: [hapticEvent], parameters: [])
+            self.hapticPlayer = try hapticEngine?.makePlayer(with: pattern)
         } catch let error {
             fatalError("Failed to create vibration player: \(error)")
         }

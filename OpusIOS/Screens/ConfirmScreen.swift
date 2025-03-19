@@ -46,13 +46,15 @@ class ConfirmScreen: SKScene {
             
             if buttonName == "YesButton" {
                 
-                // CODE GOES HERE
+                let message = Message(type: .yes, vector: nil, state: nil)
+                mpcManager.send(message: message)
                 
                 phoneManager.changeScreen(name: "MainScreen")
 
             } else if buttonName == "NoButton" {
                 
-                // CODE GOES HERE
+                let message = Message(type: .no, vector: nil, state: nil)
+                mpcManager.send(message: message)
                 
                 phoneManager.changeScreen(name: "MainScreen")
 

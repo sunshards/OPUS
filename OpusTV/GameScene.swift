@@ -46,9 +46,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             sceneManager.hasShownMenu = true
         } else if sceneManager.hasStartedGame == false {
             sceneManager.selectRoom(.sala)
-            sceneManager.hasStartedGame == true
-            sceneManager.textManager.changeText("Press the ACT button on your phone to interact.")
-            sceneManager.textManager.showForDuration(5)
+            sceneManager.hasStartedGame = true
+            sceneManager.textManager.displayText("Press the ACT button on your phone to interact.", for: 5)
         } else {
             sceneManager.selectRoom(sceneManager.sceneState)
         }
@@ -98,6 +97,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         sceneManager.light?.smoothUpdate()
+        if sceneManager.watchConnected {
+            //print(sceneManager.collectedHeartRates)
+        } else {
+            //print("watch not connected")
+        }
     }
 }
 

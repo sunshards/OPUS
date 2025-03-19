@@ -42,6 +42,8 @@ let cucina = Stanza(state: .cucina,
         (self) in
         sceneManager.hasCollectedWater = true
         sceneManager.inventory.addItem(InventoryItem(name: "acqua"))
+        sceneManager.textManager.displayText("You collected water.", for: 4)
+
         self.delete()
     }),
     
@@ -54,6 +56,7 @@ let cucina = Stanza(state: .cucina,
         touchAction: {(self) in
         if sceneManager.hasCollectedWater{
             sceneManager.inventory.addItem(InventoryItem(name: "boccia"))
+            sceneManager.textManager.displayText("You collected a glass.", for: 4)
             sceneManager.hasCollectedBecker = true
             self.delete()
         }

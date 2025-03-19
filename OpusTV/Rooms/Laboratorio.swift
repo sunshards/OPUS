@@ -53,6 +53,8 @@ let laboratorio = Stanza(state: .laboratorio,
                               audio.playSoundEffect(named: "Sangue")
                               sceneManager.inventory.removeItem(name: "boccia")
                               sceneManager.inventory.addItem(InventoryItem(name: "bocciasangue"))
+                              sceneManager.textManager.displayText("You collected blood.", for: 4)
+
                           }
                       }),
     

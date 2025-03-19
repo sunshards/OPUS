@@ -13,11 +13,14 @@ import SwiftUI
 // L'intero sistema degli interactive sprite e del populator è troppo instabile ed è da eliminare
 // Meglio fare la gestione su scene come sul telefono
 
+// Questa classe dovrebbe essere divisa in tante sottoclassi... gestisce troppe cose.
+
 // Metto qui tutti gli oggetti a cui devono avere accesso altre classi
 class SceneManager {
     @ObservedObject var mpcManager: MPCManager = MPCManager.shared
 
     //MARK: Contenuti scena
+    var debugMode : Bool = false
     var scene : SKScene?
     var light : Light?
     let inventory = Inventory()
@@ -25,7 +28,7 @@ class SceneManager {
     var textManager : TextManager = TextManager(textNode: SKLabelNode())
 
     var heartRate : Double = -1
-    
+    var collectedHeartRates : [Double] = []
 
     var winItems : [String] = ["acqua", "veleno", "bocciasangue", "fiore"]
     var addedItems : [String] = []
@@ -135,27 +138,18 @@ class SceneManager {
     }
     
     func switchToMinigame(newState : MinigameState, fade: Bool = false) {
+        if newState == minigameState { print("switching to same minigame"); return; }
+        
         if minigameState == .hidden { // Se sei nel gioco principale
             depopulate()
         }
-//        if self.savedScenes[self.minigameState] == nil {
-//            print("saving scene")
-//            self.savedScenes[self.minigameState] = self.scene
-//        }
         
         self.minigameState = newState
-
-///        faccio prima l'unwrap dal dictionary e poi l'unwrap dell'optional del tipo
-//        if let value = savedScenes[self.minigameState], let savedScene = value {
-//           print("accessing saved scene")
-//            self.scene?.view?.presentScene(savedScene, transition: .crossFade(withDuration: 0.5))
-//        } else {
-            guard let sceneName = sceneNames[newState] else {print("Could not find new scene name"); return}
-            let newScene = SKScene(fileNamed: sceneName)
-            newScene!.size = CGSize(width: 1920, height: 1080)
-            newScene?.scaleMode = .aspectFit
-            self.scene?.view?.presentScene(newScene!, transition: .crossFade(withDuration: 0.5))
-//        }
+        guard let sceneName = sceneNames[newState] else {print("Could not find new scene name"); return}
+        let newScene = SKScene(fileNamed: sceneName)
+        newScene!.size = CGSize(width: 1920, height: 1080)
+        newScene?.scaleMode = .aspectFit
+        self.scene?.view?.presentScene(newScene!, transition: .crossFade(withDuration: 0.5))
         return;
     }
     
@@ -200,10 +194,10 @@ class SceneManager {
         
         let iphoneNode =  scene?.childNode(withName: "//IphoneIcon")
         let watchNode =  scene?.childNode(withName: "//WatchIcon")
-        let playButton =  scene?.childNode(withName: "//PlayButton")
-        let disactivePlay = scene?.childNode(withName: "//disactive")
-        let activePlayOff = scene?.childNode(withName: "//activeoff")
-        let activePlayOn = scene?.childNode(withName: "//activeon")
+//        let playButton =  scene?.childNode(withName: "//PlayButton")
+//        let disactivePlay = scene?.childNode(withName: "//disactive")
+//        let activePlayOff = scene?.childNode(withName: "//activeoff")
+//        let activePlayOn = scene?.childNode(withName: "//activeon")
 
         if iphoneConnected == true {
             iphoneNode?.childNode(withName: "on")?.isHidden = false
@@ -262,6 +256,35 @@ class SceneManager {
             self.mostro.goToNextRoom()
             self.mostro.sprite?.isActive = true
         }
+    }
+    
+    func pause() {
+        //self.scene?.isPaused = true
+        audio.pauseMusic()
+        light?.disable()
+    }
+    
+    func unpause() {
+        //self.scene?.isPaused = false
+        audio.resumeMusic()
+        light?.enable()
+    }
+    
+    func collectHeartRate(rate : Double) {
+        if collectedHeartRates.count < 2 {
+            collectedHeartRates.append(rate)
+        } else {
+            collectedHeartRates.insert(rate, at: 0)
+            collectedHeartRates.removeLast()
+        }
+    }
+    
+    func playerIsScared() -> Bool {
+        guard let maxRate = collectedHeartRates.max(), let minRate = collectedHeartRates.min() else {print("could not find max and min of collectedheartrates"); return false}
+        if maxRate - minRate > 2 {
+            return true
+        }
+        return false
     }
     
 }

@@ -32,7 +32,7 @@ let libreria = Stanza(state: .libreria,
                           }
                       },
                       touchAction: {(self) in
-                          if   !sceneManager.hasPaintingMoved && sceneManager.canMovePainting {
+                          if   !sceneManager.hasPaintingMoved && sceneManager.canMovePainting && sceneManager.hasCollectedWater{
                               self.run(SKAction.move(to: CGPoint(x: 220, y: 115), duration: 5))
                               self.playSound(soundName: "PassaggioSegreto")
                               sceneManager.hasPaintingMoved = true
@@ -45,8 +45,12 @@ let libreria = Stanza(state: .libreria,
     
     InteractiveSprite(name: "libteca",
                       touchAction: {(self) in
-                          if !sceneManager.hasCollectedKey {
-                              sceneManager.switchToMinigame(newState: .labirinto)
+                          if !sceneManager.hasCollectedKey && sceneManager.monsterPhase > 0 {
+                              let message = Message(type: .confirm, vector: nil, state: nil)
+                              sceneManager.mpcManager.send(message: message)
+                              sceneManager.pause()
+                          } else {
+                              self.playSound(soundName: "")
                           }
                       }),
     

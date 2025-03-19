@@ -24,6 +24,7 @@ extension SceneManager : MPCManagerDelegate {
         else if message.type == .heartrate {
             self.watchConnected = true
             self.heartRate = Double(message.vector?.x ?? -1)
+            sceneManager.collectHeartRate(rate: heartRate)
             self.updateTitleIcons()
         }
         
@@ -36,6 +37,7 @@ extension SceneManager : MPCManagerDelegate {
             if state == true {
                 sceneManager.light?.enable()
                 recalibrate()
+                sceneManager.unpause()
             }
         }
         
@@ -45,6 +47,25 @@ extension SceneManager : MPCManagerDelegate {
         
         else if message.type == .back {
             switchToMinigame(newState: .hidden)
+        }
+        
+        else if message.type == .yes {
+            switchToMinigame(newState: .labirinto)
+            sceneManager.unpause()
+        }
+        
+        else if message.type == .no {
+            let message = Message(type: .no, vector: nil, state: nil)
+            sceneManager.mpcManager.send(message: message)
+            sceneManager.unpause()
+        }
+        
+        else if message.type == .pause {
+            sceneManager.pause()
+        }
+        
+        else if message.type == .resume {
+            sceneManager.unpause()
         }
         
     }

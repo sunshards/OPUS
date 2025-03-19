@@ -18,7 +18,7 @@ class TextManager {
         textNode.fontSize = fontSize
     }
     
-    func changeText(_ newText: String) {
+    private func changeText(_ newText: String) {
         textNode.text = newText
     }
     
@@ -31,6 +31,11 @@ class TextManager {
             SKAction.hide()
         ]
         self.textNode.run(SKAction.sequence(newSequence), withKey: TextManager.textAnimationKey)
+    }
+    
+    func displayText(_ text: String, for duration: TimeInterval) {
+        changeText(text)
+        showForDuration(duration)
     }
     
     func showDialogue(lines : [String], duration: TimeInterval) {

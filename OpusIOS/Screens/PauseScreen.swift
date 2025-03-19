@@ -41,6 +41,9 @@ class PauseScreen: SKScene {
             
             if buttonName == "ResumeButton" {
                 phoneManager.previousScreen()
+                let message = Message(type: .resume, vector: nil, state: nil)
+                mpcManager.send(message: message)
+                
             } else if buttonName == "CalibrateButton" {
                 phoneManager.changeScreen(name: "CalibrationScreen")
             }

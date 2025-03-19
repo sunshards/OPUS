@@ -54,6 +54,7 @@ class Labirinto: SKScene, SKPhysicsContactDelegate {
     private func endGame() {
         sceneManager.hasCollectedKey = true
         sceneManager.inventory.addItem(InventoryItem(name: "chiave"))
+        sceneManager.textManager.displayText("You collected a key.", for: 4)
         sceneManager.switchToMinigame(newState: .hidden)
     }
 }

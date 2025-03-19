@@ -17,6 +17,7 @@ enum MessageType : Codable {
     case pause
     case yes
     case no
+    case resume
     // per il telefono cambiano lo screen; per la tv mandano il messaggio
     case back
     case confirm
