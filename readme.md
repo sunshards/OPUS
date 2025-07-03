@@ -110,7 +110,7 @@ Special thanks to the course mentors and external UX consultant for design feedb
 </tr>
 
 <tr>
-<td>Blender for 3D assests</td>
+<td>Blender for 3D assets</td>
 <td>Custom sprites</td>
 </tr>
 
